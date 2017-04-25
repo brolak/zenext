@@ -21,3 +21,10 @@ hr{
   margin-top: 0px;
 margin-bottom: 2px;
 }
+
+.title, .intro{
+  color:#666666;
+  text-align: center;
+  margin:10px;
+  font-family: 'Assistant', sans-serif;
+}
