@@ -28,3 +28,45 @@ margin-bottom: 2px;
   margin:10px;
   font-family: 'Assistant', sans-serif;
 }
+
+.inputDomain{
+  width:140px;
+  color:#666666;
+  font-family: 'Assistant', sans-serif;
+  	border-radius:14px;
+}
+
+.myButton {
+	background-color:#ffffff;
+	-moz-border-radius:28px;
+	-webkit-border-radius:28px;
+	border-radius:14px;
+	border:1px solid #3399ff;
+	display:inline-block;
+	cursor:pointer;
+	color:#3399ff;
+  font-family: 'Assistant', sans-serif;
+	font-size:17px;
+	padding:10px 21px;
+	text-decoration:none;
+	position: center;
+	text-align: center;
+	vertical-align: middle;
+  width: 100px;
+
+}
+.myButton:hover {
+	background-color:#3399ff;
+  color:#ffffff
+}
+.myButton:active {
+	position:relative;
+	top:1px;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}
