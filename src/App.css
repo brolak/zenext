@@ -10,7 +10,15 @@
   text-align: center;
 
 }
+.input{
+  margin:5px;
+  text-align: center;
 
+}
+.submit{
+  margin:10px;
+  text-align: center;
+}
 .App-body{
   font-family: 'Assistant', sans-serif;
   color:#3399ff;
@@ -33,9 +41,15 @@ margin-bottom: 2px;
   width:140px;
   color:#666666;
   font-family: 'Assistant', sans-serif;
-  	border-radius:14px;
+  border-radius:5px;
+  border:1px solid #666666;
+  padding-left: 10px;
 }
 
+input::placeholder {
+  color: light;
+  font-size: 14px;
+}
 .myButton {
 	background-color:#ffffff;
 	-moz-border-radius:28px;
