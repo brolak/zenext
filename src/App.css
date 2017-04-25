@@ -28,3 +28,17 @@ margin-bottom: 2px;
   margin:10px;
   font-family: 'Assistant', sans-serif;
 }
+
+.inputDomain{
+  width:140px;
+  color:#666666;
+  font-family: 'Assistant', sans-serif;
+
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}

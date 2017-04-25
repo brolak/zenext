@@ -30,7 +30,7 @@ class App extends Component {
               <input type ="text" className="inputDomain" placeholder="Domain Name"></input>
             </div>
             <div className="col-md-6 ">
-              <p className="intro"> zendesk.com</p>
+              <p className="intro">zendesk.com</p>
             </div>
           </div>
           </div>
