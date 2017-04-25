@@ -2,12 +2,7 @@
     "name": "ZeNext - a better ZenDesk extension",
     "description": "This extension shows how to run a React app as a Chrome extension",
     "version": "1.0",
-    "background": {
-        "scripts": [
-            "js/*.js",
-            "js/*.js"
-        ]
-    },
+
     "permissions": [
         "https://*.zendesk.com/",
         "storage",
@@ -18,5 +13,5 @@
         "default_popup": "index.html"
     },
 
-    "manifest_version": 2,
+    "manifest_version": 2
 }
