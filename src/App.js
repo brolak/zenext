@@ -32,8 +32,11 @@ class App extends Component {
             <div className="col-md-6 ">
               <p className="intro">zendesk.com</p>
             </div>
+            <button className="myButton">Sign In</button>
           </div>
           </div>
+          <hr/>
+
         </div>
 
 
