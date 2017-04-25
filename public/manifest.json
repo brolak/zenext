@@ -1,9 +1,10 @@
 {
-    "name": "ZeNext - a better ZenDesk extension",
-    "description": "This extension shows how to run a React app as a Chrome extension",
+    "name": "Zenext - a better ZenDesk extension",
+    "description": "Advanced Zendesk ticket manager",
     "version": "1.0",
 
     "permissions": [
+    	"notifications",
         "https://*.zendesk.com/",
         "storage",
         "tabs"
@@ -13,5 +14,8 @@
         "default_popup": "index.html"
     },
 
-    "manifest_version": 2
+    "manifest_version": 2,
+    "background": {
+    	"scripts": ["background.js"]
+  	}
 }
