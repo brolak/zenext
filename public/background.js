@@ -2,10 +2,7 @@
 chrome.browserAction.setBadgeBackgroundColor({ color: '#3398FF' });
 chrome.browserAction.setBadgeText({text: '0'});
 
-var updateBadge = function(number){
-	chrome.browserAction.setBadgeText({text: number});
-}
-//welcome notification
+//create notification function
 var createNotification = function(title,message,id) {
 	var notification = {
   		type: "basic",
@@ -20,7 +17,12 @@ var createNotification = function(title,message,id) {
 
 var welcomeUser = createNotification("Welcome to Zenext","Please login to continue","1");
 
-//LOCAL STORAGE DATA
+//function for updating ext badge
+var updateBadge = function(number){
+	chrome.browserAction.setBadgeText({text: number});
+}
+
+//TEMP DATA
 var zendeskDomain = "";
 var newTickets = 0;
 var ticketsArr = [];
@@ -32,7 +34,8 @@ var checkLogin = function() {
 	chrome.storage.local.get(null,function(storage){
 	   		if(storage.zendeskDomain){
 	   			zendeskDomain = storage.zendeskDomain;
-	   			console.log(zendeskDomain);
+	   			ticketsArr = storage.ticketsArr;
+	   			newTickets = storage.newTickets;
 	   			clearInterval(loginRefresh);
 	   			var ticket_refresh = setInterval(check_tickets, 30000);
 	   		}
@@ -46,106 +49,29 @@ function check_tickets() {
 	var url = 'https://'+zendeskDomain+".zendesk.com/api/v2/search.json?query=type:ticket%20status:pending%20status:new";
 	axios.get(url)
 	.then(function (response) {
-		console.log(response);
+		console.log(response.data);
 		//if response ticket count it larger, reflect in storage and badge
-		if(newTickets < response.newTickets){
+		if(newTickets < response.data.count){
 	   		console.log("there's a new ticket");
-	   		updateBadge(response.data.results.length);
+	   		updateBadge(String(response.data.count));
 	   		var announceNewTicket = createNotification(
 	   			response.data.results[0].subject,
 	   			"you have a new ticket",
 	   			response.data.results[0].subject.id
 	   			);
-	   		chrome.storage.local.set({'newTickets': response.newTickets},function(){
-	    			//callback
-	    	});
 	   	}
 		
-	    chrome.storage.local.set({'newTickets': response.data.count},function(){
+	    chrome.storage.local.set({
+	    	'newTickets': response.data.count,
+	    	'ticketsArr': response.data.results
+	    },function(){
 	    	//callback
 	    });
+	    newTickets = response.data.count;
+	    ticketsArr = response.data.results;
 	    
 	})
 	.catch(function (error) {
 	      console.log(error);
 	});
 }
-
-
-//code examples:
-// //local storage settings
-// var settings = {
-// 	zendeskDomain: '',
-// 	viewID: null,
-//     load: function(callback) {
-//         var self = this;
-//         chrome.storage.local.get(null, function(loadedSettings) {
-//             self.zendeskDomain = loadedSettings.zendeskDomain || '';
-//             if (callback) {
-//                 callback();
-//             }
-//             console.log("Settings loaded");
-//         });
-//     },
-//     save: function() {
-//         chrome.storage.local.set({
-//             'zendeskDomain': this.zendeskDomain,
-//             'viewID': this.viewID,
-//             'userID': this.userID
-//         });
-//         console.log("Settings saved");
-//         chrome.storage.local.set({'zendeskDomain': this.input})
-//     }
-// }
-
-// function createTicket (ticketID,subject,created_at,description,url,status) {
-// 	   this.ID = ticketID,
-//     this.subject = subject,
-//     this.created_at = created_at,
-//     this.description = description,
-//     this.url = url,
-//     this.status = status
-// }
-
-// var example_ticket = new createTicket("id","subject","createdat","descr","http://","mystatus");
-// console.log(example_ticket);
-
-// //local storage tickets
-// var tickets = {
-// 	ticketsList: [],
-// 	load: function() {
-//         var self = this;
-//         chrome.storage.local.get(null, function(tickets) {
-//             self.tickets = tickets || [];
-//         });
-//     },
-//     save: function() {
-//         chrome.storage.local.set({
-//             'ticketList': this.ticketList,
-//         });
-//         console.log("tickets saved");
-//     }
-// }
-
-// function get_tickets() {
-//     model.currentlyMakingRequest = true;
-//     model.numRequestsTotal += 1;
-
-//     var url = 'https://' + settings.zendeskDomain +
-//     ".zendesk.com/api/v2/exports/tickets.json?start_time=0&per_page=100";
-
-//     // return $.getJSON(url);
-// }
-
-// // Load settings, then get ticket audit and user details
-// settings.load(/*get_tickets_and_details*/);
-// tickets.load();
-// // update_time();
-
-// // save settings when popup closes
-// chrome.runtime.onConnect.addListener(function(port) {
-//     port.onDisconnect.addListener(function() {
-//         console.log('Popup closed');
-//         tickets.save();
-//     });
-// });
