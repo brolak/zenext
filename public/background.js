@@ -20,33 +20,34 @@ var createNotification = function(title,message,id) {
 
 var welcomeUser = createNotification("Welcome to Zenext","Please login to continue","1");
 
-
 //local storage data
-var zendeskDomain = "zenext";
+var zendeskDomain = "";
 var newTickets = 0;
 var ticketsArr = [];
 
+var refresh = setInterval(check_tickets, 30000);
+
 //get open/new and check response against localstorage
 function check_tickets() {
+	if(!zendeskDomain){
+		return
+	}
 	var url = 'https://'+zendeskDomain+".zendesk.com/api/v2/search.json?query=type:ticket%20status:new";
 	axios.get(url)
-    .then(function (response) {
-      console.log(response);
-      chrome.storage.local.set({'newCounter': response.data.count},function(){
-      	//callback
-      });
-      chrome.storage.local.get(null,function(storage){
-    	console.log(storage);
-      })
-      var announceFirstTicket = createNotification(response.data.results[0].subject,"you have a new ticket",response.data.results[0].subject.id);
-
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+	.then(function (response) {
+		console.log(response);
+	    chrome.storage.local.set({'newTickets': response.data.count},function(){
+	    	//callback
+	    });
+	    chrome.storage.local.get(null,function(storage){
+	   		console.log(storage);
+	    })
+	    var announceFirstTicket = createNotification(response.data.results[0].subject,"you have a new ticket",response.data.results[0].subject.id);
+	    })
+	    .catch(function (error) {
+	      console.log(error);
+	    });
 }
-
-check_tickets();
 
 
 //code examples:
