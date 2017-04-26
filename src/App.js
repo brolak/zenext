@@ -25,7 +25,7 @@ class App extends Component {
       console.log(error);
     });
   }
-  
+
   handleInput = (e) => {
     this.setState({
       domainName: e.target.value
@@ -33,7 +33,6 @@ class App extends Component {
   }
 
   componentDidMount = () => {
-    this.state
     setInterval( (x)=> {
 
       this.setState({newTasks:this.state.newTasks+=1})
