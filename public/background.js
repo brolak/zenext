@@ -20,34 +20,55 @@ var createNotification = function(title,message,id) {
 
 var welcomeUser = createNotification("Welcome to Zenext","Please login to continue","1");
 
-//local storage data
-var zendeskDomain = "zenext";
+//LOCAL STORAGE DATA
+var zendeskDomain = "";
 var newTickets = 0;
 var ticketsArr = [];
 
-// var login_refresh = setInterval(check_login,5000);
+var checkLogin = function() {
+	//if there is a domain in the local storage
+	//start refreshing for tickets
+	//and clear the login check interval
+	chrome.storage.local.get(null,function(storage){
+	   		if(storage.zendeskDomain){
+	   			zendeskDomain = storage.zendeskDomain;
+	   			console.log(zendeskDomain);
+	   			clearInterval(loginRefresh);
+	   			var ticket_refresh = setInterval(check_tickets, 30000);
+	   		}
+	});	
+}
 
-var check_login = null;
+var loginRefresh = setInterval(checkLogin, 5000);
 
-var ticket_refresh = setInterval(check_tickets, 30000);
-
-//get open/new and check response against localstorage
 function check_tickets() {
+	//get open/new and check response against localstorage
 	var url = 'https://'+zendeskDomain+".zendesk.com/api/v2/search.json?query=type:ticket%20status:pending%20status:new";
 	axios.get(url)
 	.then(function (response) {
 		console.log(response);
+		//if response ticket count it larger, reflect in storage and badge
+		if(newTickets < response.newTickets){
+	   		console.log("there's a new ticket");
+	   		updateBadge(response.data.results.length);
+	   		var announceNewTicket = createNotification(
+	   			response.data.results[0].subject,
+	   			"you have a new ticket",
+	   			response.data.results[0].subject.id
+	   			);
+	   		chrome.storage.local.set({'newTickets': response.newTickets},function(){
+	    			//callback
+	    	});
+	   	}
+		
 	    chrome.storage.local.set({'newTickets': response.data.count},function(){
 	    	//callback
 	    });
-	    chrome.storage.local.get(null,function(storage){
-	   		console.log(storage);
-	    })
-	    var announceFirstTicket = createNotification(response.data.results[0].subject,"you have a new ticket",response.data.results[0].subject.id);
-	    })
-	    .catch(function (error) {
+	    
+	})
+	.catch(function (error) {
 	      console.log(error);
-	    });
+	});
 }
 
 
@@ -128,4 +149,3 @@ function check_tickets() {
 //         tickets.save();
 //     });
 // });
-
