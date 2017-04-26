@@ -12,10 +12,9 @@ class App extends Component {
           ticketsArr: [],
           newTickets: 0,
           zendeskDomain:"",
-          userOnline:false
+          //1-online, 2-offline, 3-unauthorized
+          userStatus:2
       };
-      // this.updateBadge = this.updateBadge.bind(this);
-      // this.newMessage = this.newMessage.bind(this);
   }
 
 
@@ -27,8 +26,10 @@ class App extends Component {
         this.setState({
           ticketsArr: cb.ticketsArr,
           newTickets: cb.newTickets,
-          userOnline:true
+          userStatus:1
           })
+       window.chrome.browserAction.setBadgeText({text:String(cb.ticketsArr.length )});
+
       }
       else{
         console.log("logged out");
@@ -47,22 +48,31 @@ class App extends Component {
         this.setState({
           ticketsArr: response.data.results,
           newTickets: response.data.count,
-          userOnline:true
+          userStatus:1
         });
-        //update the local storage
+        //update the badge counter
+        window.chrome.browserAction.setBadgeText({text:String(this.ticketsArr.length )});
+      //  update the local storage
         window.chrome.storage.local.set(
           {
             ticketsArr: this.state.ticketsArr,
             newTickets: this.state.newTickets,
             zendeskDomain:this.state.zendeskDomain
           }
-        ,function(){
-      	//callback
-      });
+        );
     })
       .catch( (error) => {
         console.log(error);
+        this.setState({
+
+        })
       });
+
+
+    // this.setState({
+    //
+    //       userStatus:1
+    //     });
   }
 
   handleInput = (e) => {
@@ -74,12 +84,15 @@ class App extends Component {
 
   render() {
     //check user is logged in
-    if(this.state.userOnline){
+    if(this.state.userStatus == 1){
       return (
         <div className="container">
           <div className="row">
-            <div className="col-md-12 navbar">
+            <div className="col-md-2 navbar"></div>
+            <div className="col-md-10 navbar">
               <img src={logo} className="App-logo" alt="logo" />
+            </div>
+            <div className="col-md-2 navbar">
             </div>
               <hr/>
           <Tickets newTickets={this.state.newTickets} tickets={this.state.ticketsArr}/>
