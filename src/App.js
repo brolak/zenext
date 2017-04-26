@@ -9,7 +9,7 @@ class App extends Component {
       super(props);
       this.state = {
           ticketsArr: [],
-          newTasks: 0,
+          newTickets: 0,
           zendeskDomain:"",
           userOnline:false
       };
@@ -19,37 +19,44 @@ class App extends Component {
 
 
   componentWillMount = () => {
-    // this.setState({
-    //
-    //       newTasks:3,
+
+    // window.chrome.storage.local.get((cb) => {
+    //   if(cb.newCounter){
+    //     this.setState({
     //       userOnline:true
     //       })
-    window.chrome.storage.local.get((cb) => {
-      console.log("call back" ,cb);
-      console.log("counter" , cb.newCounter)
-      if(cb.newCounter){
-        console.log("change state")
-        this.setState({
-          newTasks:cb.newCounter
-          })
-          console.log("new state" , this.state.newTasks)
-
-      }
-      else{
-        console.log("logged out");
-      }
-    });
+    //   }
+    //   else{
+    //     console.log("logged out");
+    //   }
+    // });
   }
 
   handleSignIn = (e) => {
     console.log("sign in")
     e.preventDefault();
     console.log("domain:" , this.state.zendeskDomain)
-    axios.get('https://'+this.state.zendeskDomain+'.zendesk.com/api/v2/search.json?query=type:ticket%20status:new')
-      .then(function (response) {
+    axios.get('https://'+this.state.zendeskDomain+'.zendesk.com/api/v2/search.json?query=type:ticket%20status:pending%20status:new')
+      .then( (response) => {
         console.log(response);
-      })
-      .catch(function (error) {
+        //update the state
+        this.setState({
+          ticketsArr: response.data.results,
+          newTickets: response.data.count,
+          userOnline:true
+        });
+        //update the local storage
+        window.chrome.storage.local.set(
+          {
+            ticketsArr: this.state.ticketsArr,
+            newTickets: this.state.newTickets,
+            zendeskDomain:this.state.zendeskDomain
+          }
+        ,function(){
+      	//callback
+      });
+    })
+      .catch( (error) => {
         console.log(error);
       });
   }
