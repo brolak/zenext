@@ -21,18 +21,19 @@ var createNotification = function(title,message,id) {
 var welcomeUser = createNotification("Welcome to Zenext","Please login to continue","1");
 
 //local storage data
-var zendeskDomain = "";
+var zendeskDomain = "zenext";
 var newTickets = 0;
 var ticketsArr = [];
 
-var refresh = setInterval(check_tickets, 30000);
+// var login_refresh = setInterval(check_login,5000);
+
+var check_login = null;
+
+var ticket_refresh = setInterval(check_tickets, 30000);
 
 //get open/new and check response against localstorage
 function check_tickets() {
-	if(!zendeskDomain){
-		return
-	}
-	var url = 'https://'+zendeskDomain+".zendesk.com/api/v2/search.json?query=type:ticket%20status:new";
+	var url = 'https://'+zendeskDomain+".zendesk.com/api/v2/search.json?query=type:ticket%20status:pending%20status:new";
 	axios.get(url)
 	.then(function (response) {
 		console.log(response);
