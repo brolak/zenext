@@ -1,3 +1,4 @@
+
 if (axios) {  
     console.log("axios loaded");
 } else {
@@ -6,6 +7,7 @@ if (axios) {
 
 //badge set-up
 chrome.browserAction.setBadgeBackgroundColor({ color: '#3398FF' });
+
 chrome.browserAction.setBadgeText({text: '0'});
 
 
@@ -29,6 +31,7 @@ var settings = {
 	zendeskDomain: 'zenext',
 	newCounter: 0
 };
+
 
 var tickets = {
 	ticketArr: []
@@ -147,3 +150,4 @@ get_tickets();
 //         tickets.save();
 //     });
 // });
+
