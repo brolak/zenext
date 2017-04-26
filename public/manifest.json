@@ -16,9 +16,10 @@
 
     "manifest_version": 2,
     "background": {
-
-
-    	"scripts": ["background.js"]
+    	"scripts": [
+            "axios.min.js",
+            "background.js"
+        ]
   	}
 
 }
