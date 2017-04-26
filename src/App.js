@@ -13,7 +13,7 @@ class App extends Component {
           newTickets: 0,
           zendeskDomain:"",
           //1-online, 2-offline, 3-unauthorized
-          userStatus:1
+          userStatus:2
       };
   }
 
@@ -51,7 +51,7 @@ class App extends Component {
           userStatus:1
         });
         //update the badge counter
-        window.chrome.browserAction.setBadgeText({text:String(this.ticketsArr.length )});
+        window.chrome.browserAction.setBadgeText({text:String(response.data.count )});
       //  update the local storage
         window.chrome.storage.local.set(
           {
