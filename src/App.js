@@ -17,7 +17,7 @@ class App extends Component {
   handleSignIn = (e) => {
     e.preventDefault();
     console.log("domain:" , this.state.domainName)
-    axios.get('https://zenext.zendesk.com/api/v2/search.json?query=type:ticket%20status:new')
+    axios.get('https://'+this.state.domainName+'.zendesk.com/api/v2/search.json?query=type:ticket%20status:new')
     .then(function (response) {
       console.log(response);
     })
@@ -25,6 +25,7 @@ class App extends Component {
       console.log(error);
     });
   }
+  
   handleInput = (e) => {
     this.setState({
       domainName: e.target.value
