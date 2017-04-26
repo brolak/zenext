@@ -19,19 +19,26 @@ class App extends Component {
 
 
   componentWillMount = () => {
-    window.chrome.storage.local.get((null,cb) => {
+    // this.setState({
+    //
+    //       newTasks:3,
+    //       userOnline:true
+    //       })
+    window.chrome.storage.local.get((cb) => {
       console.log("call back" ,cb);
-      console.log("counter" , cb.newTasks)
-      // if(cb.settings.newCounter){
-      //   console.log("change state")
-      //   this.setState({
-      //     newTasks:cb.settings.newCounter
-      //     })
-      // }
-      // else{
-      //   console.log("logged out");
-      // }
-    // })
+      console.log("counter" , cb.newCounter)
+      if(cb.newCounter){
+        console.log("change state")
+        this.setState({
+          newTasks:cb.newCounter
+          })
+          console.log("new state" , this.state.newTasks)
+
+      }
+      else{
+        console.log("logged out");
+      }
+    });
   }
 
   handleSignIn = (e) => {
@@ -56,8 +63,20 @@ class App extends Component {
 
   render() {
     //check user is logged in
-    if(userOnline){
-      
+    if(this.state.userOnline){
+      return (
+        <div className="container">
+          <div className="row">
+            <div className="col-md-12 navbar">
+              <img src={logo} className="App-logo" alt="logo" />
+            </div>
+              <hr/>
+          <div>hello logged in</div>
+          </div>
+        </div>
+
+          )
+
     }
     else{
       return (
