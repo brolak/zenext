@@ -6,15 +6,15 @@ import './App.css';
 class TicketList extends Component {
     render() {
         let items = this.props.tickets.map(function(ticket) {
-            return (<SingleTicket key={ticket.ticketID} description={ticket.description} subject={ticket.subject} status={ticket.status} requester_id={ticket.requester_id} created_at={ticket.created_at}/>)
+            return (<SingleTicket key={ticket.ticketID} description={ticket.description} subject={ticket.subject} status={ticket.status} requester_id={ticket.requester_id} created_at={ticket.created_at} requester={ticket.via.source.from.name}/>)
         })
         return (
             <div className="container">
                 <div className="row">
-                    <div className="col-md-12 ticketList">
-                        <ul className="itemList">
+                    <div className="ticketList">
+                        {/* <ul className="itemList"> */}
                             {items}
-                        </ul>
+                        {/* </ul> */}
                     </div>
                 </div>
             </div>

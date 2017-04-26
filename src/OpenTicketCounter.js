@@ -6,7 +6,7 @@ import './App.css';
 class OpenTicketCounter extends Component {
     render() {
         return (
-            <div>
+            <div className="counterDiv">
                 {/* <div className="row"> */}
                 <div className="counterBorder">
                     <div className="openTicketCounterInteger">
@@ -15,8 +15,8 @@ class OpenTicketCounter extends Component {
                     <div className="openTicketCounterString">OPEN TICKETS</div>
                 </div>
                 {/* </div> */}
-                <hr/>
-            </div>
+                {/* <hr/> */}
+              </div>
         )
     }
 }

@@ -5,12 +5,12 @@ import TicketList from './TicketList';
 import './App.css';
 
 class Tickets extends Component {
-    
+
     render() {
         return (
             <div className="container">
                 <div className="row">
-                    <div className="col-md-12 navbar">
+                    <div className="navbar">
                 <OpenTicketCounter newTickets={this.props.newTickets}/>
                 <TicketList tickets={this.props.tickets}/>
             </div>
