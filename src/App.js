@@ -18,16 +18,23 @@ class App extends Component {
 
 
   componentWillMount = () =>{
-    window.chrome.storage.local.get((cb) => {
-      console.log(cb);
-      if(cb.settings){
-        this.setState({
-          newTasks:cb.settings.newCounter
-          })
-      }
-      else{
-        console.log("logged out");
-      }
+    window.chrome.storage.local.set({
+      newTasks:5,
+      zendeskDomain:"zenext"
+    })
+
+    window.chrome.storage.local.get((null,cb) => {
+      console.log("call back" ,cb);
+      console.log("counter" , cb.newTasks)
+      // if(cb.settings.newCounter){
+      //   console.log("change state")
+      //   this.setState({
+      //     newTasks:cb.settings.newCounter
+      //     })
+      // }
+      // else{
+      //   console.log("logged out");
+      // }
     })
   }
 
@@ -50,27 +57,6 @@ class App extends Component {
       zendeskDomain: e.target.value
     })
   }
-
-  componentDidMount() {
-    //dummy new message timer when extension opens
-    this.messageTimer = setInterval(
-      () => this.newMessage(),
-      1000
-    )
-  }
-
-  newMessage () {
-    this.setState({newTasks: this.state.newTasks +=1});
-    this.updateBadge();
-  }
-
-  updateBadge() {
-    // window.chrome.browserAction.setBadgeText({text: String(this.state.newTasks)});
-    // if(this.state.newTasks == 5){
-    //   clearInterval(this.messageTimer);
-    }
-
-
 
   render() {
     return (
