@@ -40,7 +40,7 @@ class App extends Component {
     console.log("sign in")
     e.preventDefault();
     console.log("domain:" , this.state.zendeskDomain)
-    axios.get('https://'+this.state.zendeskDomain+'.zendesk.com/api/v2/search.json?query=type:ticket%20status:pending%20status:new')
+    axios.get('https://'+this.state.zendeskDomain+'.zendesk.com/api/v2/search.json?query=type:ticket%20status:open%20status:new')
       .then( (response) => {
         console.log(response);
         //update the state
