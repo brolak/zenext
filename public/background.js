@@ -2,66 +2,33 @@
 chrome.browserAction.setBadgeBackgroundColor({ color: '#3398FF' });
 chrome.browserAction.setBadgeText({text: '0'});
 
-
+var updateBadge = function(number){
+	chrome.browserAction.setBadgeText({text: number});
+}
 //welcome notification
-var welcomeUser = function() {
-	var welcome = {
+var createNotification = function(title,message,id) {
+	var notification = {
   		type: "basic",
-  		title: "Welcome to Zenext",
-  		message: "Please login to begin...",
+  		title: title,
+  		message: message,
   		iconUrl: "./logo_small.png"
 	}
-	chrome.notifications.create("1",welcome,function(){
+	chrome.notifications.create(id,notification,function(){
 	//callback
 	})
 }
 
+var welcomeUser = createNotification("Welcome to Zenext","Please login to continue","1");
 
-welcomeUser();
 
 //local storage data
 var zendeskDomain = "zenext";
-var newCounter = 0;
-var tickets = [];
+var newTickets = 0;
+var ticketsArr = [];
 
-var store = {
-	zendeskDomain: 'zenext' /*only for dev purpose*/,
-	newCounter: 0,
-	tickets: [],
-	load: function() {
-        var self = this;
-        chrome.storage.local.get(null, function(store) {
-            self.zendesk = store.zendesk || '';
-            self.newCounter = store.newCounter || 0;
-            self.tickets = store.tickets || [];
-        });
-    },
-    save: function() {
-        chrome.storage.local.set({
-            'tickets': this.tickets,
-            'zendesk': this.zendesk,
-            'newCounter': this.newCounter
-        });
-    }
-}
-
-//api calls
-//WORKING
-// function get_current_user() {
-//     var url = 'https://' + store.zendeskDomain +
-//         '.zendesk.com/api/v2/users/me.json';
-//     axios.get(url)
-//     .then(function (response) {
-//       console.log(response);
-//     })
-//     .catch(function (error) {
-//       console.log(error);
-//     });
-// }
-// get_current_user();
-
-function get_tickets() {
-	var url = 'https://'+store.zendeskDomain+".zendesk.com/api/v2/search.json?query=type:ticket%20status:new";
+//get open/new and check response against localstorage
+function check_tickets() {
+	var url = 'https://'+zendeskDomain+".zendesk.com/api/v2/search.json?query=type:ticket%20status:new";
 	axios.get(url)
     .then(function (response) {
       console.log(response);
@@ -69,15 +36,17 @@ function get_tickets() {
       	//callback
       });
       chrome.storage.local.get(null,function(storage){
-    		console.log(storage);
+    	console.log(storage);
       })
+      var announceFirstTicket = createNotification(response.data.results[0].subject,"you have a new ticket",response.data.results[0].subject.id);
+
     })
     .catch(function (error) {
       console.log(error);
     });
 }
 
-get_tickets();
+check_tickets();
 
 
 //code examples:
