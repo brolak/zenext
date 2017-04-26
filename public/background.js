@@ -16,9 +16,13 @@ var welcomeUser = function() {
 	})
 }
 
+
 welcomeUser();
 
 //local storage data
+var zendeskDomain = "zenext";
+var newCounter = 0;
+var tickets = [];
 
 var store = {
 	zendeskDomain: 'zenext' /*only for dev purpose*/,
@@ -61,7 +65,7 @@ function get_tickets() {
 	axios.get(url)
     .then(function (response) {
       console.log(response);
-      chrome.storage.local.set({'store.newCounter': response.data.count},function(){
+      chrome.storage.local.set({'newCounter': response.data.count},function(){
       	//callback
       });
       chrome.storage.local.get(null,function(storage){
