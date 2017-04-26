@@ -6,10 +6,10 @@ class SingleTicket extends Component {
     render() {
         return (
             <div>
-                <table width="100%">
+                <table width="100%" className="tickets">
                     <tr>
                         <td className="ticketSubject">{this.props.subject}</td>
-                        <td className="ticketRequester">{this.props.requester_id}</td>
+                        <td className="ticketRequester">{this.props.requester}</td>
                     </tr>
                     <tr>
                         <td className="ticketDesc">{this.props.description}</td>
