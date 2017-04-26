@@ -1,5 +1,7 @@
+
+
 //badge set-up
-chrome.browserAction.setBadgeBackgroundColor({ color: [#3398FF] });
+chrome.browserAction.setBadgeBackgroundColor({ color: "#3398FF" });
 chrome.browserAction.setBadgeText({text: '0'});
 console.log(chrome);
 
@@ -14,4 +16,3 @@ var opt = {
 chrome.notifications.create("1",opt,function(){
 	console.log(opt);
 })
-

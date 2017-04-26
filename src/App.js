@@ -8,29 +8,46 @@ class App extends Component {
   constructor(props) {
       super(props);
       this.state = {
-          tasks: [],
+          ticketsArr: [],
           newTasks: 0,
-          domainName:""
+          zendeskDomain:""
       };
       this.updateBadge = this.updateBadge.bind(this);
       this.newMessage = this.newMessage.bind(this);
   }
 
-  handleSignIn = (e) => {
-    e.preventDefault();
-    console.log("domain:" , this.state.domainName)
-    axios.get('https://'+this.state.domainName+'.zendesk.com/api/v2/search.json?query=type:ticket%20status:new')
-    .then(function (response) {
-      console.log(response);
+
+  componentWillMount = () =>{
+    window.chrome.storage.local.get((cb) => {
+      console.log(cb);
+      if(cb.settings){
+        this.setState({
+          newTasks:cb.settings.newCounter
+          })
+      }
+      else{
+        console.log("logged out");
+      }
     })
-    .catch(function (error) {
-      console.log(error);
-    });
+  }
+
+  handleSignIn = (e) => {
+    console.log("sign in")
+    e.preventDefault();
+    console.log("domain:" , this.state.zendeskDomain)
+    axios.get('https://'+this.state.zendeskDomain+'.zendesk.com/api/v2/search.json?query=type:ticket%20status:new')
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
 
   handleInput = (e) => {
+    console.log("print")
     this.setState({
-      domainName: e.target.value
+      zendeskDomain: e.target.value
     })
   }
 
@@ -48,11 +65,11 @@ class App extends Component {
   }
 
   updateBadge() {
-    window.chrome.browserAction.setBadgeText({text: String(this.state.newTasks)});
-    if(this.state.newTasks == 5){
-      clearInterval(this.messageTimer);
+    // window.chrome.browserAction.setBadgeText({text: String(this.state.newTasks)});
+    // if(this.state.newTasks == 5){
+    //   clearInterval(this.messageTimer);
     }
-  }
+
 
 
   render() {
@@ -94,6 +111,7 @@ class App extends Component {
     );
   }
 }
+
 
 
 export default App;
