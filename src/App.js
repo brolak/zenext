@@ -12,8 +12,10 @@ class App extends Component {
           newTasks: 0,
           domainName:""
       };
-
+      this.updateBadge = this.updateBadge.bind(this);
+      this.newMessage = this.newMessage.bind(this);
   }
+
   handleSignIn = (e) => {
     e.preventDefault();
     console.log("domain:" , this.state.domainName)
@@ -32,11 +34,24 @@ class App extends Component {
     })
   }
 
-  componentDidMount = () => {
-    setInterval( (x)=> {
+  componentDidMount() {
+    //dummy new message timer when extension opens
+    this.messageTimer = setInterval(
+      () => this.newMessage(),
+      1000
+    )
+  }
 
-      this.setState({newTasks:this.state.newTasks+=1})
-    }, 5000);
+  newMessage () {
+    this.setState({newTasks: this.state.newTasks +=1});
+    this.updateBadge();
+  }
+
+  updateBadge() {
+    window.chrome.browserAction.setBadgeText({text: String(this.state.newTasks)});
+    if(this.state.newTasks == 5){
+      clearInterval(this.messageTimer);
+    }
   }
 
 

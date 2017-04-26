@@ -1,33 +1,13 @@
-
-chrome.browserAction.setBadgeBackgroundColor({ color: [255, 0, 0, 255] });
+//badge set-up
+chrome.browserAction.setBadgeBackgroundColor({ color: [#3398FF] });
 chrome.browserAction.setBadgeText({text: '0'});
+console.log(chrome);
 
-var count = 0;
-
-function setBadgeText() {
-  chrome.browserAction.setBadgeText({text: String(count)});
-  count = count + 1;
-  if (count > 5){
-    clearInterval(I);
-  }
-}
-
-var I = setInterval(setBadgeText, 1000);
-
-// user clicks on badge icon
-// var clicks = 0;
-//
-// function increment() {
-//   browser.browserAction.setBadgeText({text: (++clicks).toString()});
-// }
-//
-// browser.browserAction.onClicked.addListener(increment);
-console.log('chrome', chrome);
-
+//example notification
 var opt = {
   type: "basic",
-  title: "Example title",
-  message: "I can't believe it took 5 hours to make a simple notification",
+  title: "Welcome to Zenext",
+  message: "Please login to begin...",
   iconUrl: "./logo_small.png"
 };
 
