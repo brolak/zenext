@@ -13,7 +13,7 @@ class App extends Component {
           newTickets: 0,
           zendeskDomain:"",
           //1-online, 2-offline, 3-unauthorized
-          userStatus:2
+          userStatus:1
       };
   }
 
@@ -64,15 +64,12 @@ class App extends Component {
       .catch( (error) => {
         console.log(error);
         this.setState({
-
+           userStatus:3
         })
       });
 
 
-    // this.setState({
-    //
-    //       userStatus:1
-    //     });
+
   }
 
   handleInput = (e) => {
@@ -88,12 +85,11 @@ class App extends Component {
       return (
         <div className="container">
           <div className="row">
-            <div className="col-md-2 navbar"></div>
-            <div className="col-md-10 navbar">
+
+            <div className="col-md-12 navbar">
               <img src={logo} className="App-logo" alt="logo" />
             </div>
-            <div className="col-md-2 navbar">
-            </div>
+
               <hr/>
           <Tickets newTickets={this.state.newTickets} tickets={this.state.ticketsArr}/>
           </div>
@@ -102,7 +98,7 @@ class App extends Component {
           )
 
     }
-    else{
+    else if (this.state.userStatus == 2){
       return (
 
           <div className="container">
@@ -136,6 +132,9 @@ class App extends Component {
 
           </div>
       );
+    }
+    else if (this.state.userStatus == 3){
+      <div>oops seems like you have problem logging in</div>
     }
 
   }
