@@ -84,3 +84,82 @@ textarea:focus,
 button:focus {
     outline: none;
 }
+
+.openTicketsCounter {
+  text-align: center;
+}
+
+/* Tickets */
+
+.tickets {
+    color: #3F3F3F;
+    /*padding: 10px;*/
+    height: 56px;
+    padding: auto;
+    /*padding-right: 108px;*/
+
+    border-bottom: 1px solid #eee;
+    -webkit-transition: background-color .1s ease-out;
+    -moz-transition: background-color .1s ease-out;
+    -o-transition: background-color .1s ease-out;
+    transition: background-color .1s ease-out;
+}
+.tickets:last-child {
+    border-bottom: none;
+}
+.tickets:hover {
+    background-color: #c5e4ff;
+    cursor: pointer;
+}
+.ticketDesc {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 25ch;
+  font-size: 10px;
+}
+.ticketSubject {
+  font-size: 14px;
+  font-style: bold;
+}
+.ticketRequester {
+font-size: 14px;
+text-align: center;
+margin-right: 1em;
+}
+.ticketTime {
+  font-size: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 5ch;
+  color: #3399ff;
+}
+
+/*Counter*/
+.counterBorder {
+  border-style: solid;
+  border-radius: 10px;
+  border-color: #3cad7a;
+  width: 120px;
+  margin: auto;
+  padding: 5px;
+}
+.openTicketCounterInteger {
+  text-align: center;
+  font-size: 200%;
+}
+.openTicketCounterString {
+  text-align: center;
+  font-size: 90%;
+}
+
+/*List*/
+.itemList {
+  margin-right: 5px;
+  margin-left: 5px;
+  padding-left: 0px;
+}
+.ticketList {
+  padding: inherit;
+}
