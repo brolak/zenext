@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.png';
-import axios from 'axios'
+import axios from 'axios';
+import Tickets from './Tickets';
 import './App.css';
 
 class App extends Component {
@@ -20,16 +21,19 @@ class App extends Component {
 
   componentWillMount = () => {
 
-    // window.chrome.storage.local.get((cb) => {
-    //   if(cb.newCounter){
-    //     this.setState({
-    //       userOnline:true
-    //       })
-    //   }
-    //   else{
-    //     console.log("logged out");
-    //   }
-    // });
+    window.chrome.storage.local.get((cb) => {
+      console.log(cb);
+      if(cb.zendeskDomain){
+        this.setState({
+          ticketsArr: cb.ticketsArr,
+          newTickets: cb.newTickets,
+          userOnline:true
+          })
+      }
+      else{
+        console.log("logged out");
+      }
+    });
   }
 
   handleSignIn = (e) => {
@@ -78,7 +82,7 @@ class App extends Component {
               <img src={logo} className="App-logo" alt="logo" />
             </div>
               <hr/>
-          <div>hello logged in</div>
+          <Tickets newTickets={this.state.newTickets} tickets={this.state.ticketsArr}/>
           </div>
         </div>
 
