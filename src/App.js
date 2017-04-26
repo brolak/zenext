@@ -10,19 +10,15 @@ class App extends Component {
       this.state = {
           ticketsArr: [],
           newTasks: 0,
-          zendeskDomain:""
+          zendeskDomain:"",
+          userOnline:false
       };
-      this.updateBadge = this.updateBadge.bind(this);
-      this.newMessage = this.newMessage.bind(this);
+      // this.updateBadge = this.updateBadge.bind(this);
+      // this.newMessage = this.newMessage.bind(this);
   }
 
 
-  componentWillMount = () =>{
-    window.chrome.storage.local.set({
-      newTasks:5,
-      zendeskDomain:"zenext"
-    })
-
+  componentWillMount = () => {
     window.chrome.storage.local.get((null,cb) => {
       console.log("call back" ,cb);
       console.log("counter" , cb.newTasks)
@@ -35,7 +31,7 @@ class App extends Component {
       // else{
       //   console.log("logged out");
       // }
-    })
+    // })
   }
 
   handleSignIn = (e) => {
@@ -59,42 +55,46 @@ class App extends Component {
   }
 
   render() {
-    return (
+    //check user is logged in
+    if(userOnline){
+      
+    }
+    else{
+      return (
 
-        <div className="container">
-          <div className="row">
-            <div className="col-md-12 navbar">
-              <img src={logo} className="App-logo" alt="logo" />
+          <div className="container">
+            <div className="row">
+              <div className="col-md-12 navbar">
+                <img src={logo} className="App-logo" alt="logo" />
+              </div>
+              <hr/>
+              <h3 className="title">Hello There Agent</h3>
+              <p className="intro">
+                  Please sign in with your Zendesk account
+                  to start getting real time notification
+                  on new tickets
+              </p>
+
             </div>
+            <div className="row">
+              <div className="col-md-12 input">
+                <input type ="text" className="inputDomain" onChange={this.handleInput} placeholder=" Domain Name"></input><span className="intro">.zendesk.com</span>
+              </div>
+            </div>
+            <br/>
+
+            <div className="row">
+              <div className="col-md-12 submit">
+                <button className="myButton" onClick={this.handleSignIn}> Sign In</button>
+              </div>
+            </div>
+            <br/>
             <hr/>
-            <h3 className="title">Hello There Agent</h3>
-            <p className="intro">
-                Please sign in with your Zendesk account
-                to start getting real time notification
-                on new tickets
-            </p>
 
           </div>
-          <div className="row">
-            <div className="col-md-12 input">
-              <input type ="text" className="inputDomain" onChange={this.handleInput} placeholder=" Domain Name"></input><span className="intro">.zendesk.com</span>
-            </div>
-          </div>
-          <br/>
+      );
+    }
 
-          <div className="row">
-            <div className="col-md-12 submit">
-              <button className="myButton" onClick={this.handleSignIn}> Sign In</button>
-            </div>
-          </div>
-          <br/>
-          <hr/>
-
-        </div>
-
-
-
-    );
   }
 }
 
