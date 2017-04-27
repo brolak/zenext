@@ -59,7 +59,7 @@ class App extends Component {
             setTimeout(() => {
                 //update the state
                 this.setState({ticketsArr: response.data.results, newTickets: response.data.count, userStatus: 1});
-            }, 15000);
+            }, 4000);
 
             //update the badge counter
             window.chrome.browserAction.setBadgeText({
@@ -153,15 +153,12 @@ class App extends Component {
         }
         if (this.state.userStatus == 4) {
             return (
-                <div className="preloader">
-                    <img className="preloaderImg" src={preloader}/>
-                    <div>LOADING YOUR ZENDESK ACCOUNT</div>
-                </div>
-
+                    <div className="preloader">
+                      <img className="preloaderImg" src={preloader}/>
+                      <div className="preloaderText">LOADING YOUR ZENDESK ACCOUNT</div>
+                    </div>
             )
-
         }
-
     }
 }
 
