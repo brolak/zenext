@@ -1,11 +1,17 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import logo from './logo.png';
+
 import preloader from './preloader.gif';
+
+import settings from './settings.png';
+import exit from './exit.png'
+
 import axios from 'axios';
 import Tickets from './Tickets';
 import './App.css';
 
 class App extends Component {
+
 
   constructor(props) {
       super(props);
@@ -18,25 +24,16 @@ class App extends Component {
       };
   }
 
+    componentWillMount = () => {
 
-  componentWillMount = () => {
+        window.chrome.storage.local.get((cb) => {
+            console.log(cb);
+            if (cb.zendeskDomain) {
+                this.setState({ticketsArr: cb.ticketsArr, newTickets: cb.newTickets, userStatus: 1})
+                window.chrome.browserAction.setBadgeText({
+                    text: String(cb.ticketsArr.length)
+                });
 
-    window.chrome.storage.local.get((cb) => {
-      console.log(cb);
-      if(cb.zendeskDomain){
-        this.setState({
-          ticketsArr: cb.ticketsArr,
-          newTickets: cb.newTickets,
-          userStatus:1
-          })
-       window.chrome.browserAction.setBadgeText({text:String(cb.ticketsArr.length )});
-
-      }
-      else{
-        console.log("logged out");
-      }
-    });
-  }
 
   handleSignIn = (e) => {
     console.log("sign in")
@@ -106,17 +103,24 @@ class App extends Component {
           <div className="row">
 
             <div className="col-md-12 navbar">
-              <img src={logo} className="App-logo" alt="logo" />
-            </div>
+                            <table width="100%">
+                                <tr>
+                                    <td className="align-left"><img src={logo} className="App-logo" alt="logo"/></td>
+                                    <td className="align-right">
+                                        <a href=""><img src={settings} className="settings-logo" alt="settings"/></a>&nbsp;&nbsp;&nbsp;
+                                        <a href=""><img src={exit} className="exit-logo" alt="Sign out"/></a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
 
               <hr/>
           <Tickets newTickets={this.state.newTickets} tickets={this.state.ticketsArr}/>
           </div>
         </div>
 
-          )
+ 
 
-    }
      if (this.state.userStatus == 2){
       return (
 
@@ -166,6 +170,7 @@ class App extends Component {
         </div>
 
       )
+
     }
 
   }

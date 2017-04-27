@@ -1,5 +1,5 @@
 {
-    "name": "Zenext - a better ZenDesk extension",
+    "name": "ZeNext",
     "description": "Advanced Zendesk ticket manager",
     "version": "1.0",
 
@@ -9,11 +9,14 @@
         "storage",
         "tabs"
     ],
+    "icons": {
+    "16": "logo_small.png",
+    "48": "logo_small.png",
+    "128": "logo_small.png"
+    },
     "browser_action": {
-        "default_icon": "logo_small.png",
         "default_popup": "index.html"
     },
-
     "manifest_version": 2,
     "background": {
     	"scripts": [
