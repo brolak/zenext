@@ -1,6 +1,12 @@
 .App-logo {
   height: 40px;
 }
+.settings-logo {
+  height: 20px;
+}
+.exit-logo {
+  height: 20px;
+}
 .text-title{
   color: #3399ff;
   font-size: large;
@@ -32,7 +38,9 @@ hr{
   margin-top: 0px;
 margin-bottom: 2px;
 }
-
+a:active, a:focus {
+  outline: none;
+}
 .title, .intro{
   color:#666666;
   text-align: center;
