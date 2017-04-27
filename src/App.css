@@ -4,6 +4,10 @@
 
 .preloader{
   text-align: center;
+  align-items: center;
+}
+.preloaderImg{
+  text-align: center;
 }
 .settings-logo {
   height: 20px;
