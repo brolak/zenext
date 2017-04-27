@@ -1,13 +1,19 @@
 .App-logo {
   height: 40px;
 }
-
+.preloaderText{
+  font-family: 'Assistant', sans-serif;
+  color:gray;
+  font-size:20px;
+}
 .preloader{
   text-align: center;
   align-items: center;
 }
 .preloaderImg{
   text-align: center;
+  margin-left: 10px;
+  width:90%;
 }
 .settings-logo {
   height: 20px;
