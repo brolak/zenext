@@ -10,7 +10,7 @@
   height: inherit;
 }
 .navbar {
-  text-align: center;
+  text-align: left;
   height: inherit;
 }
 .input{
@@ -182,4 +182,12 @@ color: #666666;
   height: 250px;
   overflow-y: scroll;
   /*margin-bottom: 25px;*/
+}
+
+/*Table*/
+.align-left {
+  text-align: left;
+}
+.align-right {
+  text-align: right;
 }

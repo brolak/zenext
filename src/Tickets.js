@@ -11,11 +11,11 @@ class Tickets extends Component {
             <div className="container">
                 <div className="row">
                     <div className="navbar">
-                <OpenTicketCounter newTickets={this.props.newTickets}/>
-                <TicketList tickets={this.props.tickets}/>
+                        <OpenTicketCounter newTickets={this.props.newTickets}/>
+                        <TicketList tickets={this.props.tickets}/>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
         );
     }
 }
