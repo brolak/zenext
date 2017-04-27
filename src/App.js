@@ -28,9 +28,7 @@ class App extends Component {
             console.log(cb);
             if (cb.zendeskDomain) {
                 this.setState({ticketsArr: cb.ticketsArr, newTickets: cb.newTickets, userStatus: 1})
-                window.chrome.browserAction.setBadgeText({
-                    text: String(cb.ticketsArr.length)
-                });
+                
             }
         })
     }
