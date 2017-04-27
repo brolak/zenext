@@ -16,7 +16,7 @@ class OpenTicketCounter extends Component {
                 </div>
                 {/* </div> */}
                 {/* <hr/> */}
-              </div>
+            </div>
         )
     }
 }
