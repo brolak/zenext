@@ -12,7 +12,7 @@ class Tickets extends Component {
                 <div className="row">
                     <div className="navbar">
                         <OpenTicketCounter newTickets={this.props.newTickets}/>
-                        <TicketList tickets={this.props.tickets}/>
+                        <TicketList domain={this.props.domain} tickets={this.props.tickets}/>
                     </div>
                 </div>
             </div>

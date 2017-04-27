@@ -3,9 +3,17 @@ import TimeAgo from 'react-timeago';
 import './App.css';
 
 class SingleTicket extends Component {
+
+
+
+
+    click = () => {
+      window.chrome.tabs.create({ url: 'http://'+this.props.domain+'zenext.zendesk.com/agent/tickets/'+this.props.id });
+    }
+
     render() {
         return (
-            <div>
+            <div class="ticket" onClick={this.click}>
                 <table width="100%" className="tickets">
                     <tr>
                         <td className="ticketSubject align-left">{this.props.subject}</td>
@@ -21,6 +29,7 @@ class SingleTicket extends Component {
         )
     }
 }
+// onClick="window.open('https://facebook.com','mywindow');"
 
 export default SingleTicket;
 
