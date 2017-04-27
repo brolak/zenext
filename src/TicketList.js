@@ -5,7 +5,8 @@ import './App.css';
 
 class TicketList extends Component {
     render() {
-        let items = this.props.tickets.map(function(ticket) {
+        let sortedArr = this.props.tickets.sort((a,b) => b.id - a.id)
+        let items = sortedArr.map(function(ticket) {
             return (<SingleTicket key={ticket.ticketID} description={ticket.description} subject={ticket.subject} status={ticket.status} requester_id={ticket.requester_id} created_at={ticket.created_at} requester={ticket.via.source.from.name}/>)
         })
         return (

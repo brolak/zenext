@@ -1,11 +1,16 @@
 .App-logo {
   height: 40px;
 }
+
+.preloader{
+  text-align: center;
+
 .settings-logo {
   height: 20px;
 }
 .exit-logo {
   height: 20px;
+
 }
 .text-title{
   color: #3399ff;
