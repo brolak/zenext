@@ -10,11 +10,10 @@ var createNotification = function(title,message,id) {
   		message: message,
   		iconUrl: "./logo_small.png"
 	}
-	chrome.notifications.create(id,notification,function(){
-	//callback
-	})
+	chrome.notifications.create(id,notification,function(){});
 }
 
+//initial welcome notification when extension loads
 var welcomeUser = createNotification("Welcome to Zenext","Please login to continue","1");
 
 //function for updating ext badge
@@ -22,7 +21,7 @@ var updateBadge = function(number){
 	chrome.browserAction.setBadgeText({text: number});
 }
 
-//TEMP DATA
+//global temp data
 var zendeskDomain = "";
 var newTickets = 0;
 var ticketsArr = [];
@@ -37,28 +36,62 @@ var checkLogin = function() {
 	   			ticketsArr = storage.ticketsArr;
 	   			newTickets = storage.newTickets;
 	   			clearInterval(loginRefresh);
-	   			var ticket_refresh = setInterval(check_tickets, 30000);
+	   			var ticket_refresh = setInterval(check_tickets, 10000);
 	   		}
 	});	
 }
 
 var loginRefresh = setInterval(checkLogin, 5000);
 
+//prototype method for diffing response/temp ticket ids
+Array.prototype.diff = function(a) {
+    return this.filter(function(i) {return a.indexOf(i) < 0;});
+};
+
 function check_tickets() {
 	//get open/new and check response against localstorage
 	var url = 'https://'+zendeskDomain+".zendesk.com/api/v2/search.json?query=type:ticket%20status:pending%20status:new";
 	axios.get(url)
 	.then(function (response) {
-		console.log(response.data);
-		//if response ticket count it larger, reflect in storage and badge
+		//if response ticket count it larger than global previous count, reflect in storage, badge, globally
 		if(newTickets < response.data.count){
-	   		console.log("there's a new ticket");
 	   		updateBadge(String(response.data.count));
-	   		var announceNewTicket = createNotification(
-	   			response.data.results[0].subject,
-	   			"you have a new ticket",
-	   			response.data.results[0].subject.id
+	   		//check id's of response against global data
+	   		//return index(es)
+	   		//notify accordingly
+	   		var newIds = [];
+	   		var responseIds = [];
+	   		var ticketIds = [];
+
+	   		for(i=0;i<response.data.results.length;i++){
+	   			responseIds.push(response.data.results[i].id);
+	   		}
+	   		// console.log("response ids",responseIds);
+
+	   		for(j=0;j<ticketsArr.length;j++){
+	   			ticketIds.push(ticketsArr[j].id)
+	   		}
+	   		// console.log("ticketids",ticketIds);
+	   		
+	   		newIds = responseIds.diff(ticketIds);
+	   		// console.log("id(s) of new messages",newIds);
+
+	   		if(newIds.length == 1){
+	   			var newIndex = response.data.results.findIndex(result => result.id == newIds[0]);
+	   			// console.log("new index",newIndex);
+	   			// console.log("new data",response.data.results[newIndex]);
+	   			var announceNewTicket = createNotification(
+		   			"New Ticket Received:",
+		   			response.data.results[newIndex].subject,
+		   			response.data.results[newIndex].subject.id
 	   			);
+	   		} else if (newIds.length > 1) {
+		   		var announceNewTickets = createNotification(
+		   			"New Tickets Received:",
+		   			"You have "+newIds.length+" new tickets.",
+		   			response.data.results[0].subject.id
+		   		)
+	   		}
 	   	}
 		
 	    chrome.storage.local.set({
