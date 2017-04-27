@@ -1,5 +1,5 @@
 //badge set-up
-chrome.browserAction.setBadgeBackgroundColor({ color: '#3398FF' });
+chrome.browserAction.setBadgeBackgroundColor({ color: '#D74A38' });
 
 //create notification function
 var createNotification = function(title,message,id) {
@@ -20,7 +20,7 @@ var updateBadge = function(number){
 	chrome.browserAction.setBadgeText({text: number});
 }
 
-//every 10 seconds check if a user is logged in
+//every x seconds check if a user is logged in
 var checkLogin = function() {
 	//if there is a domain in the local storage
 	chrome.storage.local.get(null,function(storage){
@@ -35,7 +35,7 @@ var checkLogin = function() {
 	});
 }
 
-var backgroundInterval = setInterval(checkLogin, 10000);
+var backgroundInterval = setInterval(checkLogin, 1000);
 
 //prototype method for diffing response/local ticket ids
 Array.prototype.diff = function(a) {
@@ -48,8 +48,7 @@ function checkTickets(storage) {
 	axios.get(url)
 	.then(function (response) {
 		//if response ticket count it larger than stored count... store, badge change, and notify
-		if(storage.newTickets < response.data.count){
-	   		updateBadge(String(response.data.count));
+		if(storage.newTickets != 0 && storage.newTickets < response.data.count){
 	   		//hold id's of local/response to diff
 	   		var newIds = [];
 	   		var responseIds = [];
@@ -87,7 +86,7 @@ function checkTickets(storage) {
 	    	//it's not just gonna happen like that
 	    	//i aint no call-a-back girl
 	    });
-
+	    updateBadge(String(response.data.count));
 	})
 	.catch(function (error) {
 	      console.log(error);
