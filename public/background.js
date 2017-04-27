@@ -35,7 +35,7 @@ var checkLogin = function() {
 	});
 }
 
-var backgroundInterval = setInterval(checkLogin, 1000);
+var backgroundInterval = setInterval(checkLogin, 5000);
 
 //prototype method for diffing response/local ticket ids
 Array.prototype.diff = function(a) {
@@ -47,6 +47,7 @@ function checkTickets(storage) {
 	var url = 'https://'+storage.zendeskDomain+".zendesk.com/api/v2/search.json?query=type:ticket%20status:open%20status:new";
 	axios.get(url)
 	.then(function (response) {
+		updateBadge(String(response.data.count));
 		//if response ticket count it larger than stored count... store, badge change, and notify
 		if(storage.newTickets != 0 && storage.newTickets < response.data.count){
 	   		//hold id's of local/response to diff
@@ -86,7 +87,6 @@ function checkTickets(storage) {
 	    	//it's not just gonna happen like that
 	    	//i aint no call-a-back girl
 	    });
-	    updateBadge(String(response.data.count));
 	})
 	.catch(function (error) {
 	      console.log(error);
