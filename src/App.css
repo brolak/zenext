@@ -139,7 +139,7 @@ button:focus {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 19ch;
+  max-width: 15ch;
   font-size: 14px;
   font-style: bold;
   text-align: left;
@@ -204,7 +204,9 @@ color: #666666;
 /*Table*/
 .align-left {
   text-align: left;
+  padding: 2px;
 }
 .align-right {
   text-align: right;
+  padding: 2px;
 }
