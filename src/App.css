@@ -1,6 +1,9 @@
 .App-logo {
   height: 40px;
 }
+.preloader{
+  text-align: center;
+}
 .text-title{
   color: #3399ff;
   font-size: large;

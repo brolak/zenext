@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import logo from './logo.png';
+import preloader from './preloader.gif';
 import axios from 'axios';
 import Tickets from './Tickets';
 import './App.css';
@@ -12,7 +13,7 @@ class App extends Component {
           ticketsArr: [],
           newTickets: 0,
           zendeskDomain:"",
-          //1-online, 2-offline, 3-unauthorized
+          //1-online, 2-offline, 3-unauthorized, 4-loading
           userStatus:2
       };
   }
@@ -46,10 +47,17 @@ class App extends Component {
         console.log(response);
         //update the state
         this.setState({
-          ticketsArr: response.data.results,
-          newTickets: response.data.count,
-          userStatus:1
+          userStatus:4
         });
+        setTimeout(() =>  {
+          //update the state
+          this.setState({
+            ticketsArr: response.data.results,
+            newTickets: response.data.count,
+            userStatus:1
+          });
+        }, 3000);
+
         //update the badge counter
         window.chrome.browserAction.setBadgeText({text:String(response.data.count )});
       //  update the local storage
@@ -67,9 +75,6 @@ class App extends Component {
            userStatus:3
         })
       });
-
-
-
   }
 
   handleInput = (e) => {
@@ -78,6 +83,20 @@ class App extends Component {
       zendeskDomain: e.target.value
     })
   }
+
+  logout = () => {
+    window.chrome.storage.local.clear();
+    window.chrome.browserAction.setBadgeText({text:"0"});
+    this.setState({
+        userStatus:2
+    })
+  }
+
+  settings = () => {
+
+  }
+
+
 
   render() {
     //check user is logged in
@@ -98,7 +117,7 @@ class App extends Component {
           )
 
     }
-    else if (this.state.userStatus == 2){
+     if (this.state.userStatus == 2){
       return (
 
           <div className="container">
@@ -117,7 +136,7 @@ class App extends Component {
             </div>
             <div className="row">
               <div className="col-md-12 input">
-                <input type ="text" className="inputDomain" onChange={this.handleInput} placeholder=" Domain Name"></input><span className="intro">.zendesk.com</span>
+                <input type ="text" className="inputDomain" onChange={this.handleInput} key placeholder=" Domain Name"></input><span className="intro">.zendesk.com</span>
               </div>
             </div>
             <br/>
@@ -133,8 +152,20 @@ class App extends Component {
           </div>
       );
     }
-    else if (this.state.userStatus == 3){
-      <div>oops seems like you have problem logging in</div>
+    if (this.state.userStatus == 3){
+      return(
+        <div >oops seems like you have problem logging in,
+          please check your zendesk account is logged in and then try again</div>
+      )
+    }
+    if (this.state.userStatus == 4){
+      return(
+        <div className="preloader" >
+          <img src={preloader} />
+          <div>LOADING YOUR ZENDESK ACCOUNT</div>
+        </div>
+
+      )
     }
 
   }
