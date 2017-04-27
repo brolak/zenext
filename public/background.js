@@ -32,7 +32,7 @@ var checkLogin = function() {
 	   			chrome.storage.local.clear();
 	      		updateBadge('0');
 	   		}
-	});	
+	});
 }
 
 var backgroundInterval = setInterval(checkLogin, 10000);
@@ -50,22 +50,22 @@ function checkTickets(storage) {
 		//if response ticket count it larger than stored count... store, badge change, and notify
 		if(storage.newTickets < response.data.count){
 	   		updateBadge(String(response.data.count));
-	   		//hold id's of local/response to diff
+				// 		hold id's of local/response to diff
 	   		var newIds = [];
 	   		var responseIds = [];
 	   		var ticketIds = [];
 
 	   		for(i=0;i<response.data.results.length;i++){
 	   			responseIds.push(response.data.results[i].id);
-	   		}
+	   		};
 
-	   		for(j=0;j<storage.ticketsArr.length;j++){
+	   		for (j=0;j<storage.ticketsArr.length;j++){
 	   			ticketIds.push(storage.ticketsArr[j].id)
-	   		}
-	   		//return only new id's
+	   		};
+				
+
 	   		newIds = responseIds.diff(ticketIds);
 
-	   		//on 1 new ticket, put new ticket message in notification
 	   		if(newIds.length == 1){
 	   			var newIndex = response.data.results.findIndex(result => result.id == newIds[0]);
 	   			var announceNewTicket = createNotification(
@@ -82,12 +82,14 @@ function checkTickets(storage) {
 		   		)
 	   		}
 	   	}
+
+
 		//always change local storage to reflect response
 	    chrome.storage.local.set({'newTickets': response.data.count,'ticketsArr': response.data.results},function(){
 	    	//it's not just gonna happen like that
 	    	//i aint no call-a-back girl
 	    });
-	    
+
 	})
 	.catch(function (error) {
 	      console.log(error);
