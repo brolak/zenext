@@ -136,6 +136,10 @@ button:focus {
   color: #666666;
 }
 .ticketSubject {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 19ch;
   font-size: 14px;
   font-style: bold;
   text-align: left;
