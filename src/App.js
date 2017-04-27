@@ -35,6 +35,19 @@ class App extends Component {
         })
     }
 
+    componentDidMount = () => {
+        window.chrome.storage.onChanged.addListener((NewStore) => {
+            console.log("changes in local storage" , NewStore)
+            if (NewStore.ticketsArr.newValue){
+              this.setState({
+                ticketsArr:NewStore.ticketsArr.newValue ,
+                newTickets:NewStore.ticketsArr.newValue.length
+              })
+            }
+
+        });
+    }
+
     handleSignIn = (e) => {
         console.log("sign in")
         e.preventDefault();
@@ -46,7 +59,7 @@ class App extends Component {
             setTimeout(() => {
                 //update the state
                 this.setState({ticketsArr: response.data.results, newTickets: response.data.count, userStatus: 1});
-            }, 3000);
+            }, 15000);
 
             //update the badge counter
             window.chrome.browserAction.setBadgeText({
@@ -93,7 +106,7 @@ class App extends Component {
                         </div>
 
                         <hr/>
-                        <Tickets newTickets={this.state.newTickets} tickets={this.state.ticketsArr}/>
+                        <Tickets newTickets={this.state.newTickets} tickets={this.state.ticketsArr} domain={this.state.zendeskDomain}/>
                     </div>
                 </div>
             )
@@ -141,7 +154,7 @@ class App extends Component {
         if (this.state.userStatus == 4) {
             return (
                 <div className="preloader">
-                    <img src={preloader}/>
+                    <img className="preloaderImg" src={preloader}/>
                     <div>LOADING YOUR ZENDESK ACCOUNT</div>
                 </div>
 
