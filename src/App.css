@@ -140,18 +140,27 @@ button:focus {
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 19ch;
-  font-size: 10px;
-  color: #666666;
+  font-size: 13px;
+  font-style: normal;
+  color: #b8b8b8;
 }
 .ticketSubject {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 15ch;
-  font-size: 14px;
+  font-size: 15px;
   font-style: bold;
   text-align: left;
   color: #666666;
+}
+
+.lower-desc{
+  vertical-align: -webkit-baseline-middle;
+}
+
+.upper-title{
+  vertical-align: bottom;
 }
 .ticketRequester {
 font-size: 10px;
