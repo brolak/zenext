@@ -1,6 +1,6 @@
 {
     "name": "ZeNext",
-    "description": "Advanced Zendesk ticket manager",
+    "description": "Advanced Zendesk Ticket Notifications",
     "version": "1.0",
 
     "permissions": [
