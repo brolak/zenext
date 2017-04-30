@@ -44,7 +44,7 @@ Array.prototype.diff = function(a) {
 
 function checkTickets(storage) {
 	//get open+new and check response against localstorage
-	var url = 'https://'+storage.zendeskDomain+".zendesk.com/api/v2/search.json?query=type:ticket%20status:open%20status:new";
+	var url = 'https://'+storage.zendeskDomain+'.zendesk.com/api/v2/views/148181329/execute.json?per_page=30&page=1&sort_by=id&sort_order=desc&group_by=+&include=via_id';
 	axios.get(url)
 	.then(function (response) {
 		updateBadge(String(response.data.count));
@@ -54,36 +54,37 @@ function checkTickets(storage) {
 	   		var newIds = [];
 	   		var responseIds = [];
 	   		var ticketIds = [];
-
-	   		for(i=0;i<response.data.results.length;i++){
-	   			responseIds.push(response.data.results[i].id);
+				console.log
+	   		for(i=0;i<response.data.rows.length;i++){
+	   			responseIds.push(response.data.rows[i].ticket.id);
 	   		}
 
 	   		for(j=0;j<storage.ticketsArr.length;j++){
-	   			ticketIds.push(storage.ticketsArr[j].id)
+	   			ticketIds.push(storage.ticketsArr[j].ticket.id)
 	   		}
-	   		//return only new id's
+	   		//return only new ids
 	   		newIds = responseIds.diff(ticketIds);
 
 	   		//on 1 new ticket, put new ticket message in notification
 	   		if(newIds.length == 1){
-	   			var newIndex = response.data.results.findIndex(result => result.id == newIds[0]);
+	   			var newIndex = response.data.rows.findIndex(result => result.ticket.id == newIds[0]);
+					console.log('new index',newIndex)
 	   			var announceNewTicket = createNotification(
-		   			response.data.results[newIndex].subject,
-		   			response.data.results[newIndex].description,
-		   			response.data.results[newIndex].subject.id
+		   			response.data.rows[newIndex].ticket.subject,
+		   			response.data.rows[newIndex].ticket.description,
+						"one ticket"
 	   			);
 	   		//on multiple new tickets, indicate amount in notification
 	   		} else if (newIds.length > 1) {
 		   		var announceNewTickets = createNotification(
 		   			"New Tickets Received:",
 		   			"You have "+newIds.length+" new tickets.",
-		   			response.data.results[0].subject.id
+		   			"batch ticket"
 		   		)
 	   		}
 	   	}
 		//always change local storage to reflect response
-	    chrome.storage.local.set({'newTickets': response.data.count,'ticketsArr': response.data.results},function(){
+	    chrome.storage.local.set({'newTickets': response.data.count,'ticketsArr': response.data.rows},function(){
 	    	//it's not just gonna happen like that
 	    	//i aint no call-a-back girl
 	    });

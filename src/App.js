@@ -28,7 +28,7 @@ class App extends Component {
             console.log(cb);
             if (cb.zendeskDomain) {
                 this.setState({ticketsArr: cb.ticketsArr, newTickets: cb.newTickets, userStatus: 1})
-                
+
             }
         })
     }
@@ -50,13 +50,14 @@ class App extends Component {
         console.log("sign in")
         e.preventDefault();
         console.log("domain:", this.state.zendeskDomain)
-        axios.get('https://' + this.state.zendeskDomain + '.zendesk.com/api/v2/search.json?query=type:ticket%20status:open%20status:new').then((response) => {
+        axios.get('https://zenext.zendesk.com/api/v2/views/148181329/execute.json?per_page=30&page=1&sort_by=id&sort_order=desc&group_by=+&include=via_id').then((response) => {
             console.log(response);
             //update the state
             this.setState({userStatus: 4});
             setTimeout(() => {
                 //update the state
-                this.setState({ticketsArr: response.data.results, newTickets: response.data.count, userStatus: 1});
+                this.setState({ticketsArr: response.data.rows, newTickets: response.data.count, userStatus: 1});
+                console.log("state", this.state.ticketsArr , this.userStatus)
             }, 4000);
 
             //update the badge counter
