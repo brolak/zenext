@@ -50,7 +50,7 @@ class App extends Component {
         console.log("sign in")
         e.preventDefault();
         console.log("domain:", this.state.zendeskDomain)
-        axios.get('https://zenext.zendesk.com/api/v2/views/148181329/execute.json?per_page=30&page=1&sort_by=id&sort_order=desc&group_by=+&include=via_id').then((response) => {
+        axios.get('https://'+this.state.zendeskDomain+'.zendesk.com/api/v2/views/148181329/execute.json?per_page=30&page=1&sort_by=id&sort_order=desc&group_by=+&include=via_id').then((response) => {
             console.log(response);
             //update the state
             this.setState({userStatus: 4});
