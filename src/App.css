@@ -120,12 +120,9 @@ button:focus {
 
 .tickets {
     color: #3F3F3F;
-    /*padding: 10px;*/
     height: 56px;
-    padding: auto;
-    /*padding-right: 108px;*/
+    width:100%;
 
-    border-bottom: 1px solid #eee;
     -webkit-transition: background-color .1s ease-out;
     -moz-transition: background-color .1s ease-out;
     -o-transition: background-color .1s ease-out;
@@ -135,7 +132,7 @@ button:focus {
     border-bottom: none;
 }
 .tickets:hover {
-    background-color: #e1e1e1;
+    background-color: #ECECEC;
     cursor: pointer;
 }
 .ticketDesc {
@@ -215,9 +212,9 @@ color: #666666;
 /*Table*/
 .align-left {
   text-align: left;
-  padding: 2px;
+      padding-left: 4%;
 }
 .align-right {
   text-align: right;
-  padding: 2px;
+    padding-right: 4%;
 }

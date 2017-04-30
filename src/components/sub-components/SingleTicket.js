@@ -10,7 +10,7 @@ class SingleTicket extends Component {
     render() {
         return (
             <div class="ticket" onClick={this.click}>
-                <table width="100%" className="tickets">
+                <table className="tickets">
                     <tr>
                         <td className="ticketSubject align-left">{this.props.subject}</td>
                         <td className="ticketRequester align-right">{this.props.requester}</td>
