@@ -4,9 +4,9 @@ import logo from './assets/logo.png';
 import preloader from './assets/preloader.gif';
 
 import settings from './assets/settings.png';
-import exit from './assets/exit.png'
+import power from './assets/power.png'
 import Toggle from 'react-toggle'
-import Heart from './assets/heart.png';
+import ReactTooltip from 'react-tooltip'
 
 import axios from 'axios';
 import Tickets from './components/Tickets';
@@ -100,10 +100,12 @@ class App extends Component {
                                 <tr>
                                     <td className="align-left"><img src={logo} className="App-logo" alt="logo"/></td>
                                     <td className="align-right">
-
-                                      <Toggle defaultChecked={this.state.notifyme} onChange={this.handleBaconChange} />
-                                      &nbsp;&nbsp;&nbsp;
-                                      <a href=""><img src={exit} className="exit-logo" alt="Sign out" onClick={this.logout}/></a>
+                                            <ReactTooltip place="bottom" type="info" effect="solid" class="toggle"/>
+                                            <span align="left" data-tip="Toggle notification ON or OFF">
+                                            <Toggle defaultChecked={this.state.notifyme} onChange={this.handleBaconChange} />
+</span>
+                                      &nbsp;&nbsp;
+                                      <a href=""><img src={power} className="exit-logo" data-tip="Logout" onClick={this.logout} /></a>
                                     </td>
                                 </tr>
                             </table>
@@ -120,7 +122,7 @@ class App extends Component {
 
                 <div className="container">
                     <div className="row">
-                        <div className="col-md-12 navbar">
+                        <div className="col-md-12 navbar" data-tip="hello world">
                             <img src={logo} className="App-logo" alt="logo"/>
                         </div>
                         <hr/>
