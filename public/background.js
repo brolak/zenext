@@ -45,7 +45,7 @@ var diffTickets = function (responseTickets,storageTickets){
 	return responseIds.diff(ticketIds);
 }
 
-//function for checking if there's an open zendesk tab
+//function for checking if theres an open zendesk tab
 var checkTab = function (storage) {
 	//if so, try to acces it
 	if(storage.tabId){
@@ -55,7 +55,7 @@ var checkTab = function (storage) {
 	   			console.log(tab,"and i can get it")
 	   			return true;
 	   		} else {
-	   			//if failed, make a new zendesk tab 
+	   			//if failed, make a new zendesk tab
 				chrome.tabs.create({url:"https://zenext.zendesk.com/agent/"},function(newTab){
 					//and save the id to storage for next check
 					chrome.storage.local.set({tabId: newTab.id},function(){});
@@ -76,7 +76,7 @@ var checkTab = function (storage) {
 
 function checkTickets(storage) {
 	//get open+new and check response against localstorage
-	var url = 'https://'+storage.zendeskDomain+'.zendesk.com/api/v2/views/148181329/execute.json?per_page=30&page=1&sort_by=id&sort_order=desc&group_by=+&include=via_id';
+	var url = 'https://'+storage.zendeskDomain+'.zendesk.com/api/v2/views/'+storage.defaultViewID+'/execute.json?per_page=30&page=1&sort_by=id&sort_order=desc&group_by=+&include=via_id';
 	axios.get(url)
 	.then(function (response) {
 		//if there are no tickets, empty badge
@@ -94,7 +94,7 @@ function checkTickets(storage) {
 
 	   		//store array of new ids
 	   		var newIds = diffTickets(response.data.rows,storage.ticketsArr);
-	   		
+
 	   		//on 1 new ticket, put new ticket message in notification
 	   		if(newIds.length == 1){
 	   			var newIndex = response.data.rows.findIndex(result => result.ticket.id == newIds[0]);
@@ -111,7 +111,7 @@ function checkTickets(storage) {
 					chrome.notifications.onClicked.addListener(function (cb){
 						chrome.tabs.update(storage.tabId, {url:"https://zenext.zendesk.com/agent/tickets/"+response.data.rows[newIndex].ticket.id}, function (){})
 					})
-				})	
+				})
 	   		//on multiple new tickets
 	   		} else if (newIds.length > 1) {
 	   			//set notification contents
