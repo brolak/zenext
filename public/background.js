@@ -2,25 +2,31 @@
 chrome.browserAction.setBadgeBackgroundColor({ color: '#D74A38' });
 
 //create notification function
-var createNotification = function(title,message,id) {
-	var notification = {
-  		type: "basic",
-  		title: title,
-  		message: message,
-  		iconUrl: "./logo_small.png"
+var createNotification = function(title,message,id,url) {
+	var options = {
+		type: "basic",
+	  	title: title,
+	  	message: message,
+	  	iconUrl: "./logo_small.png"
 	}
-	chrome.notifications.create(id,notification,function(){});
+	chrome.notifications.create(id,options,function(cb){
+		if(url){
+			chrome.notifications.onClicked.addListener(function (cb){
+				chrome.tabs.create({url:url});
+			})
+		}
+	})
 }
 
 //initial welcome notification when extension loads
-var welcomeUser = createNotification("Welcome to Zenext","Please login to continue","1");
+var welcomeUser = createNotification("Welcome to Zenext","Please login to continue","welcome");
 
 //function for updating extension badge
 var updateBadge = function(number){
 	chrome.browserAction.setBadgeText({text: number});
 }
 
-//every x seconds check if a user is logged in
+//every 5 seconds check if a user is logged in
 var checkLogin = function() {
 	//if there is a domain in the local storage
 	chrome.storage.local.get(null,function(storage){
@@ -30,7 +36,7 @@ var checkLogin = function() {
 	   		} else {
 	   		//otherwise clear storage and keep the badge empty
 	   			chrome.storage.local.clear();
-	      		updateBadge('0');
+	      		updateBadge('');
 	   		}
 	});
 }
@@ -42,6 +48,23 @@ Array.prototype.diff = function(a) {
     return this.filter(function(i) {return a.indexOf(i) < 0;});
 };
 
+//hold id's of local/response to diff
+//return only new ids
+var diffTickets = function (responseTickets,storageTickets){
+	var responseIds = [];
+	var ticketIds = [];
+
+	for(i=0;i<responseTickets.length;i++){
+	    responseIds.push(responseTickets[i].ticket.id);
+	}
+
+	for(j=0;j<storageTickets.length;j++){
+	   	ticketIds.push(storageTickets[j].ticket.id)
+	}
+	//return only new ids
+	return responseIds.diff(ticketIds);
+}
+
 function checkTickets(storage) {
 	//get open+new and check response against localstorage
 	var url = 'https://'+storage.zendeskDomain+'.zendesk.com/api/v2/views/148181329/execute.json?per_page=30&page=1&sort_by=id&sort_order=desc&group_by=+&include=via_id';
@@ -50,20 +73,8 @@ function checkTickets(storage) {
 		updateBadge(String(response.data.count));
 		//if response ticket count it larger than stored count... store, badge change, and notify
 		if(storage.newTickets != 0 && storage.newTickets < response.data.count){
-	   		//hold id's of local/response to diff
-	   		var newIds = [];
-	   		var responseIds = [];
-	   		var ticketIds = [];
-				console.log
-	   		for(i=0;i<response.data.rows.length;i++){
-	   			responseIds.push(response.data.rows[i].ticket.id);
-	   		}
-
-	   		for(j=0;j<storage.ticketsArr.length;j++){
-	   			ticketIds.push(storage.ticketsArr[j].ticket.id)
-	   		}
-	   		//return only new ids
-	   		newIds = responseIds.diff(ticketIds);
+	   		
+	   		newIds = diffTickets(response.data.rows,storage.ticketsArr);
 
 	   		//on 1 new ticket, put new ticket message in notification
 	   		if(newIds.length == 1){
@@ -72,14 +83,16 @@ function checkTickets(storage) {
 	   			var announceNewTicket = createNotification(
 		   			response.data.rows[newIndex].ticket.subject,
 		   			response.data.rows[newIndex].ticket.description,
-						"one ticket"
+					"one",
+					"https://zenext.zendesk.com/agent/tickets/"+response.data.rows[newIndex].ticket.id
 	   			);
 	   		//on multiple new tickets, indicate amount in notification
 	   		} else if (newIds.length > 1) {
 		   		var announceNewTickets = createNotification(
 		   			"New Tickets Received:",
 		   			"You have "+newIds.length+" new tickets.",
-		   			"batch ticket"
+		   			"batch",
+		   			"https://zenext.zendesk.com/agent/filters/148181329"
 		   		)
 	   		}
 	   	}
