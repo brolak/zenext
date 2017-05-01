@@ -51,7 +51,8 @@
 
 hr{
   margin-top: 0px;
-margin-bottom: 2px;
+margin-bottom: 0px;
+
 }
 a:active, a:focus {
   outline: none;
@@ -119,12 +120,9 @@ button:focus {
 
 .tickets {
     color: #3F3F3F;
-    /*padding: 10px;*/
     height: 56px;
-    padding: auto;
-    /*padding-right: 108px;*/
+    width:100%;
 
-    border-bottom: 1px solid #eee;
     -webkit-transition: background-color .1s ease-out;
     -moz-transition: background-color .1s ease-out;
     -o-transition: background-color .1s ease-out;
@@ -134,7 +132,7 @@ button:focus {
     border-bottom: none;
 }
 .tickets:hover {
-    background-color: #c5e4ff;
+    background-color: #ECECEC;
     cursor: pointer;
 }
 .ticketDesc {
@@ -142,8 +140,9 @@ button:focus {
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 19ch;
-  font-size: 10px;
-  color: #666666;
+  font-size: 13px;
+  font-style: normal;
+  color: #b8b8b8;
 }
 .ticketSubject {
   white-space: nowrap;
@@ -151,10 +150,18 @@ button:focus {
   text-overflow: ellipsis;
 
   max-width: 15ch;
-  font-size: 14px;
+  font-size: 15px;
   font-style: bold;
   text-align: left;
   color: #666666;
+}
+
+.lower-desc{
+  vertical-align: -webkit-baseline-middle;
+}
+
+.upper-title{
+  vertical-align: bottom;
 }
 .ticketRequester {
 font-size: 10px;
@@ -215,9 +222,9 @@ color: #666666;
 /*Table*/
 .align-left {
   text-align: left;
-  padding: 2px;
+      padding-left: 4%;
 }
 .align-right {
   text-align: right;
-  padding: 2px;
+    padding-right: 4%;
 }

@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
-import logo from './logo.png';
+import logo from './assets/logo.png';
 
-import preloader from './preloader.gif';
+import preloader from './assets/preloader.gif';
 
-import settings from './settings.png';
-import exit from './exit.png'
+import settings from './assets/settings.png';
+import exit from './assets/exit.png'
 
 import axios from 'axios';
-import Tickets from './Tickets';
+import Tickets from './components/Tickets';
 import './App.css';
 
 class App extends Component {
@@ -79,7 +79,7 @@ class App extends Component {
 
     logout = () => {
         window.chrome.storage.local.clear();
-        window.chrome.browserAction.setBadgeText({text: "0"});
+        window.chrome.browserAction.setBadgeText({text: ''});
         this.setState({userStatus: 2})
     }
 
