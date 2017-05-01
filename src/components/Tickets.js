@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
-import logo from './logo.png';
-import OpenTicketCounter from './OpenTicketCounter';
-import TicketList from './TicketList';
-import './App.css';
+import OpenTicketCounter from './OpenTicketCounter.js';
+import TicketList from './sub-components/TicketList';
 
 class Tickets extends Component {
 
