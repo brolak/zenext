@@ -118,7 +118,13 @@ class App extends Component {
         this.setState({userStatus: 2})
     }
     //update background JS to stop sending desktop notification to this user
-    killNotifications = () => {}
+    toggleNotifications = () => {
+        window.chrome.storage.local.get(null,function(storage){
+            window.chrome.storage.local.set({
+                notificationSetting: !storage.notificationSetting
+            });
+        })
+    }
 
     //updating the default view for the user
     updateDefaultView = (viewID) => {
