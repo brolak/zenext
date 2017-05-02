@@ -1,35 +1,43 @@
 import React, {Component} from 'react';
-import logo from './assets/logo.png';
 import preloader from './assets/preloader.gif';
 import settings from './assets/settings.png';
-
 import power from './assets/power.png'
 import Toggle from 'react-toggle'
 import ReactTooltip from 'react-tooltip'
-
-//import exit from './assets/exit.png'
-
 import axios from 'axios';
 import Tickets from './components/Tickets';
+import Nav from './components/Nav';
+import NoButtonNav from './components/NoButtonNav';
+import LoginForm from './components/LoginForm';
 import './App.css';
 
 class App extends Component {
 
     constructor(props) {
         super(props);
+        //set initial state
         this.state = {
             ticketsArr: [],
             newTickets: 0,
             zendeskDomain: "",
-            //1-online, 2-offline, 3-unauthorized, 4-loading
             userStatus: 2
-        };
+            //1-online, 2-offline, 3-unauthorized, 4-loading
+        }
+        //listener for changes in local storage tickets from bg calls
+        window.chrome.storage.onChanged.addListener((NewStore) => {
+            console.log("changes in local storage" , NewStore)
+            if (NewStore.ticketsArr.newValue){
+              this.setState({
+                ticketsArr:NewStore.ticketsArr.newValue ,
+                newTickets:NewStore.ticketsArr.newValue.length
+              })
+            }
+        });
     }
-    //before component load update the state to
+
     componentWillMount = () => {
         window.chrome.storage.local.get((cb) => {
-            console.log(cb);
-            if (cb.zendeskDomain) {
+            if (cb.zendeskDomain && cb.defaultViewID) {
                 this.setState(
                   {
                     ticketsArr: cb.ticketsArr,
@@ -41,15 +49,29 @@ class App extends Component {
             }
         })
     }
-    //bind event to catch changes in local storage
+
     componentDidMount = () => {
-        window.chrome.storage.onChanged.addListener((NewStore) => {
-            console.log("changes in local storage" , NewStore)
-            if (NewStore.ticketsArr.newValue){
-              this.setState({
-                ticketsArr:NewStore.ticketsArr.newValue ,
-                newTickets:NewStore.ticketsArr.newValue.length
-              })
+        //if user isn't logged in and opens ext
+        //this will start detecting for an open zendesk tab
+        if(this.state.userStatus == 2){
+            this.detectTab();
+        }
+        
+    }
+
+    //function for detecting open zendesk tab
+    //can be used to find viewId
+    //and domain, but not implemented...
+    detectTab = () => {
+        window.chrome.tabs.getAllInWindow(null, function(cb){
+            let re = /zendesk\.com\/agent\/filters\//
+            let result = cb.filter(function ( obj ) {
+                return obj.url.match(re);
+            })[0];
+            if(result){
+                let reViewId = /\w+$/;
+                let viewId= result.url.match(reViewId)[0];
+                console.log("found tab and viewId",result,viewId);
             }
         });
     }
@@ -81,10 +103,10 @@ class App extends Component {
     createTicketList = (defaultViewID) => {
       axios.get('https://'+this.state.zendeskDomain+'.zendesk.com/api/v2/views/'+defaultViewID+'/execute.json?per_page=60&page=1&sort_by=id&sort_order=desc&group_by=+&include=via_id')
       .then((response) => {
-          //update the state
+          //set the user's state to loading
           this.setState({userStatus: 4});
           setTimeout(() => {
-              //update the state
+              //after a 'loading period' set user to online
               this.setState(
                 {
                 ticketsArr: response.data.rows,
@@ -92,15 +114,22 @@ class App extends Component {
                 userStatus: 1
                 });
           }, 4000);
-          //update the badge counter
-          window.chrome.browserAction.setBadgeText({
-              text: String(response.data.count)
-          });
+          //if ticket count is 0, empty badge
+          if(response.data.count == 0){
+               window.chrome.browserAction.setBadgeText({
+                    text: ''
+                });
+            }else {
+            //otherwise change badge to reflect ticket #
+                window.chrome.browserAction.setBadgeText({
+                    text: String(response.data.count)
+                });
+            }
           //  update the local storage
           window.chrome.storage.local.set({
             ticketsArr: this.state.ticketsArr,
-             newTickets: this.state.newTickets,
-             zendeskDomain: this.state.zendeskDomain});
+            newTickets: this.state.newTickets,
+            zendeskDomain: this.state.zendeskDomain});
       })
       .catch((error) => {
           console.log(error);
@@ -110,20 +139,21 @@ class App extends Component {
     handleSignIn = (e) => {
       e.preventDefault();
       this.createViewList(this.state.zendeskDomain);
-
     }
 
     handleInput = (e) => {
-        console.log("print")
         this.setState({zendeskDomain: e.target.value})
     }
 
+    //function for logging out
+    //clear all storage and change user status
     logout = () => {
         window.chrome.storage.local.clear();
         window.chrome.browserAction.setBadgeText({text: ''});
         this.setState({userStatus: 2})
     }
-    //update background JS to stop sending desktop notification to this user
+
+    //toggle chrome desktop notifications
     toggleNotifications = () => {
         window.chrome.storage.local.get(null,function(storage){
             window.chrome.storage.local.set({
@@ -141,87 +171,68 @@ class App extends Component {
 
     }
 
-    updateTickets = () => {
+    //switch zendesk domain
+    changeDomain = (domain) => {
 
     }
 
 
+    //render function for user online status
+    renderOnline() {
+        return (
+            <div className="container">
+                <Nav logout={this.logout}/>
+                <Tickets newTickets={this.state.newTickets} tickets={this.state.ticketsArr} domain={this.state.zendeskDomain}/>
+            </div>
+        )
+    }
+
+    //render function for user offline status
+    renderOffline(){
+        return (
+            <div className="container">
+                <NoButtonNav/>
+                <LoginForm handleInput={this.handleInput} handleSignIn={this.handleSignIn}/>
+            </div>
+        )
+    }
+
+    //render function for user unauthorized status
+    renderUnauthorized() {
+        return (
+            <div className="container">
+                <Nav logout={this.logout}/>
+                <div >There was a problem logging in, please check your zendesk account is logged in and then try again
+                </div>
+            </div>
+        )
+    }
+
+    //render function for user loading status
+    renderLoading(){
+        return (
+            <div className="container">
+                <NoButtonNav/>
+                <div className="preloader">
+                <img className="preloaderImg" src={preloader}/>
+                    <div className="preloaderText">
+                    LOADING YOUR ZENDESK ACCOUNT
+                    </div>
+                </div>
+            </div>  
+        )
+    }
+
     render() {
-        //check user is logged in
+        //main render- according to user status
         if (this.state.userStatus == 1) {
-            return (
-                <div className="container">
-                    <div className="row">
-
-                        <div className="col-md-12 navbar">
-                            <table width="100%">
-                                <tr>
-                                    <td className="align-left"><img src={logo} className="App-logo" alt="logo"/></td>
-                                    <td className="align-right">
-                                            <ReactTooltip place="bottom" type="info" effect="solid" class="toggle"/>
-                                            <span align="left" data-tip="Toggle notification ON or OFF">
-                                            <Toggle defaultChecked={this.state.notifyme} onChange={this.handleBaconChange} />
-</span>
-                                      &nbsp;&nbsp;
-                                      <a href=""><img src={power} className="exit-logo" data-tip="Logout" onClick={this.logout} /></a>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-
-                        <hr/>
-                        <Tickets newTickets={this.state.newTickets} tickets={this.state.ticketsArr} domain={this.state.zendeskDomain}/>
-                    </div>
-                </div>
-            )
-        }
-        if (this.state.userStatus == 2) {
-            return (
-
-                <div className="container">
-                    <div className="row">
-                        <div className="col-md-12 navbar" data-tip="hello world">
-                            <img src={logo} className="App-logo" alt="logo"/>
-                        </div>
-                        <hr/>
-                        <h3 className="title">Hello There Agent</h3>
-                        <p className="intro">
-                            Please sign in with your Zendesk account to start getting real time notification on new tickets
-                        </p>
-
-                    </div>
-                    <div className="row">
-                        <div className="col-md-12 input">
-                            <input type="text" className="inputDomain" onChange={this.handleInput} placeholder=" Domain Name"></input>
-                            <span className="intro">.zendesk.com</span>
-                        </div>
-                    </div>
-                    <br/>
-
-                    <div className="row">
-                        <div className="col-md-12 submit">
-                            <button className="myButton" onClick={this.handleSignIn}>
-                                Sign In</button>
-                        </div>
-                    </div>
-                    <br/>
-                    <hr/>
-
-                </div>
-            );
-        }
-        if (this.state.userStatus == 3) {
-            return (
-                <div >oops seems like you have problem logging in, please check your zendesk account is logged in and then try again</div>
-            )
-        }
-        if (this.state.userStatus == 4) {
-            return (
-                    <div className="preloader">
-                      <img className="preloaderImg" src={preloader}/>
-                      <div className="preloaderText">LOADING YOUR ZENDESK ACCOUNT</div>
-                    </div>
-            )
+            return this.renderOnline()
+        } else if (this.state.userStatus == 2) {
+            return this.renderOffline()
+        } else if (this.state.userStatus == 3) {
+            return this.renderUnauthorized()
+        } else if (this.state.userStatus == 4) {
+            return this.renderLoading()
         }
     }
 }
