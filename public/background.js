@@ -11,7 +11,7 @@ var checkLogin = function() {
 	//if there is a domain in the local storage
 	chrome.storage.local.get(null,function(storage){
 			//call to refresh tickets
-	   		if(storage.zendeskDomain){
+	   		if(storage.zendeskDomain && storage.defaultViewID){
 	   			checkTickets(storage);
 	   		} else {
 	   		//otherwise clear storage and keep the badge empty
