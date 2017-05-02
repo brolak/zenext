@@ -97,7 +97,7 @@ var checkTickets = function (storage) {
 			updateBadge(response.data.count);
 		}
 		//check if user wants notifications
-		if(storage.notificationSetting){
+		if(true){
 			//if response ticket count it larger than stored count, notify accordingly
 			if(storage.newTickets != 0 && storage.newTickets < response.data.count){
 
