@@ -45,6 +45,7 @@ var diffTickets = function (responseTickets,storageTickets){
 	return responseIds.diff(ticketIds);
 }
 
+
 //function for finding existing/opening new tab from notification
 var findAndOpenTab = function(ticketId) {
 	chrome.tabs.getAllInWindow(null, function(cb){
@@ -79,8 +80,7 @@ var findAndOpenTab = function(ticketId) {
 
 var checkTickets = function (storage) {
 	//get open+new and check response against localstorage
-	/*VIEWID VAR*/
-	var url = 'https://'+storage.zendeskDomain+'.zendesk.com/api/v2/views/148181329/execute.json?per_page=30&page=1&sort_by=id&sort_order=desc&group_by=+&include=via_id';
+	var url = 'https://'+storage.zendeskDomain+'.zendesk.com/api/v2/views/'+storage.defaultViewID+'/execute.json?per_page=30&page=1&sort_by=id&sort_order=desc&group_by=+&include=via_id';
 
 	axios.get(url)
 	.then(function (response) {
@@ -94,6 +94,7 @@ var checkTickets = function (storage) {
 
 		//if response ticket count it larger than stored count, notify accordingly
 		if(storage.newTickets != 0 && storage.newTickets < response.data.count){
+
 		//check if there is a stored tab id and it is accessable otherwise open new tab
 		//store array of new ids
 		   	var newIds = diffTickets(response.data.rows,storage.ticketsArr);
@@ -101,6 +102,7 @@ var checkTickets = function (storage) {
 		   	if(newIds.length == 1){
 		   		var newIndex = response.data.rows.findIndex(result => result.ticket.id == newIds[0]);
 		//first get ticket index based on new id
+
 				console.log("new ticket",response.data.rows[newIndex].ticket);
 		//set notification contents
 				var options = {
@@ -117,10 +119,12 @@ var checkTickets = function (storage) {
 						console.log("listener callback",cb);
 						findAndOpenTab(response.data.rows[newIndex].ticket.id)
 					})
+
 				})	
 		//on multiple new tickets
 		   	} else if (newIds.length > 1) {
 		//set notification contents
+
 				var options = {
 					type: "basic",
 					title: "New Tickets Received",

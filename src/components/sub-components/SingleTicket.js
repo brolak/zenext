@@ -26,7 +26,6 @@ class SingleTicket extends Component {
 
     click = () => {
         this.findAndOpenTab(this.props.id);
-      // window.chrome.tabs.create({ url: 'http://'+this.props.domain+'zenext.zendesk.com/agent/tickets/'+this.props.id });
     }
 
     render() {

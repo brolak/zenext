@@ -1,11 +1,8 @@
 import React, {Component} from 'react';
 import logo from './assets/logo.png';
-
 import preloader from './assets/preloader.gif';
-
 import settings from './assets/settings.png';
 import exit from './assets/exit.png'
-
 import axios from 'axios';
 import Tickets from './components/Tickets';
 import './App.css';
@@ -22,17 +19,23 @@ class App extends Component {
             userStatus: 2
         };
     }
-
+    //before component load update the state to
     componentWillMount = () => {
         window.chrome.storage.local.get((cb) => {
             console.log(cb);
             if (cb.zendeskDomain) {
-                this.setState({ticketsArr: cb.ticketsArr, newTickets: cb.newTickets, userStatus: 1})
-
+                this.setState(
+                  {
+                    ticketsArr: cb.ticketsArr,
+                    newTickets: cb.newTickets,
+                    userStatus: 1,
+                    zendeskDomain:cb.zendeskDomain,
+                    defaultViewID:cb.defaultViewID,
+                  })
             }
         })
     }
-
+    //bind event to catch changes in local storage
     componentDidMount = () => {
         window.chrome.storage.onChanged.addListener((NewStore) => {
             console.log("changes in local storage" , NewStore)
@@ -42,34 +45,66 @@ class App extends Component {
                 newTickets:NewStore.ticketsArr.newValue.length
               })
             }
-
         });
     }
 
-    handleSignIn = (e) => {
-        console.log("sign in")
-        e.preventDefault();
-        console.log("domain:", this.state.zendeskDomain)
-        axios.get('https://'+this.state.zendeskDomain+'.zendesk.com/api/v2/views/148181329/execute.json?per_page=30&page=1&sort_by=id&sort_order=desc&group_by=+&include=via_id').then((response) => {
-            console.log(response);
-            //update the state
-            this.setState({userStatus: 4});
-            setTimeout(() => {
-                //update the state
-                this.setState({ticketsArr: response.data.rows, newTickets: response.data.count, userStatus: 1});
-                console.log("state", this.state.ticketsArr , this.userStatus)
-            }, 4000);
-
-            //update the badge counter
-            window.chrome.browserAction.setBadgeText({
-                text: String(response.data.count)
+    //making an API call and creating the view list array
+    createViewList = (domain) => {
+      //set up the views list in local storage
+      axios.get('https://'+domain+'.zendesk.com/api/v2/views/compact')
+      .then((response) => {
+          console.log("api view list" ,response);
+          this.setState(
+            {
+              viewListArr: response.data.views,
+              defaultViewID:response.data.views[0].id
+            })
+            //set the local storage with the default view id
+            window.chrome.storage.local.set({
+              defaultViewID:response.data.views[0].id,
+              viewListArr:response.data.views
             });
-            //  update the local storage
-            window.chrome.storage.local.set({ticketsArr: this.state.ticketsArr, newTickets: this.state.newTickets, zendeskDomain: this.state.zendeskDomain});
-        }).catch((error) => {
-            console.log(error);
-            this.setState({userStatus: 3})
-        });
+            this.createTicketList(response.data.views[0].id);
+      }).catch((error) => {
+          console.log(error);
+          this.setState({userStatus: 3})
+      });
+    }
+
+    //making an API call and creating the ticket list array
+    createTicketList = (defaultViewID) => {
+      axios.get('https://'+this.state.zendeskDomain+'.zendesk.com/api/v2/views/'+defaultViewID+'/execute.json?per_page=60&page=1&sort_by=id&sort_order=desc&group_by=+&include=via_id')
+      .then((response) => {
+          //update the state
+          this.setState({userStatus: 4});
+          setTimeout(() => {
+              //update the state
+              this.setState(
+                {
+                ticketsArr: response.data.rows,
+                newTickets: response.data.count,
+                userStatus: 1
+                });
+          }, 4000);
+          //update the badge counter
+          window.chrome.browserAction.setBadgeText({
+              text: String(response.data.count)
+          });
+          //  update the local storage
+          window.chrome.storage.local.set({
+            ticketsArr: this.state.ticketsArr,
+             newTickets: this.state.newTickets,
+             zendeskDomain: this.state.zendeskDomain});
+      })
+      .catch((error) => {
+          console.log(error);
+      });
+    }
+
+    handleSignIn = (e) => {
+      e.preventDefault();
+      this.createViewList(this.state.zendeskDomain);
+
     }
 
     handleInput = (e) => {
@@ -82,8 +117,17 @@ class App extends Component {
         window.chrome.browserAction.setBadgeText({text: ''});
         this.setState({userStatus: 2})
     }
+    //update background JS to stop sending desktop notification to this user
+    killNotifications = () => {}
 
-    settings = () => {}
+    //updating the default view for the user
+    updateDefaultView = (viewID) => {
+
+    }
+
+    updateTickets = () => {
+
+    }
 
     render() {
         //check user is logged in
