@@ -3,8 +3,29 @@ import TimeAgo from 'react-timeago';
 
 class SingleTicket extends Component {
 
+    findAndOpenTab = (ticketId) => {
+        window.chrome.tabs.getAllInWindow(null, function(cb){
+            const re = /zendesk\.com\/agent\//
+            let tab = cb.filter(function ( obj ) {
+                return obj.url.match(re);
+            })[0];
+            //return first matching tab based on url
+            //if there is one update that tab's url based on ticket id
+            if(tab){
+                window.chrome.tabs.update(tab.id, {url:"https://zenext.zendesk.com/agent/tickets/"+ticketId, active:true}, function (cb){
+                    window.chrome.windows.update(cb.windowId, {focused: true});
+                })  
+            } else {
+            //otherwise open new tab base on ticket id
+                window.chrome.tabs.create({url:"https://zenext.zendesk.com/agent/tickets/"+ticketId, active:true}, function (cb){
+                    window.chrome.windows.update(cb.windowId, {focused: true});
+                })
+            }
+        })
+    }
+
     click = () => {
-      window.chrome.tabs.create({ url: 'http://'+this.props.domain+'.zendesk.com/agent/tickets/'+this.props.id });
+        this.findAndOpenTab(this.props.id);
     }
 
     render() {
