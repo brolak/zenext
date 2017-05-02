@@ -1,5 +1,9 @@
 import React, {Component} from 'react';
 import preloader from './assets/preloader.gif';
+import settings from './assets/settings.png';
+import power from './assets/power.png'
+import Toggle from 'react-toggle'
+import ReactTooltip from 'react-tooltip'
 import axios from 'axios';
 import Tickets from './components/Tickets';
 import Nav from './components/Nav';
@@ -158,6 +162,10 @@ class App extends Component {
         })
     }
 
+
+
+    settings = () => {}
+
     //updating the default view for the user
     updateDefaultView = (viewID) => {
 
@@ -167,6 +175,7 @@ class App extends Component {
     changeDomain = (domain) => {
 
     }
+
 
     //render function for user online status
     renderOnline() {
