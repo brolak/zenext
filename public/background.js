@@ -1,6 +1,11 @@
 //badge set-up
 chrome.browserAction.setBadgeBackgroundColor({ color: '#D74A38' });
 
+//initial settings
+chrome.storage.local.set({
+    notificationSetting: true
+});            
+
 //function for updating extension badge
 var updateBadge = function(number){
 	chrome.browserAction.setBadgeText({text: String(number)});
@@ -91,56 +96,57 @@ var checkTickets = function (storage) {
 		//otherwise change badge to reflect tickets
 			updateBadge(response.data.count);
 		}
+		//check if user wants notifications
+		if(storage.notificationSetting){
+			//if response ticket count it larger than stored count, notify accordingly
+			if(storage.newTickets != 0 && storage.newTickets < response.data.count){
 
-		//if response ticket count it larger than stored count, notify accordingly
-		if(storage.newTickets != 0 && storage.newTickets < response.data.count){
+			//check if there is a stored tab id and it is accessable otherwise open new tab
+			//store array of new ids
+			   	var newIds = diffTickets(response.data.rows,storage.ticketsArr);
+			//on 1 new ticket, put new ticket message in notification
+			   	if(newIds.length == 1){
+			   		var newIndex = response.data.rows.findIndex(result => result.ticket.id == newIds[0]);
+			//first get ticket index based on new id
 
-		//check if there is a stored tab id and it is accessable otherwise open new tab
-		//store array of new ids
-		   	var newIds = diffTickets(response.data.rows,storage.ticketsArr);
-		//on 1 new ticket, put new ticket message in notification
-		   	if(newIds.length == 1){
-		   		var newIndex = response.data.rows.findIndex(result => result.ticket.id == newIds[0]);
-		//first get ticket index based on new id
+					console.log("new ticket",response.data.rows[newIndex].ticket);
+			//set notification contents
+					var options = {
+						type: "basic",
+						title: response.data.rows[newIndex].ticket.subject,
+						message: response.data.rows[newIndex].ticket.description,
+						iconUrl: "./logo_small.png"
+					}
 
-				console.log("new ticket",response.data.rows[newIndex].ticket);
-		//set notification contents
-				var options = {
-					type: "basic",
-					title: response.data.rows[newIndex].ticket.subject,
-					message: response.data.rows[newIndex].ticket.description,
-					iconUrl: "./logo_small.png"
-				}
+					chrome.notifications.create(String(response.data.rows[newIndex].ticket.id),options,function(cb){
+						chrome.notifications.onClicked.addListener(function (cb){
+			//create a notification with a click listener that updates existing or creates new tab 
+			//from url to ticket page
+							console.log("listener callback",cb);
+							findAndOpenTab(response.data.rows[newIndex].ticket.id)
+						})
 
-				chrome.notifications.create(String(response.data.rows[newIndex].ticket.id),options,function(cb){
-					chrome.notifications.onClicked.addListener(function (cb){
-		//create a notification with a click listener that updates existing or creates new tab 
-		//from url to ticket page
-						console.log("listener callback",cb);
-						findAndOpenTab(response.data.rows[newIndex].ticket.id)
-					})
+					})	
+			//on multiple new tickets
+			   	} else if (newIds.length > 1) {
+			//set notification contents
 
-				})	
-		//on multiple new tickets
-		   	} else if (newIds.length > 1) {
-		//set notification contents
-
-				var options = {
-					type: "basic",
-					title: "New Tickets Received",
-					message: "You have "+newIds.length+" new tickets.",
-					iconUrl: "./logo_small.png"
-				}
-				chrome.notifications.create("newTicket",options,function(cb){
-					chrome.notifications.onClicked.addListener(function (cb){
-		//create a notification with a click listener that updates existing or creates new tab 
-		//from url to agent dashboard
-						findAndOpenTab(null)
-					})
-				})	
-		   	}
+					var options = {
+						type: "basic",
+						title: "New Tickets Received",
+						message: "You have "+newIds.length+" new tickets.",
+						iconUrl: "./logo_small.png"
+					}
+					chrome.notifications.create("newTicket",options,function(cb){
+						chrome.notifications.onClicked.addListener(function (cb){
+			//create a notification with a click listener that updates existing or creates new tab 
+			//from url to agent dashboard
+							findAndOpenTab(null)
+						})
+					})	
+			   	}
+			}
 		}
-
 		//always change local storage to reflect response
 		chrome.storage.local.set({'newTickets': response.data.count,'ticketsArr': response.data.rows},function(){
 		    //it's not just gonna happen like that
