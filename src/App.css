@@ -102,6 +102,11 @@ input::placeholder {
 	background-color:#3399ff;
   color:#ffffff
 }
+
+.blue {
+  background-color:#3399ff;
+  color:#ffffff
+}
 .myButton:active {
 	position:relative;
 	top:1px;
