@@ -9,15 +9,12 @@ class Nav extends Component {
 
   constructor(props) {
       super(props);
-        this.state ={
-          notificationSetting : ''
-      }
+        this.state ={}
     }
-
     //setting the state to be aligned with the local storage on notification settings
-    componentWillMount = () => {
+    componentDidMount = () => {
       window.chrome.storage.local.get((storage) => {
-            this.setState({notificationSetting: storage.notificationSetting})
+              this.setState({notificationSetting: storage.notificationSetting})
       })
     }
 
@@ -28,15 +25,14 @@ class Nav extends Component {
                 notificationSetting: !this.state.notificationSetting
             });
       this.setState({notificationSetting: !this.state.notificationSetting});
-
     }
-
 
     render() {
       let buttons;
+      console.log("notification" , this.state.notificationSetting)
         if (this.props.hasButtons){
           buttons= (<td className="align-right">
-                      <img src={(this.state.notificationSetting) ? mute : muted} className="settings-logo" title={(this.state.notificationSetting) ? "Mute notification" : "UnMute notifications"} onClick={this.toggleNotifications}/>
+                      <img src={(this.state.notificationSetting) ? mute : muted} className="settings-logo" title={(this.state.notificationSetting) ? "Mute notifications" : "Un-Mute notifications"} onClick={this.toggleNotifications}/>
                       <img src={exit} className="exit-logo" alt="Sign out" onClick={this.props.logout}/>
                     </td>)
                   }
