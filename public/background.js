@@ -121,7 +121,7 @@ var checkTickets = function (storage) {
 
 		//check if user wants notifications
 
-		if(storage.defaultViewID){
+		if(storage.notificationSetting){
 			//if response ticket count it larger than stored count, notify accordingly
 
 			if(storage.newTickets != 0 && storage.newTickets < response.data.count){
