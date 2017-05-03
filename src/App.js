@@ -43,6 +43,7 @@ class App extends Component {
                     userStatus: 1,
                     zendeskDomain:cb.zendeskDomain,
                     defaultViewID:cb.defaultViewID,
+                    requestersArr: cb.requestersArr
                   })
             }
         })
@@ -117,7 +118,8 @@ class App extends Component {
                 {
                 ticketsArr: response.data.rows,
                 newTickets: response.data.count,
-                userStatus: 1
+                userStatus: 1,
+                requestersArr: response.data.users
                 });
           }, 4000);
           //if ticket count is 0, empty badge
@@ -136,6 +138,7 @@ class App extends Component {
             ticketsArr: this.state.ticketsArr,
             newTickets: this.state.newTickets,
             zendeskDomain: this.state.zendeskDomain,
+            requestersArr: this.state.requestersArr,
             notificationSetting:true
           });
       })
@@ -179,7 +182,12 @@ class App extends Component {
     renderOnline() {
         return (
             <div className="onlinePage">
-                <Tickets newTickets={this.state.newTickets} tickets={this.state.ticketsArr} domain={this.state.zendeskDomain}/>
+                <Tickets
+                  newTickets={this.state.newTickets}
+                   tickets={this.state.ticketsArr}
+                   domain={this.state.zendeskDomain}
+                   requestersArr={this.state.requestersArr}
+                   />
             </div>
         )
     }
@@ -187,7 +195,9 @@ class App extends Component {
     //render function for user offline status
     renderOffline(){
         return (
-                <LoginForm handleInput={this.handleInput} handleSignIn={this.handleSignIn}/>
+                <LoginForm
+                  handleInput={this.handleInput}
+                  handleSignIn={this.handleSignIn}/>
         )
     }
 
