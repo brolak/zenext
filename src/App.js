@@ -58,20 +58,28 @@ class App extends Component {
     }
 
     //function for detecting open zendesk tab
-    //can be used to find viewId
-    //and domain, but not implemented...
+    //and retrieving viewid and domain
     detectTab = () => {
-        window.chrome.tabs.getAllInWindow(null, function(cb){
-            let re = /zendesk\.com\/agent\/filters\//
-            let result = cb.filter(function ( obj ) {
-                return obj.url.match(re);
-            })[0];
-            if(result){
-                let reViewId = /\w+$/;
-                let viewId= result.url.match(reViewId)[0];
-                console.log("found tab and viewId",result,viewId);
+    window.chrome.tabs.getAllInWindow(null, function(cb){
+        let re = /zendesk\.com\/agent\/filters\//
+        let result = cb.filter(function ( obj ) {
+            return obj.url.match(re);
+        })[0];
+        if(result){
+          let reViewId = /\w+$/;
+          let viewID= result.url.match(reViewId)[0];
+          if(viewID){
+            let splitting = result.url.split("/")[2];
+            let domain = splitting.split(".")[0];
+            console.log("found tab, viewId,and domain",result,viewID,domain);
+            return{
+              tab: result,
+              viewID: viewID,
+              zendeskDomain: domain
             }
-        });
+          }
+        }
+      });
     }
 
     //making an API call and creating the view list array
