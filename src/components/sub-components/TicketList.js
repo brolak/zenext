@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import SingleTicket from './SingleTicket';
+import noTicketsAnimation from './rocketGif.gif'
 
 class TicketList extends Component {
     render() {
@@ -26,7 +27,13 @@ class TicketList extends Component {
             return (
                 <div>
                   <br />
-                    <span text-align="center">No tickets - all good :)</span>
+
+                      <div className="preloader">
+                        <div className="preloaderText">
+                        No tickets.. you rock!
+                        </div>
+                      <img className="rocketImage" src={noTicketsAnimation}/>
+                      </div>
                 </div>
             )
         } else {
@@ -44,3 +51,4 @@ class TicketList extends Component {
     }
 }
 export default TicketList;
+// <span text-align="center">No tickets - all good :)</span>
