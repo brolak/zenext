@@ -56,7 +56,7 @@ class App extends Component {
         if(this.state.userStatus == 2){
             this.detectTab();
         }
-        
+
     }
 
     //function for detecting open zendesk tab
@@ -180,7 +180,7 @@ class App extends Component {
     //render function for user online status
     renderOnline() {
         return (
-            <div className="container">
+            <div className="onlinePage">
                 <Nav logout={this.logout}/>
                 <Tickets newTickets={this.state.newTickets} tickets={this.state.ticketsArr} domain={this.state.zendeskDomain}/>
             </div>
@@ -219,7 +219,7 @@ class App extends Component {
                     LOADING YOUR ZENDESK ACCOUNT
                     </div>
                 </div>
-            </div>  
+            </div>
         )
     }
 

@@ -20,8 +20,7 @@
   width: 20px;
 }
 .exit-logo {
-  height: 20px;
-  padding-bottom: 6px;
+  height: 19px;
 
 }
 .text-title{
@@ -119,7 +118,10 @@ button:focus {
 }
 
 /* Tickets */
-
+.ticketsContainer{
+  padding-left: 14px;
+padding-right: 14px;
+}
 .tickets {
     color: #3F3F3F;
     height: 56px;
