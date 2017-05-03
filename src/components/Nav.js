@@ -10,28 +10,25 @@ class Nav extends Component {
   constructor(props) {
       super(props);
         this.state ={
-          notificationSetting : true
+          notificationSetting : ''
       }
     }
 
     //setting the state to be aligned with the local storage on notification settings
-    // componentWillMount = () => {
-    //   window.chrome.storage.local.get(null,function(storage){
-    //     if (storage.notificationSetting != this.state.notificationSetting){
-    //         this.setState({notificationSetting: storage.notificationSetting})
-    //     }
-    //   })
-    // }
+    componentWillMount = () => {
+      window.chrome.storage.local.get((storage) => {
+            this.setState({notificationSetting: storage.notificationSetting})
+      })
+    }
 
      //toggle chrome desktop notifications
     toggleNotifications = () => {
       console.log("tetet")
-      this.setState({notificationSetting: !this.state.notificationSetting})
-        // window.chrome.storage.local.get(null,function(storage){
-        //     window.chrome.storage.local.set({
-        //         notificationSetting: !storage.notificationSetting
-        //     });
-        // })
+      window.chrome.storage.local.set({
+                notificationSetting: !this.state.notificationSetting
+            });
+      this.setState({notificationSetting: !this.state.notificationSetting});
+
     }
 
 
