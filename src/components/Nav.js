@@ -9,12 +9,14 @@ class Nav extends Component {
 
   constructor(props) {
       super(props);
-        this.state ={}
+        this.state = {notificationSetting: true}
     }
     //setting the state to be aligned with the local storage on notification settings
     componentDidMount = () => {
       window.chrome.storage.local.get((storage) => {
-              this.setState({notificationSetting: storage.notificationSetting})
+        if (storage.zendeskDomain){
+          this.setState({notificationSetting: storage.notificationSetting})
+        }
       })
     }
 
