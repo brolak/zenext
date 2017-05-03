@@ -36,7 +36,7 @@ class Nav extends Component {
       let buttons;
         if (this.props.hasButtons){
           buttons= (<td className="align-right">
-                      <img src={(this.state.notificationSetting) ? mute : muted} className="settings-logo" alt="settings" onClick={this.toggleNotifications}/>
+                      <img src={(this.state.notificationSetting) ? mute : muted} className="settings-logo" title={(this.state.notificationSetting) ? "Mute notification" : "UnMute notifications"} onClick={this.toggleNotifications}/>
                       <img src={exit} className="exit-logo" alt="Sign out" onClick={this.props.logout}/>
                     </td>)
                   }

@@ -119,10 +119,7 @@ button:focus {
 }
 
 /* Tickets */
-.ticketsContainer{
-  padding-left: 14px;
-padding-right: 14px;
-}
+
 .tickets {
     color: #3F3F3F;
     height: 56px;
