@@ -1,11 +1,6 @@
 //badge set-up
 chrome.browserAction.setBadgeBackgroundColor({ color: '#D74A38' });
 
-//initial settings - notifications...
-chrome.storage.local.set({
-    notificationSetting: true
-});
-
 //function for updating extension badge
 var updateBadge = function(number){
 	chrome.browserAction.setBadgeText({text: String(number)});
@@ -126,7 +121,7 @@ var checkTickets = function (storage) {
 
 		//check if user wants notifications
 
-		if(storage.notificationSetting){
+		if(storage.defaultViewID){
 			//if response ticket count it larger than stored count, notify accordingly
 
 			if(storage.newTickets != 0 && storage.newTickets < response.data.count){
@@ -138,11 +133,10 @@ var checkTickets = function (storage) {
 					var newIndex = response.data.rows.findIndex(result => result.ticket.id == newIds[0]);
 		//use that ticket's info in notification
 					createNotification({
-						ticketID: response.data.rows[newIndex].ticket.id,
-						id: response.data.rows[newIndex].ticket.id,
+						ticketID: String(response.data.rows[newIndex].ticket.id),
+						id: "single",
 						title: response.data.rows[newIndex].ticket.subject,
 						message: response.data.rows[newIndex].ticket.description,
-
 						viewID: storage.defaultViewID
 					});
 		//on multiple new tickets
@@ -152,7 +146,7 @@ var checkTickets = function (storage) {
 						ticketID: null,
 						id: "multiple",
 						title: "New Tickets Received",
-						message: "You have "+numIds.length+" new tickets.",
+						message: "You have "+newIds.length+" new tickets.",
 						viewID: storage.defaultViewID
 					});
 				}
