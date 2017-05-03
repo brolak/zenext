@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import SingleTicket from './SingleTicket';
 import noTicketsAnimation from './rocketGif.gif'
 
+
 class TicketList extends Component {
     render() {
 

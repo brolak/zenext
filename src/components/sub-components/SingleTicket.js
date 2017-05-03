@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import TimeAgo from 'react-timeago';
+import ReactTooltip from 'react-tooltip';
+
 
 class SingleTicket extends Component {
 
@@ -37,7 +39,9 @@ class SingleTicket extends Component {
                         <td className="ticketRequester align-right">{this.props.requester}</td>
                     </tr>
                     <tr className="lower-desc">
-                        <td className="ticketDesc align-left">{this.props.description}</td>
+                        <td className="ticketDesc align-left" data-tip={this.props.description}>{this.props.description}
+                        <ReactTooltip />
+                        </td>
                         <td className="ticketTime align-right"><TimeAgo date={this.props.created_at}/></td>
                     </tr>
                 </table>
