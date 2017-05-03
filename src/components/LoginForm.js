@@ -6,6 +6,7 @@ class LoginForm extends Component {
         super();
         this.state = {};
     }
+
     _handleKeyPress = (e) => {
         if (e.key === 'Enter') {
             this.setState({clicked: true})
@@ -14,6 +15,7 @@ class LoginForm extends Component {
             }, 100);
         }
     }
+
     render() {
         return (
             <div>
@@ -28,7 +30,7 @@ class LoginForm extends Component {
 
                 <div className="row">
                     <div className="col-md-12 input">
-                        <input type="text" className="inputDomain" onChange={this.props.handleInput} onKeyPress={this._handleKeyPress} placeholder="Zendesk Domain"></input>
+                        <input ref={this.props.detectTab} type="text" className="inputDomain" onChange={this.props.handleInput} onKeyPress={this._handleKeyPress} placeholder="Zendesk Domain"></input>
                         <span className="intro">.zendesk.com</span>
                     </div>
                 </div>
