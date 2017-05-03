@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import SingleTicket from './SingleTicket';
 
+
 class TicketList extends Component {
     render() {
 
