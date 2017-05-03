@@ -209,7 +209,12 @@ color: #666666;
   font-family: 'Assistant', sans-serif;
   color: #666666;
 }
-
+.noTickets .counterBorder {
+  border-color: #d8d8d8;
+}
+.noTickets .openTicketCounterInteger {
+  color: #d8d8d8;
+}
 /*List*/
 .itemList {
   margin-right: 5px;
