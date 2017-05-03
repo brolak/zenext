@@ -21,6 +21,7 @@
 }
 .exit-logo {
   height: 19px;
+  padding-left: 14px;
 
 }
 .text-title{
@@ -101,6 +102,11 @@ input::placeholder {
 	background-color:#3399ff;
   color:#ffffff
 }
+
+.blue {
+  background-color:#3399ff;
+  color:#ffffff
+}
 .myButton:active {
 	position:relative;
 	top:1px;
@@ -118,10 +124,7 @@ button:focus {
 }
 
 /* Tickets */
-.ticketsContainer{
-  padding-left: 14px;
-padding-right: 14px;
-}
+
 .tickets {
     color: #3F3F3F;
     height: 56px;

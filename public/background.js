@@ -4,7 +4,7 @@ chrome.browserAction.setBadgeBackgroundColor({ color: '#D74A38' });
 //initial settings - notifications...
 chrome.storage.local.set({
     notificationSetting: true
-});            
+});
 
 //function for updating extension badge
 var updateBadge = function(number){
@@ -70,7 +70,7 @@ var findAndOpenTab = function(ticketId,viewID) {
 	//if it's just one ticket, update existing tab to ticket url and open window/tab
 				chrome.tabs.update(tab.id, {url:"https://zenext.zendesk.com/agent/tickets/"+ticketId, active:true}, function (cb){
 					chrome.windows.update(cb.windowId, {focused: true});
-				})	
+				})
 			}
 		} else {
 	//if tab not found
@@ -125,8 +125,10 @@ var checkTickets = function (storage) {
 		}
 
 		//check if user wants notifications
-		if(true){
-		//if response tickets are more than stored tickets
+
+		if(storage.notificationSetting){
+			//if response ticket count it larger than stored count, notify accordingly
+
 			if(storage.newTickets != 0 && storage.newTickets < response.data.count){
 		//first find out how many new tickets there are,
 				var newIds = diffTickets(response.data.rows,storage.ticketsArr);
@@ -140,6 +142,7 @@ var checkTickets = function (storage) {
 						id: response.data.rows[newIndex].ticket.id,
 						title: response.data.rows[newIndex].ticket.subject,
 						message: response.data.rows[newIndex].ticket.description,
+
 						viewID: storage.defaultViewID
 					});
 		//on multiple new tickets
