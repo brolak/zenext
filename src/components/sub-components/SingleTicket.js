@@ -12,12 +12,12 @@ class SingleTicket extends Component {
             //return first matching tab based on url
             //if there is one update that tab's url based on ticket id
             if(tab){
-                window.chrome.tabs.update(tab.id, {url:"https://zenext.zendesk.com/agent/tickets/"+ticketId, active:true}, function (cb){
+                window.chrome.tabs.update(tab.id, {url:"https://"+this.props.domain+".zendesk.com/agent/tickets/"+ticketId, active:true}, function (cb){
                     window.chrome.windows.update(cb.windowId, {focused: true});
-                })  
+                })
             } else {
             //otherwise open new tab base on ticket id
-                window.chrome.tabs.create({url:"https://zenext.zendesk.com/agent/tickets/"+ticketId, active:true}, function (cb){
+                window.chrome.tabs.create({url:"https://"+this.props.domain+".zendesk.com/agent/tickets/"+ticketId, active:true}, function (cb){
                     window.chrome.windows.update(cb.windowId, {focused: true});
                 })
             }
