@@ -49,40 +49,6 @@ class App extends Component {
         })
     }
 
-    componentDidMount = () => {
-        //if user isn't logged in and opens ext
-        //this will start detecting for an open zendesk tab
-        if(this.state.userStatus == 2){
-            this.detectTab();
-        }
-
-    }
-
-    //function for detecting open zendesk tab
-    //and retrieving viewid and domain
-    detectTab = () => {
-    window.chrome.tabs.getAllInWindow(null, function(cb){
-        let re = /zendesk\.com\/agent\/filters\//
-        let result = cb.filter(function ( obj ) {
-            return obj.url.match(re);
-        })[0];
-        if(result){
-          let reViewId = /\w+$/;
-          let viewID= result.url.match(reViewId)[0];
-          if(viewID){
-            let splitting = result.url.split("/")[2];
-            let domain = splitting.split(".")[0];
-            console.log("found tab, viewId,and domain",result,viewID,domain);
-            return{
-              tab: result,
-              viewID: viewID,
-              zendeskDomain: domain
-            }
-          }
-        }
-      });
-    }
-
     //making an API call and creating the view list array
     createViewList = (domain) => {
       //set up the views list in local storage
@@ -147,9 +113,32 @@ class App extends Component {
       });
     }
 
+    //function for detecting open zendesk tab
+    detectTab = (input) => {
+        var that = this;
+        window.chrome.tabs.getAllInWindow(null, function(cb){
+            let re = /zendesk\.com\/agent\/filters\//
+            let result = cb.filter(function ( obj ) {
+                return obj.url.match(re);
+            })[0];
+    //and retrieving viewid and domain
+            if(result){
+                let reViewId = /\w+$/;
+                let viewID= result.url.match(reViewId)[0];
+                if(viewID){
+                    let splitting = result.url.split("/")[2];
+                    let domain = splitting.split(".")[0];
+    //then sends domain info to input/state for login
+                    input.value = domain;
+                    that.setState({zendeskDomain: domain});
+                }
+            }
+        });
+    }
+
     handleSignIn = (e) => {
       e.preventDefault();
-
+      console.log(this.state);
       this.createViewList(this.state.zendeskDomain);
     }
 
@@ -195,9 +184,12 @@ class App extends Component {
     //render function for user offline status
     renderOffline(){
         return (
-                <LoginForm
-                  handleInput={this.handleInput}
-                  handleSignIn={this.handleSignIn}/>
+
+                <LoginForm detectTab={this.detectTab} 
+                  handleInput={this.handleInput} 
+                   handleSignIn={this.handleSignIn} 
+                   userStatus={this.state.userStatus}/>
+
         )
     }
 
