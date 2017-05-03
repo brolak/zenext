@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
 import preloader from './assets/preloader.gif';
-import settings from './assets/settings.png';
-import power from './assets/power.png'
 import Toggle from 'react-toggle'
 import ReactTooltip from 'react-tooltip'
 import axios from 'axios';
@@ -20,8 +18,8 @@ class App extends Component {
             ticketsArr: [],
             newTickets: 0,
             zendeskDomain: "",
-            userStatus: 2
             //1-online, 2-offline, 3-unauthorized, 4-loading
+            userStatus: 2,
         }
         //listener for changes in local storage tickets from bg calls
         window.chrome.storage.onChanged.addListener((NewStore) => {
@@ -153,17 +151,6 @@ class App extends Component {
         this.setState({userStatus: 2})
     }
 
-    //toggle chrome desktop notifications
-    toggleNotifications = () => {
-        window.chrome.storage.local.get(null,function(storage){
-            window.chrome.storage.local.set({
-                notificationSetting: !storage.notificationSetting
-            });
-        })
-    }
-
-
-
     settings = () => {}
 
     //updating the default view for the user
@@ -181,7 +168,6 @@ class App extends Component {
     renderOnline() {
         return (
             <div className="onlinePage">
-                <Nav logout={this.logout}/>
                 <Tickets newTickets={this.state.newTickets} tickets={this.state.ticketsArr} domain={this.state.zendeskDomain}/>
             </div>
         )
@@ -190,50 +176,52 @@ class App extends Component {
     //render function for user offline status
     renderOffline(){
         return (
-            <div className="container">
-                <NoButtonNav/>
                 <LoginForm handleInput={this.handleInput} handleSignIn={this.handleSignIn}/>
-            </div>
         )
     }
 
     //render function for user unauthorized status
     renderUnauthorized() {
         return (
-            <div className="container">
-                <Nav logout={this.logout}/>
                 <div >There was a problem logging in, please check your zendesk account is logged in and then try again
                 </div>
-            </div>
         )
     }
 
     //render function for user loading status
     renderLoading(){
         return (
-            <div className="container">
-                <NoButtonNav/>
                 <div className="preloader">
                 <img className="preloaderImg" src={preloader}/>
                     <div className="preloaderText">
                     LOADING YOUR ZENDESK ACCOUNT
                     </div>
                 </div>
-            </div>
         )
     }
 
     render() {
+      let hasButtons;
+      let content;
+      content= this.renderUnauthorized()
         //main render- according to user status
         if (this.state.userStatus == 1) {
-            return this.renderOnline()
+            content = this.renderOnline()
+            hasButtons = true;
         } else if (this.state.userStatus == 2) {
-            return this.renderOffline()
+            content =  this.renderOffline()
         } else if (this.state.userStatus == 3) {
-            return this.renderUnauthorized()
+            content= this.renderUnauthorized()
         } else if (this.state.userStatus == 4) {
-            return this.renderLoading()
+            content= this.renderLoading()
         }
+        return(
+          <div className="container">
+              <Nav logout={this.logout} hasButtons={hasButtons}/>
+                {content}
+          </div>
+        )
+
     }
 }
 
