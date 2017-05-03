@@ -19,7 +19,7 @@ class App extends Component {
             newTickets: 0,
             zendeskDomain: "",
             //1-online, 2-offline, 3-unauthorized, 4-loading
-            userStatus: 2,
+            userStatus: 2
         }
         //listener for changes in local storage tickets from bg calls
         window.chrome.storage.onChanged.addListener((NewStore) => {
@@ -127,7 +127,9 @@ class App extends Component {
           window.chrome.storage.local.set({
             ticketsArr: this.state.ticketsArr,
             newTickets: this.state.newTickets,
-            zendeskDomain: this.state.zendeskDomain});
+            zendeskDomain: this.state.zendeskDomain,
+            notificationSetting:true
+          });
       })
       .catch((error) => {
           console.log(error);
@@ -136,6 +138,7 @@ class App extends Component {
 
     handleSignIn = (e) => {
       e.preventDefault();
+
       this.createViewList(this.state.zendeskDomain);
     }
 
