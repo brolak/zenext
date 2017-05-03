@@ -121,7 +121,7 @@ var checkTickets = function (storage) {
 
 		//check if user wants notifications
 
-		if(storage.defaultViewID){
+		if(storage.notificationSetting){
 			//if response ticket count it larger than stored count, notify accordingly
 
 			if(storage.newTickets != 0 && storage.newTickets < response.data.count){
@@ -153,7 +153,7 @@ var checkTickets = function (storage) {
 			}
 		}
 		//after api call, always change local storage to reflect response
-		chrome.storage.local.set({'newTickets': response.data.count,'ticketsArr': response.data.rows},function(){});
+		chrome.storage.local.set({'newTickets': response.data.count,'ticketsArr': response.data.rows ,'requestersArr':response.data.users},function(){});
 	})
 	.catch(function (error) {
 	      console.log(error);
