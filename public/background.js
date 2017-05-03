@@ -4,7 +4,7 @@ chrome.browserAction.setBadgeBackgroundColor({ color: '#D74A38' });
 //initial settings
 chrome.storage.local.set({
     notificationSetting: true
-});            
+});
 
 //function for updating extension badge
 var updateBadge = function(number){
@@ -67,7 +67,7 @@ var findAndOpenTab = function(ticketId) {
 			} else if(ticketId) {
 				chrome.tabs.update(tab.id, {url:"https://zenext.zendesk.com/agent/tickets/"+ticketId, active:true}, function (cb){
 					chrome.windows.update(cb.windowId, {focused: true});
-				})	
+				})
 			}
 		} else {
 			if(ticketId == null){
@@ -97,7 +97,7 @@ var checkTickets = function (storage) {
 			updateBadge(response.data.count);
 		}
 		//check if user wants notifications
-		if(true){
+		if(storage.notificationSetting){
 			//if response ticket count it larger than stored count, notify accordingly
 			if(storage.newTickets != 0 && storage.newTickets < response.data.count){
 
@@ -120,13 +120,13 @@ var checkTickets = function (storage) {
 
 					chrome.notifications.create(String(response.data.rows[newIndex].ticket.id),options,function(cb){
 						chrome.notifications.onClicked.addListener(function (cb){
-			//create a notification with a click listener that updates existing or creates new tab 
+			//create a notification with a click listener that updates existing or creates new tab
 			//from url to ticket page
 							console.log("listener callback",cb);
 							findAndOpenTab(response.data.rows[newIndex].ticket.id)
 						})
 
-					})	
+					})
 			//on multiple new tickets
 			   	} else if (newIds.length > 1) {
 			//set notification contents
@@ -139,11 +139,11 @@ var checkTickets = function (storage) {
 					}
 					chrome.notifications.create("newTicket",options,function(cb){
 						chrome.notifications.onClicked.addListener(function (cb){
-			//create a notification with a click listener that updates existing or creates new tab 
+			//create a notification with a click listener that updates existing or creates new tab
 			//from url to agent dashboard
 							findAndOpenTab(null)
 						})
-					})	
+					})
 			   	}
 			}
 		}
