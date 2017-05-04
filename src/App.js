@@ -35,7 +35,7 @@ class App extends Component {
 
     componentWillMount = () => {
         window.chrome.storage.local.get((cb) => {
-            if (cb.zendeskDomain && cb.defaultViewID) {
+            if (cb.zendeskDomain && cb.defaultViewID&&cb.online) {
                 this.setState(
                   {
                     ticketsArr: cb.ticketsArr,
@@ -45,6 +45,11 @@ class App extends Component {
                     defaultViewID:cb.defaultViewID,
                     requestersArr: cb.requestersArr
                   })
+            }
+            else{
+              this.setState({
+                userStatus: 2
+              })
             }
         })
     }
@@ -128,7 +133,7 @@ class App extends Component {
     //then sends domain info to input/state for login
                 input.value = domain;
                 that.setState({zendeskDomain: domain});
-            }      
+            }
         });
     }
 
@@ -181,9 +186,9 @@ class App extends Component {
     renderOffline(){
         return (
 
-                <LoginForm detectTab={this.detectTab} 
-                  handleInput={this.handleInput} 
-                   handleSignIn={this.handleSignIn} 
+                <LoginForm detectTab={this.detectTab}
+                  handleInput={this.handleInput}
+                   handleSignIn={this.handleSignIn}
                    userStatus={this.state.userStatus}/>
 
         )

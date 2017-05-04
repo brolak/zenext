@@ -154,7 +154,7 @@ var checkTickets = function (storage) {
 			}
 		}
 		//after api call, always change local storage to reflect response
-		chrome.storage.local.set({'newTickets': response.data.count,'ticketsArr': response.data.rows ,'requestersArr':response.data.users},function(){});
+		chrome.storage.local.set({'online':true ,'newTickets': response.data.count,'ticketsArr': response.data.rows ,'requestersArr':response.data.users},function(){});
 	})
 	.catch(function (error) {
 		chrome.storage.local.set({'online':false},function(){});
