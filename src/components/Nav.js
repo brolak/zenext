@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
-import mute from '../assets/alarm.png';
-import muted from '../assets/alarmno.png'
-import exit from '../assets/power.png';
+import mute from '../assets/speaker.svg';
+import muted from '../assets/mute.svg'
+import exit from '../assets/power.svg';
+import settings from '../assets/settings.svg';
 import logo from '../assets/logoNEW.png';
 import '../App.css';
-
+//icons color #d8d8d8
 class Nav extends Component {
 
   constructor(props) {
@@ -34,6 +35,7 @@ class Nav extends Component {
       console.log("notification" , this.state.notificationSetting)
         if (this.props.hasButtons){
           buttons= (<td className="align-right">
+                      <img src={settings} className="settings-logo" title="settings" onClick={this.props.openSettings}/>
                       <img src={(this.state.notificationSetting) ? mute : muted} className="settings-logo" title={(this.state.notificationSetting) ? "Mute notifications" : "Unmute notifications"} onClick={this.toggleNotifications}/>
                       <img src={exit} className="exit-logo" alt="Sign out" title="Logout" onClick={this.props.logout}/>
                     </td>)

@@ -6,6 +6,7 @@ import axios from 'axios';
 import Tickets from './components/Tickets';
 import Nav from './components/Nav';
 import NoButtonNav from './components/NoButtonNav';
+import Settings from './components/Settings';
 import LoginForm from './components/LoginForm';
 import './App.css';
 
@@ -18,12 +19,12 @@ class App extends Component {
             ticketsArr: [],
             newTickets: 0,
             zendeskDomain: "",
-            //1-online, 2-offline, 3-unauthorized, 4-loading
+            //1-online, 2-offline, 3-unauthorized, 4-loading, 5-settings
             userStatus: 2
         }
         //listener for changes in local storage tickets from bg calls
         window.chrome.storage.onChanged.addListener((NewStore) => {
-            console.log("changes in local storage" , NewStore)
+            console.log("changes in local storage" , NewStore.ticketsArr.newValue.length)
             if (NewStore.ticketsArr.newValue){
               this.setState({
                 ticketsArr:NewStore.ticketsArr.newValue ,
@@ -166,7 +167,11 @@ class App extends Component {
         });
     }
 
-    settings = () => {}
+    openSettings = () => {
+      this.setState({
+        userStatus:5
+      })
+    }
 
     //updating the default view for the user
     updateDefaultView = (viewID) => {
@@ -224,6 +229,12 @@ class App extends Component {
                 </div>
         )
     }
+    //render function for settings page
+    renderSettings(){
+        return (
+                <Settings/>
+        )
+    }
 
     render() {
       let hasButtons;
@@ -239,10 +250,12 @@ class App extends Component {
             content= this.renderUnauthorized()
         } else if (this.state.userStatus == 4) {
             content= this.renderLoading()
+        }else if (this.state.userStatus == 5) {
+            content= this.renderSettings()
         }
         return(
           <div className="container">
-              <Nav logout={this.logout} hasButtons={hasButtons}/>
+              <Nav logout={this.logout} openSettings={this.openSettings} hasButtons={hasButtons}/>
                 {content}
           </div>
         )
