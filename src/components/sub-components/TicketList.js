@@ -25,6 +25,7 @@ class TicketList extends Component {
         })
 
         if (this.props.newTickets == 0) {
+          console.log("we are at zero" , this.props.newTickets )
             return (
                 <div>
                   <br />
@@ -38,7 +39,8 @@ class TicketList extends Component {
                 </div>
             )
         } else {
-
+          console.log("we have new tickets", this.props.newTickets)
+          
             return (
                 <div>
                     <div className="row">

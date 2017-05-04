@@ -21,16 +21,7 @@ class App extends Component {
             //1-online, 2-offline, 3-unauthorized, 4-loading
             userStatus: 2
         }
-        //listener for changes in local storage tickets from bg calls
-        window.chrome.storage.onChanged.addListener((NewStore) => {
-            console.log("changes in local storage" , NewStore)
-            if (NewStore.ticketsArr.newValue){
-              this.setState({
-                ticketsArr:NewStore.ticketsArr.newValue ,
-                newTickets:NewStore.ticketsArr.newValue.length
-              })
-            }
-        });
+
     }
 
     componentWillMount = () => {
@@ -54,6 +45,16 @@ class App extends Component {
         })
     }
 
+    componentDidMount = () =>{
+      //listener for changes in local storage tickets from bg calls
+      window.chrome.storage.onChanged.addListener((NewStore) => {
+          console.log("changes in local storage" , NewStore)
+            this.setState({
+              ticketsArr:NewStore.ticketsArr.newValue ,
+              newTickets:NewStore.ticketsArr.newValue.length
+            })
+      });
+    }
     //making an API call and creating the view list array
     createViewList = (domain) => {
       //set up the views list in local storage
@@ -92,29 +93,33 @@ class App extends Component {
             zendeskDomain: this.state.zendeskDomain,
             requestersArr: response.data.users,
             notificationSetting:true
+          }, () => {
+
+            setTimeout(() => {
+                //after a 'loading period' set user to online
+                this.setState(
+                  {
+                  ticketsArr: response.data.rows,
+                  newTickets: response.data.count,
+                  userStatus: 1,
+                  requestersArr: response.data.users
+                  });
+            }, 4000);
+            //if ticket count is 0, empty badge
+            if(response.data.count == 0){
+                 window.chrome.browserAction.setBadgeText({
+                      text: ''
+                  });
+              }
+            else {
+              //otherwise change badge to reflect ticket #
+                 window.chrome.browserAction.setBadgeText({
+                      text: String(response.data.count)
+                  });
+              }
+
           });
-          setTimeout(() => {
-              //after a 'loading period' set user to online
-              this.setState(
-                {
-                ticketsArr: response.data.rows,
-                newTickets: response.data.count,
-                userStatus: 1,
-                requestersArr: response.data.users
-                });
-          }, 4000);
-          //if ticket count is 0, empty badge
-          if(response.data.count == 0){
-               window.chrome.browserAction.setBadgeText({
-                    text: ''
-                });
-            }
-          else {
-            //otherwise change badge to reflect ticket #
-               window.chrome.browserAction.setBadgeText({
-                    text: String(response.data.count)
-                });
-            }
+
 
       })
       .catch((error) => {
