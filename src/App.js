@@ -150,9 +150,16 @@ class App extends Component {
     //function for logging out
     //clear all storage and change user status
     logout = () => {
-        window.chrome.storage.local.clear();
-        window.chrome.browserAction.setBadgeText({text: ''});
-        this.setState({userStatus: 2})
+        window.chrome.storage.local.clear(() => {
+          window.chrome.browserAction.setBadgeText({text: ''});
+          this.setState({
+            ticketsArr: [],
+            newTickets: 0,
+            zendeskDomain: "",
+            //1-online, 2-offline, 3-unauthorized, 4-loading
+            userStatus: 2
+          })
+        });
     }
 
     settings = () => {}

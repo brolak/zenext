@@ -92,7 +92,7 @@ var createNotification = function(notification) {
 		type: "basic",
 		title: notification.title,
 		message: notification.message,
-		iconUrl: "./logo_small.png"
+		iconUrl: "./logo_smallNEW.png"
 	}
 	//create notification with click function that does tab check/open
 	chrome.notifications.create(notification.id,options,function(){});
