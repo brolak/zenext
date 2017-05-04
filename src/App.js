@@ -81,8 +81,18 @@ class App extends Component {
     createTicketList = (defaultViewID) => {
       axios.get('https://'+this.state.zendeskDomain+'.zendesk.com/api/v2/views/'+defaultViewID+'/execute.json?per_page=60&page=1&sort_by=id&sort_order=desc&group_by=+&include=via_id')
       .then((response) => {
+
+
           //set the user's state to loading
           this.setState({userStatus: 4});
+          //  update the local storage
+          window.chrome.storage.local.set({
+            ticketsArr: response.data.rows,
+            newTickets: response.data.count,
+            zendeskDomain: this.state.zendeskDomain,
+            requestersArr: response.data.users,
+            notificationSetting:true
+          });
           setTimeout(() => {
               //after a 'loading period' set user to online
               this.setState(
@@ -98,20 +108,14 @@ class App extends Component {
                window.chrome.browserAction.setBadgeText({
                     text: ''
                 });
-            }else {
+            }
+          else {
             //otherwise change badge to reflect ticket #
-                window.chrome.browserAction.setBadgeText({
+               window.chrome.browserAction.setBadgeText({
                     text: String(response.data.count)
                 });
             }
-          //  update the local storage
-          window.chrome.storage.local.set({
-            ticketsArr: this.state.ticketsArr,
-            newTickets: this.state.newTickets,
-            zendeskDomain: this.state.zendeskDomain,
-            requestersArr: this.state.requestersArr,
-            notificationSetting:true
-          });
+
       })
       .catch((error) => {
           console.log(error);
