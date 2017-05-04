@@ -12,7 +12,7 @@ class LoginForm extends Component {
             this.setState({clicked: true})
             setTimeout(() => {
                 this.props.handleSignIn(e)
-            }, 100);
+            }, 10);
         }
     }
 
