@@ -1,5 +1,5 @@
 .App-logo {
-  height: 40px;
+  height: 25px;
 }
 .preloaderText{
   font-family: 'Assistant', sans-serif;
@@ -40,6 +40,10 @@
 .navbar {
   text-align: left;
   height: inherit;
+}
+.topNavbar{
+  padding-left: 0px;
+padding-right: 0px;
 }
 .input{
   margin:5px;

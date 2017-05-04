@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import mute from '../assets/alarm.png';
 import muted from '../assets/alarmno.png'
 import exit from '../assets/power.png';
-import logo from '../assets/logo.png';
+import logo from '../assets/logoNEW.png';
 import '../App.css';
 
 class Nav extends Component {
@@ -40,7 +40,7 @@ class Nav extends Component {
                   }
         return (
             <div className="row">
-                <div className="col-md-12 navbar">
+                <div className="col-md-12 topNavbar navbar">
                     <table width="100%">
                         <tr>
                             <td className="align-left"><img src={logo} className="App-logo" alt="logo"/></td>

@@ -35,7 +35,7 @@ class App extends Component {
 
     componentWillMount = () => {
         window.chrome.storage.local.get((cb) => {
-            if (cb.zendeskDomain && cb.defaultViewID&&cb.online) {
+            if (cb.zendeskDomain && cb.defaultViewID && cb.online) {
                 this.setState(
                   {
                     ticketsArr: cb.ticketsArr,
