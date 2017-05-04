@@ -1,6 +1,6 @@
 {
-    "name": "NOTIFY-ME",
-    "description": "Advanced Zendesk Ticket Notifications",
+    "name": "Notify-Me",
+    "description": "Advanced Support Ticket Notifications",
     "version": "1.0",
 
     "permissions": [
