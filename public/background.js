@@ -23,7 +23,7 @@ var checkLogin = function() {
 }
 
 //every 5 seconds run ticket refresh - starting with user check
-var backgroundInterval = setInterval(checkLogin, 5*1000);
+var backgroundInterval = setInterval(checkLogin, 2*1000);
 
 //prototype method for diffing response/local ticket ids
 Array.prototype.diff = function(a) {
