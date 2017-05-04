@@ -117,22 +117,18 @@ class App extends Component {
     detectTab = (input) => {
         var that = this;
         window.chrome.tabs.getAllInWindow(null, function(cb){
-            let re = /zendesk\.com\/agent\/filters\//
+            let re = /zendesk\.com\/agent\//
             let result = cb.filter(function ( obj ) {
                 return obj.url.match(re);
             })[0];
-    //and retrieving viewid and domain
+    //and retrieving domain
             if(result){
-                let reViewId = /\w+$/;
-                let viewID= result.url.match(reViewId)[0];
-                if(viewID){
-                    let splitting = result.url.split("/")[2];
-                    let domain = splitting.split(".")[0];
+                let splitting = result.url.split("/")[2];
+                let domain = splitting.split(".")[0];
     //then sends domain info to input/state for login
-                    input.value = domain;
-                    that.setState({zendeskDomain: domain});
-                }
-            }
+                input.value = domain;
+                that.setState({zendeskDomain: domain});
+            }      
         });
     }
 
