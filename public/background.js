@@ -23,7 +23,7 @@ var checkLogin = function() {
 }
 
 //every 5 seconds run ticket refresh - starting with user check
-var backgroundInterval = setInterval(checkLogin, 5*1000);
+var backgroundInterval = setInterval(checkLogin, 8*1000);
 
 //prototype method for diffing response/local ticket ids
 Array.prototype.diff = function(a) {
@@ -119,13 +119,12 @@ var checkTickets = function (storage) {
 		//otherwise set badge to ticket #
 			updateBadge(response.data.count);
 		}
-
+		//set icon
+		updateIcon(response.data.count);
 		//check if user wants notifications
-
 		if(storage.notificationSetting){
-			//if response ticket count it larger than stored count, notify accordingly
-
-			if(storage.newTickets != 0 && storage.newTickets < response.data.count){
+		//if response ticket count is larger than stored count, notify accordingly
+			if(storage.newTickets < response.data.count){
 		//first find out how many new tickets there are,
 				var newIds = diffTickets(response.data.rows,storage.ticketsArr);
 		//on 1 new ticket
