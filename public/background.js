@@ -10,6 +10,7 @@ var updateBadge = function(number){
 var checkLogin = function() {
 	chrome.storage.local.get(null,function(storage){
 		//if there is a domain in the local storage
+		/* Put in check for online/offline?*/
 	   		if(storage.zendeskDomain && storage.defaultViewID){
 	   	//call to get+check tickets
 	   			checkTickets(storage);
@@ -156,6 +157,7 @@ var checkTickets = function (storage) {
 		chrome.storage.local.set({'newTickets': response.data.count,'ticketsArr': response.data.rows ,'requestersArr':response.data.users},function(){});
 	})
 	.catch(function (error) {
-	      console.log(error);
+		chrome.storage.local.set({'online':false},function(){});
+		console.log(error);
 	});
 }
