@@ -232,10 +232,15 @@ class App extends Component {
     }
 
     //render function for user unauthorized status
-    renderUnauthorized() {
+    renderUnauthorized=() => {
+      var url='http://'+this.state.zendeskDomain+'.zendesk.com/login/'
         return (
-                <div >There was a problem logging in, please check your zendesk account is logged in and then try again
-                </div>
+          <div className="preloader down">
+              <div className="preloaderText">
+              There was a problem logging in, please check your zendesk account is logged in and then try again
+              </div>
+              <a href={url} target="_blank">Go To Zendesk</a>
+          </div>
         )
     }
 
