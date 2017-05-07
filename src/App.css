@@ -185,6 +185,9 @@ button:focus {
 .row{
   margin-bottom: 2px;
 }
+.down{
+  padding-top: 80px;
+}
 .viewSpan{
   color: #b8b8b8;
     padding-left: 46px;
