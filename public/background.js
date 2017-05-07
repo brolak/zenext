@@ -123,9 +123,13 @@ var checkTickets = function (storage) {
 			updateBadge(response.data.count);
 		}
 		//check if user wants notifications
-		if(storage.notificationSetting){
+		if(storage.notificationSetting < 2){
 			//if response ticket count it larger than stored count, notify accordingly
 			if(storage.newTickets < response.data.count){
+
+				if (storage.notificationSetting == 0 ) {
+						myAudio.play();    // play the music
+					};
 		//first find out how many new tickets there are,
 				var newIds = diffTickets(response.data.rows,storage.ticketsArr);
 		//on 1 new ticket
@@ -151,7 +155,7 @@ var checkTickets = function (storage) {
 						viewID: storage.defaultViewID
 					});
 				}
-				myAudio.play();    // play the music
+
 			}
 		}
 		//after api call, always change local storage to reflect response
