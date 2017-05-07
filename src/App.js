@@ -32,8 +32,8 @@ class App extends Component {
                   {
                     ticketsArr: cb.ticketsArr,
                     newTickets: cb.newTickets,
-                    userStatus: 1,
                     zendeskDomain:cb.zendeskDomain,
+                    userStatus:1,
                     defaultViewID:cb.defaultViewID,
                     requestersArr: cb.requestersArr,
                     viewListArr:cb.viewListArr,
@@ -52,13 +52,30 @@ class App extends Component {
       //listener for changes in local storage tickets from bg calls
       window.chrome.storage.onChanged.addListener((NewStore) => {
           console.log("changes in local storage" , NewStore)
-            this.setState({
-              ticketsArr:NewStore.ticketsArr.newValue ,
-              newTickets:NewStore.ticketsArr.newValue.length,
-              requestersArr:NewStore.requestersArr.newValue
-            })
-      });
-    }
+          if(NewStore){
+            window.chrome.storage.local.get((cb) => {
+                if (cb.zendeskDomain && cb.defaultViewID && cb.online) {
+                    this.setState(
+                      {
+                        ticketsArr: cb.ticketsArr,
+                        newTickets: cb.newTickets,
+                        zendeskDomain:cb.zendeskDomain,
+                        defaultViewID:cb.defaultViewID,
+                        requestersArr: cb.requestersArr,
+                        viewListArr:cb.viewListArr,
+                        defaultViewTitle:cb.defaultViewTitle
+                      })
+                }
+        });
+          }
+    });
+}
+    // this.setState({
+    //   ticketsArr:NewStore.ticketsArr.newValue,
+    //   newTickets:NewStore.ticketsArr.newValue.length,
+    //   requestersArr:NewStore.requestersArr.newValue
+    // })
+
 
     //making an API call and creating the view list array
     createViewList = (domain) => {
@@ -178,7 +195,7 @@ class App extends Component {
     }
 
     //render function for user online status
-    renderOnline() {
+    renderOnline(){
         return (
             <div className="onlinePage">
                 <Tickets
@@ -241,12 +258,17 @@ class App extends Component {
         defaultViewID : newDefaultViewID ,
         defaultViewTitle : viewTitle
         })
+      this.setState({userStatus: 4});
+        setTimeout(() => {
+            //after a 'loading period' set user to online
+            this.setState({userStatus: 1});
+        }, 4000);
+
+
+
+
       console.log("change to ", viewTitle)
-      this.setState({
-        defaultViewID:newDefaultViewID,
-        defaultViewTitle : viewTitle
-      })
-      this.createTicketList(newDefaultViewID)
+
     }
 
     render() {

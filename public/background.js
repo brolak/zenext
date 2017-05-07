@@ -23,7 +23,7 @@ var checkLogin = function() {
 }
 
 //every 8 seconds run ticket refresh - starting with user check
-var backgroundInterval = setInterval(checkLogin, 8*1000);
+var backgroundInterval = setInterval(checkLogin, 3*1000);
 
 //prototype method for diffing response/local ticket ids
 Array.prototype.diff = function(a) {
@@ -92,7 +92,7 @@ var createNotification = function(notification) {
 		type: "basic",
 		title: notification.title,
 		message: notification.message,
-		iconUrl: "./logo_smallNEW.png"
+		iconUrl: "./logoNotifications.png"
 	}
 	//create notification with click function that does tab check/open
 	chrome.notifications.create(notification.id,options,function(){});
