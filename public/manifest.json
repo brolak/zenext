@@ -9,9 +9,7 @@
         "storage",
         "tabs"
     ],
-    "app" :{
-      "urls": [ "https://zendesk.com"]
-    },
+    
     "icons": {
     "16": "logo_smallNEW.png",
     "48": "logo_smallNEW.png",

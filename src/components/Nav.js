@@ -72,6 +72,7 @@ class Nav extends Component {
                     <table width="100%">
                         <tr>
                             <td className="align-left"><img src={logo} className="App-logo" alt="logo"/></td>
+                            <td className="align-center"><span>{msg}</span></td>
                             {buttons}
                         </tr>
                     </table>
