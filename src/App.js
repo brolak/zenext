@@ -204,11 +204,17 @@ class App extends Component {
                    domain={this.state.zendeskDomain}
                    requestersArr={this.state.requestersArr}
                    />
-                 <DropDown
-                   changeView={this.changeView}
-                    viewsArr={this.state.viewListArr}
-                    defaultViewID={this.state.defaultViewID}
-                    defaultViewTitle={this.state.defaultViewTitle} />
+                 <div className="row">
+                   <span className="viewSpan">
+                     VIEWING:
+                   </span>
+                   <DropDown
+                     changeView={this.changeView}
+                      viewsArr={this.state.viewListArr}
+                      defaultViewID={this.state.defaultViewID}
+                      defaultViewTitle={this.state.defaultViewTitle} />
+                 </div>
+
             </div>
         )
     }
