@@ -27,7 +27,10 @@
 .exit-logo {
   height: 19px;
   padding-left: 14px;
-
+}
+.speaker-logo {
+  height: 19px;
+  padding-left: 14px;
 }
 .text-title{
   color: #3399ff;
