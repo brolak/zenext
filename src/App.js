@@ -22,20 +22,6 @@ class App extends Component {
             //1-online, 2-offline, 3-unauthorized, 4-loading, 5-settings
             userStatus: 2
         }
-<<<<<<< HEAD
-        //listener for changes in local storage tickets from bg calls
-        window.chrome.storage.onChanged.addListener((NewStore) => {
-            console.log("changes in local storage" , NewStore.ticketsArr.newValue.length)
-            if (NewStore.ticketsArr.newValue){
-              this.setState({
-                ticketsArr:NewStore.ticketsArr.newValue ,
-                newTickets:NewStore.ticketsArr.newValue.length
-              })
-            }
-        });
-=======
-
->>>>>>> 35623ba98dcf988d726a8c555ca91fe4ced31c7e
     }
 
     componentWillMount = () => {
@@ -48,7 +34,9 @@ class App extends Component {
                     userStatus: 1,
                     zendeskDomain:cb.zendeskDomain,
                     defaultViewID:cb.defaultViewID,
-                    requestersArr: cb.requestersArr
+                    requestersArr: cb.requestersArr,
+                    viewListArr:cb.viewListArr,
+                    defaultViewTitle:cb.defaultViewTitle
                   })
             }
             else{
@@ -58,7 +46,7 @@ class App extends Component {
             }
         })
     }
-
+    //when component loads add a listener to identify changes on local storage
     componentDidMount = () =>{
       //listener for changes in local storage tickets from bg calls
       window.chrome.storage.onChanged.addListener((NewStore) => {
@@ -69,6 +57,7 @@ class App extends Component {
             })
       });
     }
+
     //making an API call and creating the view list array
     createViewList = (domain) => {
       //set up the views list in local storage
@@ -96,8 +85,6 @@ class App extends Component {
     createTicketList = (defaultViewID) => {
       axios.get('https://'+this.state.zendeskDomain+'.zendesk.com/api/v2/views/'+defaultViewID+'/execute.json?per_page=60&page=1&sort_by=id&sort_order=desc&group_by=+&include=via_id')
       .then((response) => {
-
-
           //set the user's state to loading
           this.setState({userStatus: 4});
           //  update the local storage
@@ -118,7 +105,7 @@ class App extends Component {
                   userStatus: 1,
                   requestersArr: response.data.users
                   });
-            }, 4000);
+            }, 2000);
             //if ticket count is 0, empty badge
             if(response.data.count == 0){
                  window.chrome.browserAction.setBadgeText({
@@ -131,10 +118,7 @@ class App extends Component {
                       text: String(response.data.count)
                   });
               }
-
           });
-
-
       })
       .catch((error) => {
           console.log(error);
@@ -191,17 +175,6 @@ class App extends Component {
       })
     }
 
-    //updating the default view for the user
-    updateDefaultView = (viewID) => {
-
-    }
-
-    //switch zendesk domain
-    changeDomain = (domain) => {
-
-    }
-
-
     //render function for user online status
     renderOnline() {
         return (
@@ -254,9 +227,25 @@ class App extends Component {
         )
     }
 
+    changeView = (viewTitle) => {
+      var viewIndex = this.state.viewListArr.findIndex(result => result.title === viewTitle);
+      var newDefaultViewID = this.state.viewListArr[viewIndex].id
+      window.chrome.storage.local.set({
+        defaultViewID : newDefaultViewID ,
+        defaultViewTitle : viewTitle
+        })
+      console.log("change to ", viewTitle)
+      this.setState({
+        defaultViewID:newDefaultViewID,
+        defaultViewTitle : viewTitle
+      })
+      this.createTicketList(newDefaultViewID)
+    }
+
     render() {
       let hasButtons;
       let content;
+      console.log("state is" , this.state)
       content= this.renderUnauthorized()
         //main render- according to user status
         if (this.state.userStatus == 1) {
@@ -273,7 +262,14 @@ class App extends Component {
         }
         return(
           <div className="container">
-              <Nav logout={this.logout} openSettings={this.openSettings} hasButtons={hasButtons}/>
+              <Nav logout={this.logout}
+                 openSettings={this.openSettings}
+                  hasButtons={hasButtons}
+                  defaultViewID={this.state.defaultViewID}
+                  viewsArr={this.state.viewListArr}
+                  changeView={this.changeView}
+                  defaultViewTitle={this.state.defaultViewTitle}
+              />
                 {content}
           </div>
         )

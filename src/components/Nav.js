@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
-import mute from '../assets/speaker.svg';
-import muted from '../assets/mute.svg'
-import exit from '../assets/power.svg';
-import settings from '../assets/settings.svg';
+import mute from '../assets/alarm.png';
+import muted from '../assets/alarmno.png'
+import exit from '../assets/power.png';
+import settings from '../assets/settings.png';
 import logo from '../assets/logoNEW.png';
+import DropDown from './dropDown'
 import '../App.css';
 //icons color #d8d8d8
 class Nav extends Component {
@@ -23,7 +24,6 @@ class Nav extends Component {
 
      //toggle chrome desktop notifications
     toggleNotifications = () => {
-      console.log("tetet")
       window.chrome.storage.local.set({
                 notificationSetting: !this.state.notificationSetting
             });
@@ -35,7 +35,7 @@ class Nav extends Component {
       console.log("notification" , this.state.notificationSetting)
         if (this.props.hasButtons){
           buttons= (<td className="align-right">
-                      <img src={settings} className="settings-logo" title="settings" onClick={this.props.openSettings}/>
+                      <DropDown changeView={this.props.changeView} viewsArr={this.props.viewsArr} defaultViewID={this.props.defaultViewID} defaultViewTitle={this.props.defaultViewTitle} />
                       <img src={(this.state.notificationSetting) ? mute : muted} className="settings-logo" title={(this.state.notificationSetting) ? "Mute notifications" : "Unmute notifications"} onClick={this.toggleNotifications}/>
                       <img src={exit} className="exit-logo" alt="Sign out" title="Logout" onClick={this.props.logout}/>
                     </td>)
