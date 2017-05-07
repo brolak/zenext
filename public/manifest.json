@@ -1,7 +1,7 @@
 {
     "name": "Notify-Me",
     "description": "Advanced Support Ticket Notifications",
-    "version": "1.0",
+    "version": "1.0.0",
 
     "permissions": [
     	"notifications",
@@ -9,6 +9,9 @@
         "storage",
         "tabs"
     ],
+    "app" :{
+      "urls": [ "https://zendesk.com"]
+    },
     "icons": {
     "16": "logo_smallNEW.png",
     "48": "logo_smallNEW.png",
