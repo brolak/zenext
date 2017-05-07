@@ -8,6 +8,7 @@ import Nav from './components/Nav';
 import NoButtonNav from './components/NoButtonNav';
 import Settings from './components/Settings';
 import LoginForm from './components/LoginForm';
+import DropDown from './components/dropDown'
 import './App.css';
 
 class App extends Component {
@@ -53,7 +54,8 @@ class App extends Component {
           console.log("changes in local storage" , NewStore)
             this.setState({
               ticketsArr:NewStore.ticketsArr.newValue ,
-              newTickets:NewStore.ticketsArr.newValue.length
+              newTickets:NewStore.ticketsArr.newValue.length,
+              requestersArr:NewStore.requestersArr.newValue
             })
       });
     }
@@ -185,6 +187,11 @@ class App extends Component {
                    domain={this.state.zendeskDomain}
                    requestersArr={this.state.requestersArr}
                    />
+                 <DropDown
+                   changeView={this.changeView}
+                    viewsArr={this.state.viewListArr}
+                    defaultViewID={this.state.defaultViewID}
+                    defaultViewTitle={this.state.defaultViewTitle} />
             </div>
         )
     }
@@ -265,15 +272,10 @@ class App extends Component {
               <Nav logout={this.logout}
                  openSettings={this.openSettings}
                   hasButtons={hasButtons}
-                  defaultViewID={this.state.defaultViewID}
-                  viewsArr={this.state.viewListArr}
-                  changeView={this.changeView}
-                  defaultViewTitle={this.state.defaultViewTitle}
               />
                 {content}
           </div>
         )
-
     }
 }
 
