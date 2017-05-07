@@ -23,7 +23,9 @@ class Nav extends Component {
     componentDidMount = () => {
         window.chrome.storage.local.get((storage) => {
             if (storage.zendeskDomain) {
-                this.setState({notificationSetting: storage.notificationSetting || 0})
+                this.setState({
+                    notificationSetting: storage.notificationSetting || 0
+                })
             }
         })
     }
@@ -59,7 +61,7 @@ class Nav extends Component {
         if (this.props.hasButtons) {
             buttons = (
                 <td className="align-right">
-                    <img src={notifyButton} className="settings-logo"  onClick={this.toggleNotifications} title={msg}/>
+                    <img src={notifyButton} className="settings-logo" onClick={this.toggleNotifications} title={msg}/>
                     <img src={exit} className="exit-logo" alt="Sign out" title="Logout" onClick={this.props.logout}/>
                 </td>
             )
