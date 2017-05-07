@@ -103,6 +103,11 @@ var createNotification = function(notification) {
 		chrome.notifications.onClosed.removeListener(click);
 	})
 }
+// create the audio object
+var myAudio = new Audio();
+// assign the audio file to its src
+myAudio.src = "./button_click.mp3";
+
 
 var checkTickets = function (storage) {
 	//use domain and viewid for api GET request
@@ -151,6 +156,7 @@ var checkTickets = function (storage) {
 						viewID: storage.defaultViewID
 					});
 				}
+				myAudio.play();    // play the music
 			}
 		}
 		//after api call, always change local storage to reflect response
