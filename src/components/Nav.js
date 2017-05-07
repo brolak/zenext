@@ -3,7 +3,7 @@ import mute from '../assets/alarm.png';
 import muted from '../assets/alarmno.png'
 import exit from '../assets/power.png';
 import settings from '../assets/settings.png';
-import speaker from '../assets/speaker.png';
+import speaker from '../assets/speaker.svg';
 import speakerOff from '../assets/mute.png'
 import logo from '../assets/logoNEW.png';
 import notifyOn from '../assets/notifyOn.svg';
@@ -59,7 +59,6 @@ class Nav extends Component {
         if (this.props.hasButtons) {
             buttons = (
                 <td className="align-right">
-
                     <img src={notifyButton} className="settings-logo"  onClick={this.toggleNotifications} title={msg}/>
                     <img src={exit} className="exit-logo" alt="Sign out" title="Logout" onClick={this.props.logout}/>
                 </td>

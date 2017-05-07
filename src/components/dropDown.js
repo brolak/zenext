@@ -2,20 +2,21 @@ import React, {Component} from 'react';
 
 class DropDown extends Component {
 
-  constructor(props) {
-    super(props);
+    constructor(props) {
+        super(props);
 
-    this.state = { value: this.props.defaultViewTitle};
+        this.state = {
+            value: this.props.defaultViewTitle
+        };
 
-  }
+    }
 
-  onChange(e) {
-    this.setState({
-      value: e.target.value
-    })
-    this.props.changeView(e.target.value)
-  }
+    onChange(e) {
+        this.setState({value: e.target.value})
+        this.props.changeView(e.target.value)
+    }
     render() {
+
       console.log("current view" ,this.state.value)
       return (
         <div className="views">
@@ -26,7 +27,7 @@ class DropDown extends Component {
           </select>
         </div>
 
-  )
+        )
     }
 }
 

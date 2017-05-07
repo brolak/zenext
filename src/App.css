@@ -21,12 +21,13 @@
   width:70%;
 }
 .settings-logo {
-  height: 20px;
-  width: 20px;
+  height: 21px;
+  width: 21px;
 }
 .exit-logo {
   height: 19px;
   padding-left: 14px;
+  padding-bottom: 1px;
 }
 .speaker-logo {
   height: 19px;

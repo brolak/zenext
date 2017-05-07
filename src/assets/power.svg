@@ -1,38 +1,14 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 56 56" style="enable-background:new 0 0 56 56;" xml:space="preserve" width="512px" height="512px">
-<g>
-	<path d="M35.31,5.042c-0.532-0.155-1.085,0.15-1.24,0.68s0.149,1.085,0.68,1.24C44.906,9.932,52,19.405,52,30   c0,13.233-10.767,24-24,24S4,43.233,4,30C4,19.392,11.105,9.915,21.279,6.953c0.53-0.154,0.835-0.709,0.681-1.239   c-0.153-0.53-0.708-0.839-1.239-0.681C9.698,8.241,2,18.508,2,30c0,14.337,11.663,26,26,26s26-11.663,26-26   C54,18.522,46.314,8.26,35.31,5.042z" fill="#d8d8d8"/>
-	<path d="M28,27c0.553,0,1-0.447,1-1V1c0-0.553-0.447-1-1-1s-1,0.447-1,1v25C27,26.553,27.447,27,28,27z" fill="#d8d8d8"/>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
+<?xml version="1.0"?>
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="56" height="56">
+    <desc iVinci="yes" version="4.6" gridStep="20" showGrid="no" snapToGrid="no" codePlatform="0"/>
+    <g id="Layer1" name="Layer 1" opacity="1">
+        <g id="Shape1">
+            <desc shapeID="1" type="0" basicInfo-basicType="0" basicInfo-roundedRectRadius="12" basicInfo-polygonSides="6" basicInfo-starPoints="5" bounding="rect(-26,-25.5042,52,51.0084)" text="" font-familyName="" font-pixelSize="20" font-bold="0" font-underline="0" font-alignment="1" strokeStyle="0" markerStart="0" markerEnd="0" shadowEnabled="0" shadowOffsetX="0" shadowOffsetY="2" shadowBlur="4" shadowOpacity="160" blurEnabled="0" blurRadius="4" transform="matrix(0.923077,0,0,0.910714,26,32.773)" pers-center="0,0" pers-size="0,0" pers-start="0,0" pers-end="0,0" locked="0" mesh="" flag=""/>
+            <path id="shapePath1" d="M32.7477,9.59182 C32.2566,9.45066 31.7462,9.72843 31.6031,10.2111 C31.46,10.6938 31.7406,11.1992 32.2308,11.3404 C41.6055,14.0452 48.1538,22.6724 48.1538,32.3214 C48.1538,44.3729 38.2151,54.1786 26,54.1786 C13.7849,54.1786 3.84615,44.3729 3.84615,32.3214 C3.84615,22.6606 10.4046,14.0297 19.796,11.3322 C20.2852,11.1919 20.5668,10.6865 20.4246,10.2038 C20.2834,9.72114 19.7711,9.43973 19.2809,9.58362 C9.10585,12.5052 2,21.8555 2,32.3214 C2,45.3783 12.7658,56 26,56 C39.2342,56 50,45.3783 50,32.3214 C50,21.8682 42.9052,12.5225 32.7477,9.59182 Z" style="stroke:none;fill-rule:nonzero;fill:#666666;fill-opacity:1;"/>
+        </g>
+        <g id="Shape2">
+            <desc shapeID="2" type="0" basicInfo-basicType="0" basicInfo-roundedRectRadius="12" basicInfo-polygonSides="6" basicInfo-starPoints="5" bounding="rect(-1,-13.5,2,27)" text="" font-familyName="" font-pixelSize="20" font-bold="0" font-underline="0" font-alignment="1" strokeStyle="0" markerStart="0" markerEnd="0" shadowEnabled="0" shadowOffsetX="0" shadowOffsetY="2" shadowBlur="4" shadowOpacity="160" blurEnabled="0" blurRadius="4" transform="matrix(0.923077,0,0,0.910714,26,12.2946)" pers-center="0,0" pers-size="0,0" pers-start="0,0" pers-end="0,0" locked="0" mesh="" flag=""/>
+            <path id="shapePath2" d="M26,24.5893 C26.5105,24.5893 26.9231,24.1822 26.9231,23.6786 L26.9231,0.910712 C26.9231,0.407086 26.5105,-1.90735e-06 26,-1.90735e-06 C25.4895,-1.90735e-06 25.0769,0.407086 25.0769,0.910712 L25.0769,23.6786 C25.0769,24.1822 25.4895,24.5893 26,24.5893 Z" style="stroke:none;fill-rule:nonzero;fill:#666666;fill-opacity:1;"/>
+        </g>
+    </g>
 </svg>
