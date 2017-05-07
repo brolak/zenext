@@ -107,10 +107,8 @@ var createNotification = function(notification) {
 var checkTickets = function (storage) {
 	//use domain and viewid for api GET request
 	var url = 'https://'+storage.zendeskDomain+'.zendesk.com/api/v2/views/'+storage.defaultViewID+'/execute.json?per_page=30&page=1&sort_by=id&sort_order=desc&group_by=+&include=via_id';
-
 	axios.get(url)
 	.then(function (response) {
-
 		//if there are no tickets
 		if(response.data.count == 0){
 		//empty badge
@@ -119,12 +117,9 @@ var checkTickets = function (storage) {
 		//otherwise set badge to ticket #
 			updateBadge(response.data.count);
 		}
-
 		//check if user wants notifications
-
 		if(storage.notificationSetting){
 			//if response ticket count it larger than stored count, notify accordingly
-
 			if(storage.newTickets < response.data.count){
 		//first find out how many new tickets there are,
 				var newIds = diffTickets(response.data.rows,storage.ticketsArr);

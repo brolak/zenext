@@ -2,9 +2,10 @@ import React, {Component} from 'react';
 import mute from '../assets/alarm.png';
 import muted from '../assets/alarmno.png'
 import exit from '../assets/power.png';
+import settings from '../assets/settings.png';
 import logo from '../assets/logoNEW.png';
 import '../App.css';
-
+//icons color #d8d8d8
 class Nav extends Component {
 
   constructor(props) {
@@ -22,7 +23,6 @@ class Nav extends Component {
 
      //toggle chrome desktop notifications
     toggleNotifications = () => {
-      console.log("tetet")
       window.chrome.storage.local.set({
                 notificationSetting: !this.state.notificationSetting
             });
