@@ -190,7 +190,8 @@ button:focus {
 }
 .viewSpan{
   color: #b8b8b8;
-    padding-left: 46px;
+  padding-left: 46px;
+  font-family: 'Assistant', sans-serif;
 }
 .views{
   width: 200px;
@@ -208,6 +209,7 @@ padding-left: 5px;
     background-image: none;
     border: 1px solid #3399ff;
     border-radius: .25rem;
+    font-family: 'Assistant', sans-serif;
 }
 .upper-title{
   vertical-align: bottom;
@@ -278,13 +280,29 @@ color: #666666;
   padding-left: 10px;
 }
 /*Table*/
+.table-header {
+  table-layout: fixed;
+}
 .align-left {
   text-align: left;
       padding-left: 4%;
 }
 .align-center {
-  text-align: center;
+  text-align: right;
+  font-size: 12px;
+  color: #3399ff;
+  font-family: 'Assistant', sans-serif;
 }
+.align-center .init-fade {
+  opacity: 0;
+  visibility: 0;
+}
+.fade-out {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s 0.5s, opacity 0.5s linear;
+}
+
 .align-right {
   text-align: right;
     padding-right: 4%;
