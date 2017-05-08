@@ -10,7 +10,9 @@ import notifyOn from '../assets/notifyOn.svg';
 import notifyOff from '../assets/notifyOff.svg';
 import notifySound from '../assets/notifySound.svg';
 import '../App.css';
+import ReactGA from 'react-ga'
 //icons color #d8d8d8
+
 class Nav extends Component {
 
     constructor(props) {
@@ -32,6 +34,10 @@ class Nav extends Component {
 
     //toggle chrome desktop notifications
     toggleNotifications = () => {
+      ReactGA.event({
+            category: 'Notification',
+            action: 'Clicked'
+        });
         let notify = this.state.notificationSetting + 1;
         if (notify > 2) {
             notify = 0;
