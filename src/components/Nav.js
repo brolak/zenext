@@ -25,7 +25,9 @@ class Nav extends Component {
     componentDidMount = () => {
         window.chrome.storage.local.get((storage) => {
             if (storage.zendeskDomain) {
-                this.setState({notificationSetting: storage.notificationSetting || 0})
+                this.setState({
+                    notificationSetting: storage.notificationSetting || 0
+                })
             }
         })
     }
@@ -42,6 +44,15 @@ class Nav extends Component {
         }
         window.chrome.storage.local.set({notificationSetting: notify});
         this.setState({notificationSetting: notify});
+
+        setTimeout(() => {
+          this.alertMsg.classList.remove('fade-out');
+          this.alertMsg.classList.remove('init-fade');
+              setTimeout(() => {
+                this.alertMsg.classList.add('fade-out');
+            }, 0)
+        }, 0)
+
     }
 
     render() {
@@ -51,21 +62,21 @@ class Nav extends Component {
         switch (this.state.notificationSetting) {
             case 0:
                 notifyButton = notifySound;
-                msg = "sound on"
+                msg = "SOUND ON"
                 break;
             case 1:
                 notifyButton = notifyOn;
-                msg = "sound off"
+                msg = "SOUND OFF"
                 break;
             case 2:
                 notifyButton = notifyOff;
-                msg = "notification off"
+                msg = "NOTIFICATIONS OFF"
         }
         console.log("notification", this.state.notificationSetting)
         if (this.props.hasButtons) {
             buttons = (
                 <td className="align-right">
-                    <img src={notifyButton} className="settings-logo"  onClick={this.toggleNotifications} title={msg}/>
+                    <img src={notifyButton} className="settings-logo" onClick={this.toggleNotifications} />
                     <img src={exit} className="exit-logo" alt="Sign out" title="Logout" onClick={this.props.logout}/>
                 </td>
             )
@@ -73,9 +84,10 @@ class Nav extends Component {
         return (
             <div className="row">
                 <div className="col-md-12 topNavbar navbar">
-                    <table width="100%">
+                    <table width="100%" className="header-table">
                         <tr>
                             <td className="align-left"><img src={logo} className="App-logo" alt="logo"/></td>
+                            <td className="align-center"><span className="init-fade" ref={(value) => this.alertMsg = value}>{msg}</span></td>
                             {buttons}
                         </tr>
                     </table>
