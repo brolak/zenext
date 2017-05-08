@@ -8,6 +8,7 @@
     "font-awesome": "^4.7.0",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
+    "react-ga": "^2.2.0",
     "react-timeago": "^3.3.0",
     "react-toggle": "^3.0.1",
     "react-tooltip": "^3.3.0"

@@ -2,16 +2,13 @@
     "name": "Notify-Me",
     "description": "Advanced Support Ticket Notifications",
     "version": "1.0.0",
-
+    "content_security_policy": "script-src 'self' https://www.google-analytics.com; object-src 'self'",
     "permissions": [
     	"notifications",
         "https://*.zendesk.com/",
         "storage",
         "tabs"
     ],
-    "app" :{
-      "urls": [ "https://zendesk.com"]
-    },
     "icons": {
     "16": "logo_smallNEW.png",
     "48": "logo_smallNEW.png",

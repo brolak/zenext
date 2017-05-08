@@ -43,15 +43,12 @@ var diffTickets = function (responseTickets,storageTickets){
 	return responseIds.diff(ticketIds);
 }
 
-
 //function for finding/opening new zendesk tab
 //for use in chrome notification
-var findAndOpenTab = function(ticketId,viewID) {
-	var st;
+var findAndOpenTab = function(ticketId,viewID,domain) {
+
 	chrome.tabs.getAllInWindow(null, function(cb){
-		chrome.storage.local.get(null,function(storage){
-			st=storage.zendeskDomain;
-		})
+
 	//regex to find matching url
 		var re = /zendesk\.com\/agent\//
 	//return first tab that matches dashboard url
@@ -68,7 +65,7 @@ var findAndOpenTab = function(ticketId,viewID) {
 				})
 			} else if(ticketId) {
 	//if it's just one ticket, update existing tab to ticket url and open window/tab
-				chrome.tabs.update(tab.id, {url:"https://"+st+".zendesk.com/agent/tickets/"+ticketId, active:true}, function (cb){
+				chrome.tabs.update(tab.id, {url:"https://"+domain+".zendesk.com/agent/tickets/"+ticketId, active:true}, function (cb){
 					chrome.windows.update(cb.windowId, {focused: true});
 				})
 			}
@@ -76,12 +73,12 @@ var findAndOpenTab = function(ticketId,viewID) {
 	//if tab not found
 			if(ticketId == null){
 	//create a new one and open it at dashboard (multiple ticket case)
-				chrome.tabs.create({url:"https://"+st+".zendesk.com/agent/filters/"+viewID, active:true}, function (cb){
+				chrome.tabs.create({url:"https://"+domain+".zendesk.com/agent/filters/"+viewID, active:true}, function (cb){
 					chrome.windows.update(cb.windowId, {focused: true});
 				})
 			}else if(ticketId){
 	//or create new one with ticket url and open
-				chrome.tabs.create({url:"https://"+st+"zendesk.com/agent/tickets/"+ticketId, active:true}, function (cb){
+				chrome.tabs.create({url:"https://"+domain+".zendesk.com/agent/tickets/"+ticketId, active:true}, function (cb){
 					chrome.windows.update(cb.windowId, {focused: true});
 				})
 			}
@@ -98,10 +95,15 @@ var createNotification = function(notification) {
 		message: notification.message,
 		iconUrl: "./logoNotifications.png"
 	}
+	var domain;
+	chrome.storage.local.get(null,function(storage){
+		domain=storage.zendeskDomain;
+		console.log("domain" , domain);
+	})
 	//create notification with click function that does tab check/open
 	chrome.notifications.create(notification.id,options,function(){});
 	chrome.notifications.onClicked.addListener(function click(){
-		findAndOpenTab(notification.ticketID,notification.viewID);
+		findAndOpenTab(notification.ticketID,notification.viewID, domain);
 	//when notification is clicked or closed, remove the function so it doesn't stack
 		chrome.notifications.onClicked.removeListener(click);
 		chrome.notifications.onClosed.removeListener(click);
