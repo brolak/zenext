@@ -9,6 +9,7 @@ import NoButtonNav from './components/NoButtonNav';
 import Settings from './components/Settings';
 import LoginForm from './components/LoginForm';
 import DropDown from './components/dropDown'
+import ReactGA from 'react-ga'
 import './App.css';
 
 class App extends Component {
@@ -70,18 +71,13 @@ class App extends Component {
           }
     });
 }
-    // this.setState({
-    //   ticketsArr:NewStore.ticketsArr.newValue,
-    //   newTickets:NewStore.ticketsArr.newValue.length,
-    //   requestersArr:NewStore.requestersArr.newValue
-    // })
-
 
     //making an API call and creating the view list array
     createViewList = (domain) => {
       //set up the views list in local storage
       axios.get('https://'+domain+'.zendesk.com/api/v2/views/compact')
       .then((response) => {
+
           console.log("api view list" ,response);
           this.setState(
             {
@@ -111,8 +107,7 @@ class App extends Component {
             ticketsArr: response.data.rows,
             newTickets: response.data.count,
             zendeskDomain: this.state.zendeskDomain,
-            requestersArr: response.data.users,
-            notificationSetting:true
+            requestersArr: response.data.users
           }, () => {
 
             setTimeout(() => {
@@ -166,7 +161,13 @@ class App extends Component {
     handleSignIn = (e) => {
       e.preventDefault();
       console.log(this.state);
+      window.chrome.storage.local.set({notificationSetting: 0});
       this.createViewList(this.state.zendeskDomain);
+      ReactGA.event({
+            category: 'launch',
+            action: 'Clicked',
+            label:this.state.zendeskDomain
+        });
     }
 
     handleInput = (e) => {
@@ -196,6 +197,7 @@ class App extends Component {
 
     //render function for user online status
     renderOnline(){
+
         return (
             <div className="onlinePage">
                 <Tickets
