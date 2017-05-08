@@ -1,24 +1,29 @@
 import React, {Component} from 'react';
 import TimeAgo from 'react-timeago';
 
-
 class SingleTicket extends Component {
 
     findAndOpenTab = (ticketId, domain) => {
-        window.chrome.tabs.getAllInWindow( (cb) => {
+        window.chrome.tabs.getAllInWindow((cb) => {
             const re = /zendesk\.com\/agent\//
-            let tab = cb.filter(function ( obj ) {
+            let tab = cb.filter(function(obj) {
                 return obj.url.match(re);
             })[0];
             //return first matching tab based on url
             //if there is one update that tab's url based on ticket id
-            if(tab){
-                window.chrome.tabs.update(tab.id, {url:"https://"+domain+".zendesk.com/agent/tickets/"+ticketId, active:true}, function (cb){
+            if (tab) {
+                window.chrome.tabs.update(tab.id, {
+                    url: "https://" + domain + ".zendesk.com/agent/tickets/" + ticketId,
+                    active: true
+                }, function(cb) {
                     window.chrome.windows.update(cb.windowId, {focused: true});
                 })
             } else {
-            //otherwise open new tab base on ticket id
-                window.chrome.tabs.create({url:"https://"+domain+".zendesk.com/agent/tickets/"+ticketId, active:true}, function (cb){
+                //otherwise open new tab base on ticket id
+                window.chrome.tabs.create({
+                    url: "https://" + domain + ".zendesk.com/agent/tickets/" + ticketId,
+                    active: true
+                }, function(cb) {
                     window.chrome.windows.update(cb.windowId, {focused: true});
                 })
             }
@@ -38,7 +43,7 @@ class SingleTicket extends Component {
                         <td className="ticketRequester align-right">{this.props.requester}</td>
                     </tr>
                     <tr className="lower-desc">
-                        <td className="ticketDesc align-left" >{this.props.description}
+                        <td className="ticketDesc align-left">{this.props.description}
                         </td>
                         <td className="ticketTime align-right"><TimeAgo date={this.props.created_at}/></td>
                     </tr>

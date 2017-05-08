@@ -4,11 +4,11 @@ class Settings extends Component {
 
     render() {
         return (
-          <div className="preloader">
-              <div className="preloaderText">
-                SETTINGS
-              </div>
-          </div>
+            <div className="preloader">
+                <div className="preloaderText">
+                    SETTINGS
+                </div>
+            </div>
         );
     }
 }

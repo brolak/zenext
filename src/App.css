@@ -1,205 +1,227 @@
 .App-logo {
-  height: 25px;
+    height: 25px;
 }
-.preloaderText{
-  font-family: 'Assistant', sans-serif;
-  color:gray;
-  font-size:20px;
+
+.preloaderText {
+    font-family: 'Assistant', sans-serif;
+    color: gray;
+    font-size: 20px;
 }
-.preloader{
-  text-align: center;
-  align-items: center;
+
+.preloader {
+    text-align: center;
+    align-items: center;
 }
-.preloaderImg{
-  text-align: center;
-  margin-left: 10px;
-  width:90%;
+
+.preloaderImg {
+    text-align: center;
+    margin-left: 10px;
+    width: 90%;
 }
-.rocketImage{
-  text-align: center;
-  margin-left: 10px;
-  width:70%;
+
+.rocketImage {
+    text-align: center;
+    margin-left: 10px;
+    width: 70%;
 }
+
 .settings-logo {
-  height: 21px;
-  width: 21px;
+    height: 21px;
+    width: 21px;
 }
+
 .exit-logo {
-  height: 19px;
-  padding-left: 14px;
-  padding-bottom: 1px;
+    height: 19px;
+    padding-left: 14px;
+    padding-bottom: 1px;
 }
+
 .speaker-logo {
-  height: 19px;
-  padding-left: 14px;
+    height: 19px;
+    padding-left: 14px;
 }
-.text-title{
-  color: #3399ff;
-  font-size: large;
+
+.text-title {
+    color: #3399ff;
+    font-size: large;
 }
+
 .logo {
-  text-align: center;
-  height: inherit;
+    text-align: center;
+    height: inherit;
 }
+
 .navbar {
-  text-align: left;
-  height: inherit;
-}
-.topNavbar{
-  padding-left: 0px;
-padding-right: 0px;
-}
-.input{
-  margin:5px;
-  text-align: center;
-
-}
-.submit{
-  margin:10px;
-  text-align: center;
-}
-.App-body{
-  font-family: 'Assistant', sans-serif;
-  color:#3399ff;
-  font-size: large;
+    text-align: left;
+    height: inherit;
 }
 
-hr{
-  margin-top: 0px;
-margin-bottom: 0px;
-
+.topNavbar {
+    padding-left: 0px;
+    padding-right: 0px;
 }
+
+.input {
+    margin: 5px;
+    text-align: center;
+}
+
+.submit {
+    margin: 10px;
+    text-align: center;
+}
+
+.App-body {
+    font-family: 'Assistant', sans-serif;
+    color: #3399ff;
+    font-size: large;
+}
+
+hr {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
 a:active, a:focus {
-  outline: none;
-}
-.title, .intro{
-  color:#666666;
-  text-align: center;
-  margin:10px;
-  font-family: 'Assistant', sans-serif;
+    outline: none;
 }
 
-.inputDomain{
-  width:140px;
-  color:#666666;
-  font-family: 'Assistant', sans-serif;
-  border-radius:5px;
-  border:1px solid #666666;
-  padding-left: 10px;
+.title, .intro {
+    color: #666666;
+    text-align: center;
+    margin: 10px;
+    font-family: 'Assistant', sans-serif;
+}
+
+.inputDomain {
+    width: 140px;
+    color: #666666;
+    font-family: 'Assistant', sans-serif;
+    border-radius: 5px;
+    border: 1px solid #666666;
+    padding-left: 10px;
 }
 
 input::placeholder {
-  color: light;
-  font-size: 14px;
+    color: light;
+    font-size: 14px;
 }
-.myButton {
-	background-color:#ffffff;
-	-moz-border-radius:28px;
-	-webkit-border-radius:28px;
-	border-radius:14px;
-	border:1px solid #3399ff;
-	display:inline-block;
-	cursor:pointer;
-	color:#3399ff;
-  font-family: 'Assistant', sans-serif;
-	font-size:17px;
-	padding:10px 21px;
-	text-decoration:none;
-	position: center;
-	text-align: center;
-	vertical-align: middle;
-  width: 100px;
 
+.myButton {
+    background-color: #ffffff;
+    -moz-border-radius: 28px;
+    -webkit-border-radius: 28px;
+    border-radius: 14px;
+    border: 1px solid #3399ff;
+    display: inline-block;
+    cursor: pointer;
+    color: #3399ff;
+    font-family: 'Assistant', sans-serif;
+    font-size: 17px;
+    padding: 10px 21px;
+    text-decoration: none;
+    position: center;
+    text-align: center;
+    vertical-align: middle;
+    width: 100px;
 }
+
 .myButton:hover {
-	background-color:#3399ff;
-  color:#ffffff
+    background-color: #3399ff;
+    color: #ffffff
 }
 
 .blue {
-  background-color:#3399ff;
-  color:#ffffff
-}
-.myButton:active {
-	position:relative;
-	top:1px;
+    background-color: #3399ff;
+    color: #ffffff
 }
 
-input:focus,
-select:focus,
-textarea:focus,
-button:focus {
+.myButton:active {
+    position: relative;
+    top: 1px;
+}
+
+input:focus, select:focus, textarea:focus, button:focus {
     outline: none;
 }
 
 .openTicketsCounter {
-  text-align: center;
+    text-align: center;
 }
+
 
 /* Tickets */
 
 .tickets {
     color: #3F3F3F;
     height: 56px;
-    width:100%;
-
+    width: 100%;
     -webkit-transition: background-color .1s ease-out;
     -moz-transition: background-color .1s ease-out;
     -o-transition: background-color .1s ease-out;
     transition: background-color .1s ease-out;
 }
+
 .tickets:last-child {
     border-bottom: none;
 }
+
 .tickets:hover {
     background-color: #ECECEC;
     cursor: pointer;
 }
+
 .ticketDesc {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 19ch;
-  font-size: 13px;
-  font-style: normal;
-  color: #b8b8b8;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 19ch;
+    font-size: 13px;
+    font-style: normal;
+    color: #b8b8b8;
 }
+
 .ticketSubject {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-
-  max-width: 15ch;
-  font-size: 15px;
-  font-style: bold;
-  text-align: left;
-  color: #666666;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 15ch;
+    font-size: 15px;
+    font-style: bold;
+    text-align: left;
+    color: #666666;
 }
 
-.lower-desc{
-  vertical-align: -webkit-baseline-middle;
+.lower-desc {
+    vertical-align: -webkit-baseline-middle;
 }
-.base{
-  height: 410px;
+
+.base {
+    height: 410px;
 }
-.row{
-  margin-bottom: 2px;
+
+.row {
+    margin-bottom: 2px;
 }
-.down{
-  padding-top: 80px;
+
+.down {
+    padding-top: 80px;
 }
-.viewSpan{
-  color: #b8b8b8;
-  padding-left: 46px;
-  font-family: 'Assistant', sans-serif;
+
+.viewSpan {
+    color: #b8b8b8;
+    padding-left: 46px;
+    font-family: 'Assistant', sans-serif;
 }
-.views{
-  width: 200px;
-display: inline-block;
-padding-left: 5px;
+
+.views {
+    width: 200px;
+    display: inline-block;
+    padding-left: 5px;
 }
-.form-control{
-  display: block;
+
+.form-control {
+    display: block;
     width: 100%;
     padding: .375rem .75rem;
     font-size: 1rem;
@@ -211,94 +233,116 @@ padding-left: 5px;
     border-radius: .25rem;
     font-family: 'Assistant', sans-serif;
 }
-.upper-title{
-  vertical-align: bottom;
-}
-.ticketRequester {
-font-size: 10px;
-text-align: center;
-margin-right: 1em;
-color: #666666;
-}
-.ticketTime {
-  font-size: 10px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 5ch;
-  color: #3399ff;
+
+.upper-title {
+    vertical-align: bottom;
 }
 
+.ticketRequester {
+    font-size: 10px;
+    text-align: center;
+    margin-right: 1em;
+    color: #666666;
+}
+
+.ticketTime {
+    font-size: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 5ch;
+    color: #3399ff;
+}
+
+
 /*Counter*/
+
 .counterBorder {
-  border-style: solid;
-  border-radius: 10px;
-  border-color: #2eddaf;
-  width: 110px;
-  margin: auto;
-  padding: 5px;
+    border-style: solid;
+    border-radius: 10px;
+    border-color: #2eddaf;
+    width: 110px;
+    margin: auto;
+    padding: 5px;
 }
+
 .counterDiv {
-  margin: 2px;
+    margin: 2px;
 }
+
 .openTicketCounterInteger {
-  text-align: center;
-  font-size: 200%;
-  color: #2eddaf;
-  font-family: 'Assistant', sans-serif;
+    text-align: center;
+    font-size: 200%;
+    color: #2eddaf;
+    font-family: 'Assistant', sans-serif;
 }
+
 .openTicketCounterString {
-  text-align: center;
-  font-size: 80%;
-  font-family: 'Assistant', sans-serif;
-  color: #666666;
+    text-align: center;
+    font-size: 80%;
+    font-family: 'Assistant', sans-serif;
+    color: #666666;
 }
+
 .noTickets .counterBorder {
-  border-color: #d8d8d8;
+    border-color: #d8d8d8;
 }
+
 .noTickets .openTicketCounterInteger {
-  color: #d8d8d8;
+    color: #d8d8d8;
 }
+
+
 /*List*/
+
 .itemList {
-  margin-right: 5px;
-  margin-left: 5px;
-  padding-left: 3px;
-  padding-right: 3px;
+    margin-right: 5px;
+    margin-left: 5px;
+    padding-left: 3px;
+    padding-right: 3px;
 }
+
 .ticketList {
-  margin-top: 2px;
-  padding: inherit;
-  /*border: solid black;*/
-  height: 230px;
-  overflow-y: scroll;
-  /*margin-bottom: 25px;*/
+    margin-top: 2px;
+    padding: inherit;
+    /*border: solid black;*/
+    height: 230px;
+    overflow-y: scroll;
+    /*margin-bottom: 25px;*/
 }
-.form-group{
-  margin-top: 5px;
-  width: 200px;
-  padding-left: 10px;
+
+.form-group {
+    margin-top: 5px;
+    width: 200px;
+    padding-left: 10px;
 }
+
+
 /*Table*/
+
 .table-header {
-  table-layout: fixed;
+    table-layout: fixed;
 }
+
 .align-left {
-  text-align: left;
-      padding-left: 4%;
+    text-align: left;
+    padding-left: 4%;
 }
+
 .align-center {
-  text-align: right;
-  font-size: 12px;
-  color: #3399ff;
-  padding-top: 5px;
-  padding-right: 5px;
-  font-family: 'Assistant', sans-serif;
+    text-align: right;
+    font-size: 12px;
+    color: #3399ff;
+    padding-top: 5px;
+    padding-right: 5px;
+    font-family: 'Assistant', sans-serif;
 }
+
 .align-center .init-fade {
-  opacity: 0;
-  visibility: 0;
+    opacity: 0;
+    visibility: 0;
 }
+
 .fade-out {
     visibility: hidden;
     opacity: 0;
@@ -306,163 +350,161 @@ color: #666666;
 }
 
 .align-right {
-  text-align: right;
+    text-align: right;
     padding-right: 4%;
     width: 70px;
 }
 
+
 /*react toggle*/
+
 .toggle {
-  padding-top: 3px;
+    padding-top: 3px;
 }
+
 .react-toggle {
-  touch-action: pan-x;
-
-  display: inline-block;
-  position: relative;
-  cursor: pointer;
-  background-color: transparent;
-  border: 0;
-  padding: 0;
-
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-
-  -webkit-tap-highlight-color: rgba(0,0,0,0);
-  -webkit-tap-highlight-color: transparent;
+    touch-action: pan-x;
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    background-color: transparent;
+    border: 0;
+    padding: 0;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-tap-highlight-color: transparent;
 }
 
 .react-toggle-screenreader-only {
-  border: 0;
-  clip: rect(0 0 0 0);
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  padding: 0;
-  position: absolute;
-  width: 1px;
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
 }
 
 .react-toggle--disabled {
-  cursor: not-allowed;
-  opacity: 0.5;
-  -webkit-transition: opacity 0.25s;
-  transition: opacity 0.25s;
+    cursor: not-allowed;
+    opacity: 0.5;
+    -webkit-transition: opacity 0.25s;
+    transition: opacity 0.25s;
 }
 
 .react-toggle-track {
-  width: 40px;
-  height: 17px;
-  padding: 5;
-  border-radius: 30px;
-  background-color: #4D4D4D;
-  -webkit-transition: all 0.2s ease;
-  -moz-transition: all 0.2s ease;
-  transition: all 0.2s ease;
-
+    width: 40px;
+    height: 17px;
+    padding: 5;
+    border-radius: 30px;
+    background-color: #4D4D4D;
+    -webkit-transition: all 0.2s ease;
+    -moz-transition: all 0.2s ease;
+    transition: all 0.2s ease;
 }
 
 .react-toggle:hover:not(.react-toggle--disabled) .react-toggle-track {
-  background-color: #000000;
+    background-color: #000000;
 }
 
 .react-toggle--checked .react-toggle-track {
-  background-color: #0099E0;
+    background-color: #0099E0;
 }
 
 .react-toggle--checked:hover:not(.react-toggle--disabled) .react-toggle-track {
-  background-color: #0099E0;
+    background-color: #0099E0;
 }
 
 .react-toggle-track-check {
-  position: absolute;
-  width: 14px;
-  height: 10px;
-  top: 0px;
-  bottom: 0px;
-  margin-top: auto;
-  margin-bottom: auto;
-  line-height: 0;
-  left: 8px;
-  opacity: 0;
-  -webkit-transition: opacity 0.25s ease;
-  -moz-transition: opacity 0.25s ease;
-  transition: opacity 0.25s ease;
+    position: absolute;
+    width: 14px;
+    height: 10px;
+    top: 0px;
+    bottom: 0px;
+    margin-top: auto;
+    margin-bottom: auto;
+    line-height: 0;
+    left: 8px;
+    opacity: 0;
+    -webkit-transition: opacity 0.25s ease;
+    -moz-transition: opacity 0.25s ease;
+    transition: opacity 0.25s ease;
 }
 
 .react-toggle--checked .react-toggle-track-check {
-  opacity: 1;
-  -webkit-transition: opacity 0.25s ease;
-  -moz-transition: opacity 0.25s ease;
-  transition: opacity 0.25s ease;
+    opacity: 1;
+    -webkit-transition: opacity 0.25s ease;
+    -moz-transition: opacity 0.25s ease;
+    transition: opacity 0.25s ease;
 }
 
 .react-toggle-track-x {
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  top: 0px;
-  bottom: 0px;
-  margin-top: auto;
-  margin-bottom: auto;
-  line-height: 0;
-  right: 10px;
-  opacity: 1;
-  -webkit-transition: opacity 0.25s ease;
-  -moz-transition: opacity 0.25s ease;
-  transition: opacity 0.25s ease;
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    top: 0px;
+    bottom: 0px;
+    margin-top: auto;
+    margin-bottom: auto;
+    line-height: 0;
+    right: 10px;
+    opacity: 1;
+    -webkit-transition: opacity 0.25s ease;
+    -moz-transition: opacity 0.25s ease;
+    transition: opacity 0.25s ease;
 }
 
 .react-toggle--checked .react-toggle-track-x {
-  opacity: 0;
+    opacity: 0;
 }
 
 .react-toggle-thumb {
-  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1) 0ms;
-  position: absolute;
-  top: 1px;
-  left: 1px;
-  width: 15px;
-  height: 15px;
-  border: 1px solid #4D4D4D;
-  border-radius: 50%;
-  background-color: #FAFAFA;
-
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-
-  -webkit-transition: all 0.25s ease;
-  -moz-transition: all 0.25s ease;
-  transition: all 0.25s ease;
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    width: 15px;
+    height: 15px;
+    border: 1px solid #4D4D4D;
+    border-radius: 50%;
+    background-color: #FAFAFA;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-transition: all 0.25s ease;
+    -moz-transition: all 0.25s ease;
+    transition: all 0.25s ease;
 }
 
 .react-toggle--checked .react-toggle-thumb {
-  left: 27px;
-  border-color: #0099E0;
+    left: 27px;
+    border-color: #0099E0;
 }
 
 .react-toggle--focus .react-toggle-thumb {
-  -webkit-box-shadow: 0px 0px 3px 2px #0099E0;
-  -moz-box-shadow: 0px 0px 3px 2px #0099E0;
-  box-shadow: 0px 0px 2px 3px #0099E0;
+    -webkit-box-shadow: 0px 0px 3px 2px #0099E0;
+    -moz-box-shadow: 0px 0px 3px 2px #0099E0;
+    box-shadow: 0px 0px 2px 3px #0099E0;
 }
 
 .react-toggle:active:not(.react-toggle--disabled) .react-toggle-thumb {
-  -webkit-box-shadow: 0px 0px 5px 5px #0099E0;
-  -moz-box-shadow: 0px 0px 5px 5px #0099E0;
-  box-shadow: 0px 0px 5px 5px #0099E0;
+    -webkit-box-shadow: 0px 0px 5px 5px #0099E0;
+    -moz-box-shadow: 0px 0px 5px 5px #0099E0;
+    box-shadow: 0px 0px 5px 5px #0099E0;
 }
-/*Tooltip*/
-.customeTheme {
- color: #0099E0 !important;
- background-color: white !important;
- /*border-top-width: 6px !important;*/
- opacity: 0.2;
- display: inline-block;
 
- }
+/*Tooltip*/
+
+.customeTheme {
+    color: #0099E0 !important;
+    background-color: white !important;
+    /*border-top-width: 6px !important;*/
+    opacity: 0.2;
+    display: inline-block;
+}

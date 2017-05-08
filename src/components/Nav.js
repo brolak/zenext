@@ -1,18 +1,11 @@
 import React, {Component} from 'react';
-import mute from '../assets/alarm.png';
-import muted from '../assets/alarmno.png'
 import exit from '../assets/power.png';
-import settings from '../assets/settings.png';
-import speaker from '../assets/speaker.svg';
-import speakerOff from '../assets/mute.png'
 import logo from '../assets/logoNEW.png';
 import notifyOn from '../assets/notifyOn.svg';
 import notifyOff from '../assets/notifyOff.svg';
 import notifySound from '../assets/notifySound.svg';
 import '../App.css';
-import ReactGA from 'react-ga'
 //icons color #d8d8d8
-
 class Nav extends Component {
 
     constructor(props) {
@@ -34,25 +27,19 @@ class Nav extends Component {
 
     //toggle chrome desktop notifications
     toggleNotifications = () => {
-      ReactGA.event({
-            category: 'Notification',
-            action: 'Clicked'
-        });
         let notify = this.state.notificationSetting + 1;
         if (notify > 2) {
             notify = 0;
         }
         window.chrome.storage.local.set({notificationSetting: notify});
         this.setState({notificationSetting: notify});
-
         setTimeout(() => {
-          this.alertMsg.classList.remove('fade-out');
-          this.alertMsg.classList.remove('init-fade');
-              setTimeout(() => {
+            this.alertMsg.classList.remove('fade-out');
+            this.alertMsg.classList.remove('init-fade');
+            setTimeout(() => {
                 this.alertMsg.classList.add('fade-out');
             }, 0)
         }, 0)
-
     }
 
     render() {
@@ -76,7 +63,7 @@ class Nav extends Component {
         if (this.props.hasButtons) {
             buttons = (
                 <td className="align-right">
-                    <img src={notifyButton} className="settings-logo" onClick={this.toggleNotifications} />
+                    <img src={notifyButton} className="settings-logo" onClick={this.toggleNotifications}/>
                     <img src={exit} className="exit-logo" alt="Sign out" title="Logout" onClick={this.props.logout}/>
                 </td>
             )
@@ -87,7 +74,9 @@ class Nav extends Component {
                     <table width="100%" className="header-table">
                         <tr>
                             <td className="align-left"><img src={logo} className="App-logo" alt="logo"/></td>
-                            <td className="align-center"><span className="init-fade" ref={(value) => this.alertMsg = value}>{msg}</span></td>
+                            <td className="align-center">
+                                <span className="init-fade" ref={(value) => this.alertMsg = value}>{msg}</span>
+                            </td>
                             {buttons}
                         </tr>
                     </table>
