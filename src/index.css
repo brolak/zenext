@@ -1,18 +1,17 @@
 body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Roboto', sans-serif;
-  border-width: 1px solid;
-  border-color: gray;
-  background-color: gray;
-
-/* Added body dimensions*/
-  height: 400px;
-  width: 350px;
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    border-width: 1px solid;
+    border-color: gray;
+    background-color: gray;
+    /* Added body dimensions*/
+    height: 400px;
+    width: 350px;
 }
 
-.base{
-  height: 420px;
-  width: 350px;
-  background-color: white;
+.base {
+    height: 420px;
+    width: 350px;
+    background-color: white;
 }
