@@ -69,12 +69,15 @@ class App extends Component {
     //making an API call and creating the view list array
     createViewList = (domain) => {
         //set up the views list in local storage
-        axios.get('https://' + domain + '.zendesk.com/api/v2/views/compact').then((response) => {
-
+        axios.get('https://' + domain + '.zendesk.com/api/v2/views/compact')
+        .then((response) => {
             console.log("api view list", response);
-            this.setState({viewListArr: response.data.views, defaultViewID: response.data.views[0].id})
+            this.setState({viewListArr: response.data.views,
+              defaultViewID: response.data.views[0].id})
             //set the local storage with the default view id
-            window.chrome.storage.local.set({defaultViewID: response.data.views[0].id, viewListArr: response.data.views});
+            window.chrome.storage.local.set(
+              {defaultViewID: response.data.views[0].id,
+                 viewListArr: response.data.views});
             this.createTicketList(response.data.views[0].id);
         }).catch((error) => {
             console.log(error);
@@ -84,7 +87,11 @@ class App extends Component {
 
     //making an API call and creating the ticket list array
     createTicketList = (defaultViewID) => {
-        axios.get('https://' + this.state.zendeskDomain + '.zendesk.com/api/v2/views/' + defaultViewID + '/execute.json?per_page=60&page=1&sort_by=id&sort_order=desc&group_by=+&include=via_id').then((response) => {
+        axios.get('https://' + this.state.zendeskDomain +
+         '.zendesk.com/api/v2/views/' + defaultViewID +
+         '/execute.json?per_page=60&page=1&sort_by=id&sort_order'+
+         '=desc&group_by=+&include=via_id')
+         .then((response) => {
             //set the user's state to loading
             this.setState({userStatus: 4});
             //  update the local storage
@@ -97,7 +104,9 @@ class App extends Component {
 
                 setTimeout(() => {
                     //after a 'loading period' set user to online
-                    this.setState({ticketsArr: response.data.rows, newTickets: response.data.count, userStatus: 1, requestersArr: response.data.users});
+                    this.setState({ticketsArr: response.data.rows,
+                       newTickets: response.data.count, userStatus: 1,
+                       requestersArr: response.data.users});
                 }, 2000);
                 //if ticket count is 0, empty badge
                 if (response.data.count == 0) {
@@ -138,7 +147,8 @@ class App extends Component {
         console.log(this.state);
         window.chrome.storage.local.set({notificationSetting: 0});
         this.createViewList(this.state.zendeskDomain);
-        ReactGA.event({category: 'launch', action: 'Clicked', label: this.state.zendeskDomain});
+        ReactGA.event({category: 'launch', action: 'Clicked',
+           label: this.state.zendeskDomain});
     }
 
     handleInput = (e) => {
@@ -167,12 +177,20 @@ class App extends Component {
 
         return (
             <div className="onlinePage">
-                <Tickets newTickets={this.state.newTickets} tickets={this.state.ticketsArr} domain={this.state.zendeskDomain} requestersArr={this.state.requestersArr}/>
+                <Tickets newTickets={this.state.newTickets}
+                   tickets={this.state.ticketsArr}
+                   domain={this.state.zendeskDomain}
+                   requestersArr={this.state.requestersArr}/>
                 <div className="row">
                     <span className="viewSpan">
                         VIEWING:
                     </span>
-                    <DropDown changeView={this.changeView} viewsArr={this.state.viewListArr} defaultViewID={this.state.defaultViewID} defaultViewTitle={this.state.defaultViewTitle}/>
+                    <DropDown
+                      changeView={this.changeView}
+                      viewsArr={this.state.viewListArr}
+                      defaultViewID={this.state.defaultViewID}
+                      defaultViewTitle={this.state.defaultViewTitle}
+                    />
                 </div>
 
             </div>
@@ -181,7 +199,10 @@ class App extends Component {
 
     //render function for user offline status
     renderOffline() {
-        return (<LoginForm detectTab={this.detectTab} handleInput={this.handleInput} handleSignIn={this.handleSignIn} userStatus={this.state.userStatus}/>)
+        return (<LoginForm detectTab={this.detectTab}
+           handleInput={this.handleInput}
+           handleSignIn={this.handleSignIn}
+           userStatus={this.state.userStatus}/>)
     }
 
     //render function for user unauthorized status
@@ -190,7 +211,9 @@ class App extends Component {
         return (
             <div className="preloader down">
                 <div className="preloaderText">
-                    There was a problem logging in, please check your zendesk account is logged in and then try again
+                    There was a problem logging in,
+                    please check your zendesk account is
+                    logged in and then try again
                 </div>
                 <a href={url} target="_blank">Go To Zendesk</a>
             </div>
@@ -214,17 +237,17 @@ class App extends Component {
     }
 
     changeView = (viewTitle) => {
-        var viewIndex = this.state.viewListArr.findIndex(result => result.title === viewTitle);
+        var viewIndex = this.state.viewListArr
+        .findIndex(result => result.title === viewTitle);
         var newDefaultViewID = this.state.viewListArr[viewIndex].id
-        window.chrome.storage.local.set({defaultViewID: newDefaultViewID, defaultViewTitle: viewTitle})
+        window.chrome.storage.local.set({defaultViewID: newDefaultViewID,
+           defaultViewTitle: viewTitle})
         this.setState({userStatus: 4});
         setTimeout(() => {
             //after a 'loading period' set user to online
             this.setState({userStatus: 1});
         }, 4000);
-
         console.log("change to ", viewTitle)
-
     }
 
     render() {
@@ -247,7 +270,9 @@ class App extends Component {
         }
         return (
             <div className="container">
-                <Nav logout={this.logout} openSettings={this.openSettings} hasButtons={hasButtons}/> {content}
+                <Nav logout={this.logout}
+                  openSettings={this.openSettings}
+                  hasButtons={hasButtons}/> {content}
             </div>
         )
     }
