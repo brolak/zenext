@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import SingleTicket from './SingleTicket';
 import noTicketsAnimation from './rocketGif.gif'
 
-class TicketList extends Component {
+class TicketList extends Component{
     render() {
 
         let items = this.props.tickets.map((ticket) => {
