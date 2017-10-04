@@ -7,7 +7,6 @@ import notifySound from '../assets/notifySound.svg';
 import '../App.css';
 //icons color #d8d8d8
 class Nav extends Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -24,7 +23,6 @@ class Nav extends Component {
             }
         })
     }
-
     //toggle chrome desktop notifications
     toggleNotifications = () => {
         let notify = this.state.notificationSetting + 1;
@@ -41,7 +39,6 @@ class Nav extends Component {
             }, 0)
         }, 0)
     }
-
     render() {
         let buttons;
         let notifyButton;
@@ -63,8 +60,11 @@ class Nav extends Component {
         if (this.props.hasButtons) {
             buttons = (
                 <td className="align-right">
-                    <img src={notifyButton} className="settings-logo" onClick={this.toggleNotifications}/>
-                    <img src={exit} className="exit-logo" alt="Sign out" title="Logout" onClick={this.props.logout}/>
+                    <img src={notifyButton} className="settings-logo"
+                      onClick={this.toggleNotifications}/>
+                    <img src={exit} className="exit-logo"
+                       alt="Sign out" title="Logout"
+                       onClick={this.props.logout}/>
                 </td>
             )
         }
@@ -73,9 +73,13 @@ class Nav extends Component {
                 <div className="col-md-12 topNavbar navbar">
                     <table width="100%" className="header-table">
                         <tr>
-                            <td className="align-left"><img src={logo} className="App-logo" alt="logo"/></td>
+                            <td className="align-left"><img src={logo}
+                              className="App-logo" alt="logo"/></td>
                             <td className="align-center">
-                                <span className="init-fade" ref={(value) => this.alertMsg = value}>{msg}</span>
+                                <span className="init-fade"
+                                  ref={(value) => this.alertMsg = value}>
+                                  {msg}
+                                </span>
                             </td>
                             {buttons}
                         </tr>
@@ -86,5 +90,4 @@ class Nav extends Component {
         );
     }
 }
-
 export default Nav;

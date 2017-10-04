@@ -6,17 +6,14 @@ class OpenTicketCounter extends Component {
             <div className={'counterDiv ' + (this.props.newTickets == 0
                 ? 'noTickets'
                 : '')}>
-
                 <div className="counterBorder">
                     <div className="openTicketCounterInteger">
                         {this.props.newTickets}
                     </div>
-                    <div className="openTicketCounterString">OPEN TICKETS</div>
+                    <div className="openTicketCounterString">TICKETS</div>
                 </div>
-
             </div>
         )
     }
 }
-
 export default OpenTicketCounter;
