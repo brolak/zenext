@@ -16,7 +16,7 @@ class TicketList extends Component{
               created_at={ticket.created} requester={requesterName}/>)
         })
         if (this.props.newTickets == 0) {
-            console.log("we are at zero", this.props.newTickets)
+            console.log("zero tickets", this.props.newTickets)
             return (
                 <div>
                     <br/>
