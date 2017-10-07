@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import SingleTicket from './SingleTicket';
 import noTicketsAnimation from './rocketGif.gif'
+import ReactGA from 'react-ga';
 
 class TicketList extends Component{
     render() {
-
         let items = this.props.tickets.map((ticket) => {
             var requesterIndex = this.props.requestersArr.
             findIndex(result => result.id == ticket.requester_id);
@@ -29,7 +29,8 @@ class TicketList extends Component{
                 </div>
             )
         } else {
-            console.log("we have new tickets", this.props.newTickets)
+            ReactGA.event({category: 'main', action: 'new ticket',
+              label: this.props.domain});
             return (
                 <div>
                     <div className="row">
