@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import TimeAgo from 'react-timeago';
+import ReactGA from 'react-ga';
 
 class SingleTicket extends Component {
     findAndOpenTab = (ticketId, domain) => {
@@ -29,6 +30,8 @@ class SingleTicket extends Component {
         })
     }
     click = () => {
+        ReactGA.event({category: 'main', action: 'ticket-click',
+          label: this.props.domain});
         this.findAndOpenTab(this.props.id, this.props.domain);
     }
     render() {

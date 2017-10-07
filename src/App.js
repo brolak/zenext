@@ -45,6 +45,8 @@ class App extends Component {
     }
     //when component loads add a listener to identify changes on local storage
     componentDidMount = () => {
+      ReactGA.event({category: 'main', action: 'loaded',
+        label: this.state.zendeskDomain});
         //listener for changes in local storage tickets from bg calls
         window.chrome.storage.onChanged.addListener((NewStore) => {
             console.log("changes in local storage", NewStore)
@@ -158,6 +160,8 @@ class App extends Component {
     //function for logging out
     //clear all storage and change user status
     logout = () => {
+        ReactGA.event({category: 'main', action: 'logout',
+          label: this.state.zendeskDomain});
         window.chrome.storage.local.clear(() => {
             window.chrome.browserAction.setBadgeText({text: ''});
             this.setState({
@@ -174,7 +178,6 @@ class App extends Component {
 
     //render function for user online status
     renderOnline() {
-
         return (
             <div className="onlinePage">
                 <Tickets newTickets={this.state.newTickets}
